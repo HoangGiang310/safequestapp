@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgStreet" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#38BDF8"/>
+            <stop offset="60%" stop-color="#7DD3FC"/>
+            <stop offset="100%" stop-color="#FED7AA"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgStreet)"/>
+        <!-- Shop / House silhouettes -->
+        <rect x="40" y="110" width="100" height="130" rx="8" fill="#FBCFE8" stroke="#F472B6" stroke-width="3"/>
+        <polygon points="90,70 150,110 30,110" fill="#EC4899"/>
+        <rect x="180" y="90" width="120" height="150" rx="8" fill="#DDD6FE" stroke="#A78BFA" stroke-width="3"/>
+        <polygon points="240,50 310,90 170,90" fill="#8B5CF6"/>
+        <!-- Tree -->
+        <rect x="490" y="160" width="16" height="85" fill="#92400E"/>
+        <circle cx="498" cy="140" r="45" fill="#22C55E"/>
+        <circle cx="475" cy="120" r="30" fill="#16A34A"/>
+        <!-- Sidewalk & Road -->
+        <rect x="0" y="240" width="600" height="40" fill="#E2E8F0"/>
+        <line x1="0" y1="280" x2="600" y2="280" stroke="#94A3B8" stroke-width="4"/>
+        <rect x="0" y="284" width="600" height="76" fill="#334155"/>
+      
+  
+  <!-- Suspicious colorful lollipop on tray -->
+  <g transform="translate(380, 160)">
+    <circle cx="40" cy="40" r="30" fill="#EC4899" stroke="#DB2777" stroke-width="4"/>
+    <path d="M40 10 A30 30 0 0 1 70 40 A30 30 0 0 1 40 70" stroke="white" stroke-width="6" fill="none"/>
+    <line x1="40" y1="70" x2="40" y2="130" stroke="#E2E8F0" stroke-width="8" stroke-linecap="round"/>
+    <!-- Warning Cross -->
+    <circle cx="40" cy="40" r="36" fill="none" stroke="#DC2626" stroke-width="6"/>
+    <line x1="16" y1="16" x2="64" y2="64" stroke="#DC2626" stroke-width="6"/>
+  </g>
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="137.5" cy="277.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="182.5" cy="277.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="160" cy="220" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M120 207.5 Q91.25 220 107.5 238.75 Q125 226.25 120 207.5 Z" fill="#1E293B"/>
+      <path d="M202.5 207.5 Q241.25 201.25 235 182.5 Q212.5 201.25 202.5 207.5 Z" fill="#1E293B"/>
+      <circle cx="235" cy="180" r="12.5" fill="#F97316"/>
+    
+      <ellipse cx="160" cy="227.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="130" cy="185" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="190" cy="185" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="140" cy="172.5" r="13.75" fill="white"/>
+      <circle cx="180" cy="172.5" r="13.75" fill="white"/>
+      <circle cx="140" cy="172.5" r="6.875" fill="#0F172A"/>
+      <circle cx="180" cy="172.5" r="6.875" fill="#0F172A"/>
+      <circle cx="136.25" cy="168.75" r="3.125" fill="white"/>
+      <circle cx="176.25" cy="168.75" r="3.125" fill="white"/>
+    
+      <path d="M148.75 180 Q160 193.75 171.25 180 Q160 187.5 Z" fill="#EA580C"/>
+      <polygon points="150,181.25 170,181.25 160,193.75" fill="#F97316"/>
+      
+    </g>
+  
+  <g transform="translate(180, 50)">
+    <rect x="0" y="0" width="160" height="42" rx="12" fill="#EF4444" stroke="white" stroke-width="3"/>
+    <text x="80" y="27" text-anchor="middle" font-size="16" font-family="Arial" fill="white" font-weight="bold">KHÔNG NHẬN!</text>
+  </g>
+
+</svg>

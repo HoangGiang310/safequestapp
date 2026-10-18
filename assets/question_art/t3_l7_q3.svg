@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgMtn" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#60A5FA"/>
+            <stop offset="60%" stop-color="#93C5FD"/>
+            <stop offset="100%" stop-color="#E2E8F0"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgMtn)"/>
+        <!-- Distant Mountain Peaks -->
+        <polygon points="120,80 230,240 10,240" fill="#94A3B8"/>
+        <polygon points="120,80 150,130 90,130" fill="white"/>
+        <polygon points="320,60 460,240 180,240" fill="#64748B"/>
+        <polygon points="320,60 360,120 280,120" fill="white"/>
+        <polygon points="480,100 580,240 380,240" fill="#94A3B8"/>
+        <!-- Green Pine Forest Ground -->
+        <path d="M0 240 Q300 220 600 240 L600 360 L0 360 Z" fill="#15803D"/>
+        <!-- Dirt Trail Path -->
+        <path d="M220 240 Q290 290 350 360 L410 360 Q340 290 280 240 Z" fill="#B45309"/>
+      
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="176.6" cy="274.8" rx="19.5" ry="10.4" fill="#F97316"/>
+      <ellipse cx="223.4" cy="274.8" rx="19.5" ry="10.4" fill="#F97316"/>
+      <ellipse cx="200" cy="215" rx="49.4" ry="62.400000000000006" fill="#1E293B"/>
+      
+      <path d="M155.8 202 Q127.2 234.5 150.6 247.5 Z" fill="#1E293B"/>
+      <path d="M244.2 202 Q291 208.5 284.5 221.5 Z" fill="#1E293B"/>
+    
+      <ellipse cx="200" cy="222.8" rx="35.1" ry="46.800000000000004" fill="#FFFFFF"/>
+      <circle cx="168.8" cy="178.6" r="9.1" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="231.2" cy="178.6" r="9.1" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="179.2" cy="165.6" r="12.35" fill="white"/>
+      <circle cx="220.8" cy="165.6" r="12.35" fill="white"/>
+      <circle cx="180.5" cy="166.9" r="6.5" fill="#0F172A"/>
+      <circle cx="222.1" cy="166.9" r="6.5" fill="#0F172A"/>
+      <circle cx="177.9" cy="163" r="3.25" fill="white"/>
+      <circle cx="219.5" cy="163" r="3.25" fill="white"/>
+    
+      <path d="M188.3 173.4 Q200 187.7 211.7 173.4 Q200 181.2 Z" fill="#EA580C"/>
+      <polygon points="189.6,174.7 210.4,174.7 200,187.7" fill="#F97316"/>
+      
+    </g>
+  
+  <g transform="translate(320, 70)">
+    <rect x="0" y="0" width="220" height="65" rx="16" fill="white" stroke="#38BDF8" stroke-width="4"/>
+    <text x="110" y="28" text-anchor="middle" font-size="14" fill="#0284C7" font-weight="bold">"Cháu bị lạc bố mẹ,</text>
+    <text x="110" y="48" text-anchor="middle" font-size="14" fill="#0284C7" font-weight="bold">chú giúp cháu với!"</text>
+  </g>
+
+</svg>

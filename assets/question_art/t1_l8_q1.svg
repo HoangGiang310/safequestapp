@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgCity" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0284C7"/>
+            <stop offset="60%" stop-color="#7DD3FC"/>
+            <stop offset="100%" stop-color="#E0F2FE"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgCity)"/>
+        <!-- City Skyline silhouettes -->
+        <rect x="50" y="110" width="60" height="130" fill="#BAE6FD" opacity="0.8"/>
+        <rect x="130" y="80" width="70" height="160" fill="#93C5FD" opacity="0.8"/>
+        <rect x="220" y="120" width="55" height="120" fill="#BAE6FD" opacity="0.8"/>
+        <rect x="380" y="90" width="65" height="150" fill="#93C5FD" opacity="0.8"/>
+        <rect x="460" y="115" width="80" height="125" fill="#BAE6FD" opacity="0.8"/>
+        <!-- Wide City Highway -->
+        <path d="M0 240 L600 240 L600 360 L0 360 Z" fill="#334155"/>
+        <line x1="50" y1="300" x2="130" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="190" y1="300" x2="270" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="330" y1="300" x2="410" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="470" y1="300" x2="550" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <rect x="0" y="235" width="600" height="8" fill="#94A3B8"/>
+      
+  
+  <g transform="translate(100, 70)">
+    <rect x="0" y="0" width="400" height="200" rx="20" fill="#FEF3C7" stroke="#F59E0B" stroke-width="6"/>
+    <!-- Yellow handrails -->
+    <line x1="80" y1="20" x2="80" y2="180" stroke="#F59E0B" stroke-width="8"/>
+    <line x1="320" y1="20" x2="320" y2="180" stroke="#F59E0B" stroke-width="8"/>
+    <rect x="150" y="60" width="110" height="130" rx="16" fill="#3B82F6"/>
+  </g>
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="282.5" cy="242.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="327.5" cy="242.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="305" cy="185" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M262.5 172.5 Q230 141.25 245 135 Z" fill="#1E293B"/>
+      <path d="M347.5 172.5 Q380 141.25 365 135 Z" fill="#1E293B"/>
+    
+      <ellipse cx="305" cy="192.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="275" cy="150" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="335" cy="150" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="285" cy="137.5" r="11.875" fill="white"/>
+      <circle cx="325" cy="137.5" r="11.875" fill="white"/>
+      <circle cx="286.25" cy="138.75" r="6.25" fill="#0F172A"/>
+      <circle cx="326.25" cy="138.75" r="6.25" fill="#0F172A"/>
+      <circle cx="283.75" cy="135" r="3.125" fill="white"/>
+      <circle cx="323.75" cy="135" r="3.125" fill="white"/>
+    
+      <path d="M293.75 145 Q305 158.75 316.25 145 Q305 152.5 Z" fill="#EA580C"/>
+      <polygon points="295,146.25 315,146.25 305,158.75" fill="#F97316"/>
+      
+    </g>
+  
+
+</svg>

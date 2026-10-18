@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgBath" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#CCFBF1"/>
+            <stop offset="65%" stop-color="#99F6E4"/>
+            <stop offset="100%" stop-color="#5EEAD4"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgBath)"/>
+        <!-- Tile Grid -->
+        <line x1="0" y1="70" x2="600" y2="70" stroke="#2DD4BF" stroke-width="2" opacity="0.5"/>
+        <line x1="0" y1="140" x2="600" y2="140" stroke="#2DD4BF" stroke-width="2" opacity="0.5"/>
+        <line x1="0" y1="210" x2="600" y2="210" stroke="#2DD4BF" stroke-width="2" opacity="0.5"/>
+        <!-- Mirror -->
+        <rect x="250" y="30" width="100" height="100" rx="50" fill="#E0F2FE" stroke="#38BDF8" stroke-width="6"/>
+        <!-- Floor -->
+        <rect x="0" y="240" width="600" height="120" fill="#0D9488"/>
+        <!-- Bubbles -->
+        <circle cx="100" cy="110" r="14" fill="white" opacity="0.6"/>
+        <circle cx="120" cy="85" r="8" fill="white" opacity="0.6"/>
+        <circle cx="480" cy="120" r="16" fill="white" opacity="0.6"/>
+      
+  
+  <!-- Cozy Blue Anti-slip Mat -->
+  <g transform="translate(180, 250)">
+    <rect x="0" y="0" width="220" height="65" rx="16" fill="#38BDF8" stroke="#0284C7" stroke-width="4"/>
+    <!-- Texture dots -->
+    <circle cx="40" cy="32" r="6" fill="#E0F2FE"/>
+    <circle cx="80" cy="32" r="6" fill="#E0F2FE"/>
+    <circle cx="120" cy="32" r="6" fill="#E0F2FE"/>
+    <circle cx="160" cy="32" r="6" fill="#E0F2FE"/>
+  </g>
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="267.5" cy="262.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="312.5" cy="262.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="290" cy="205" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M247.5 192.5 Q215 161.25 230 155 Z" fill="#1E293B"/>
+      <path d="M332.5 192.5 Q365 161.25 350 155 Z" fill="#1E293B"/>
+    
+      <ellipse cx="290" cy="212.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="260" cy="170" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="320" cy="170" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="270" cy="157.5" r="11.875" fill="white"/>
+      <circle cx="310" cy="157.5" r="11.875" fill="white"/>
+      <circle cx="271.25" cy="158.75" r="6.25" fill="#0F172A"/>
+      <circle cx="311.25" cy="158.75" r="6.25" fill="#0F172A"/>
+      <circle cx="268.75" cy="155" r="3.125" fill="white"/>
+      <circle cx="308.75" cy="155" r="3.125" fill="white"/>
+    
+      <path d="M278.75 165 Q290 178.75 301.25 165 Q290 172.5 Z" fill="#EA580C"/>
+      <polygon points="280,166.25 300,166.25 290,178.75" fill="#F97316"/>
+      
+    </g>
+  
+
+</svg>

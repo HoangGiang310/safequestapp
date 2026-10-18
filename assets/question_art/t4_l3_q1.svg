@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgDefense" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#7C3AED"/>
+            <stop offset="50%" stop-color="#A855F7"/>
+            <stop offset="100%" stop-color="#C084FC"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgDefense)"/>
+        <!-- Comic Sunburst Rays -->
+        <polygon points="300,180 100,0 200,0" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 400,0 500,0" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 600,100 600,200" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 0,100 0,200" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 150,360 250,360" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 450,360 550,360" fill="#DDD6FE" opacity="0.2"/>
+        <!-- Glowing Stage -->
+        <ellipse cx="300" cy="285" rx="220" ry="40" fill="#EDE9FE" opacity="0.9"/>
+      
+  
+  
+    <g transform="translate(350, 70)">
+      <circle cx="90" cy="90" r="85" fill="white" stroke="#A855F7" stroke-width="6"/>
+      <!-- 5 Colorful Circle Petals -->
+      <circle cx="90" cy="30" r="22" fill="#EC4899"/>
+      <text x="90" y="36" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Ôm</text>
+      <circle cx="140" cy="65" r="22" fill="#3B82F6"/>
+      <text x="140" y="71" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Khoác tay</text>
+      <circle cx="130" cy="125" r="22" fill="#10B981"/>
+      <text x="130" y="131" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Bắt tay</text>
+      <circle cx="50" cy="125" r="22" fill="#F59E0B"/>
+      <text x="50" y="131" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Vẫy tay</text>
+      <circle cx="40" cy="65" r="22" fill="#EF4444"/>
+      <text x="40" y="71" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Xua tay</text>
+      <!-- Center hand icon -->
+      <circle cx="90" cy="90" r="18" fill="#F3E8FF"/>
+      <text x="90" y="97" text-anchor="middle" font-size="18">🖐️</text>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <path d="M121 177.5 Q62.5 262 95 294.5 Q160 275 225 294.5 Q257.5 262 199 177.5 Z" fill="#DC2626" opacity="0.9"/>
+      <polygon points="136.6,177.5 160,190.5 183.4,177.5" fill="#F59E0B"/>
+    
+      <ellipse cx="136.6" cy="269.8" rx="19.5" ry="10.4" fill="#F97316"/>
+      <ellipse cx="183.4" cy="269.8" rx="19.5" ry="10.4" fill="#F97316"/>
+      <ellipse cx="160" cy="210" rx="49.4" ry="62.400000000000006" fill="#1E293B"/>
+      
+      <path d="M115.8 197 Q82 164.5 97.6 158 Z" fill="#1E293B"/>
+      <path d="M204.2 197 Q238 164.5 222.4 158 Z" fill="#1E293B"/>
+    
+      <ellipse cx="160" cy="217.8" rx="35.1" ry="46.800000000000004" fill="#FFFFFF"/>
+      <circle cx="128.8" cy="173.6" r="9.1" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="191.2" cy="173.6" r="9.1" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="139.2" cy="160.6" r="12.35" fill="white"/>
+      <circle cx="180.8" cy="160.6" r="12.35" fill="white"/>
+      <circle cx="140.5" cy="161.9" r="6.5" fill="#0F172A"/>
+      <circle cx="182.1" cy="161.9" r="6.5" fill="#0F172A"/>
+      <circle cx="137.9" cy="158" r="3.25" fill="white"/>
+      <circle cx="179.5" cy="158" r="3.25" fill="white"/>
+    
+      <path d="M148.3 168.4 Q160 182.7 171.7 168.4 Q160 176.2 Z" fill="#EA580C"/>
+      <polygon points="149.6,169.7 170.4,169.7 160,182.7" fill="#F97316"/>
+      
+    </g>
+  
+
+</svg>

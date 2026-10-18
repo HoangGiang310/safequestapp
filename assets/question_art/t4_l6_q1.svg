@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgDefense" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#7C3AED"/>
+            <stop offset="50%" stop-color="#A855F7"/>
+            <stop offset="100%" stop-color="#C084FC"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgDefense)"/>
+        <!-- Comic Sunburst Rays -->
+        <polygon points="300,180 100,0 200,0" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 400,0 500,0" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 600,100 600,200" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 0,100 0,200" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 150,360 250,360" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 450,360 550,360" fill="#DDD6FE" opacity="0.2"/>
+        <!-- Glowing Stage -->
+        <ellipse cx="300" cy="285" rx="220" ry="40" fill="#EDE9FE" opacity="0.9"/>
+      
+  
+  <g transform="translate(370, 90)">
+    <rect x="0" y="0" width="110" height="90" rx="14" fill="#0F172A" stroke="#38BDF8" stroke-width="4"/>
+    <text x="55" y="55" text-anchor="middle" font-size="28" fill="#FDE047" font-weight="bold">••••</text>
+  </g>
+  
+    <g class="penguin-character">
+      
+      <path d="M141 177.5 Q82.5 262 115 294.5 Q180 275 245 294.5 Q277.5 262 219 177.5 Z" fill="#DC2626" opacity="0.9"/>
+      <polygon points="156.6,177.5 180,190.5 203.4,177.5" fill="#F59E0B"/>
+    
+      <ellipse cx="156.6" cy="269.8" rx="19.5" ry="10.4" fill="#F97316"/>
+      <ellipse cx="203.4" cy="269.8" rx="19.5" ry="10.4" fill="#F97316"/>
+      <ellipse cx="180" cy="210" rx="49.4" ry="62.400000000000006" fill="#1E293B"/>
+      
+      <path d="M135.8 197 Q102 164.5 117.6 158 Z" fill="#1E293B"/>
+      <path d="M224.2 197 Q258 164.5 242.4 158 Z" fill="#1E293B"/>
+    
+      <ellipse cx="180" cy="217.8" rx="35.1" ry="46.800000000000004" fill="#FFFFFF"/>
+      <circle cx="148.8" cy="173.6" r="9.1" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="211.2" cy="173.6" r="9.1" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="159.2" cy="160.6" r="12.35" fill="white"/>
+      <circle cx="200.8" cy="160.6" r="12.35" fill="white"/>
+      <circle cx="160.5" cy="161.9" r="6.5" fill="#0F172A"/>
+      <circle cx="202.1" cy="161.9" r="6.5" fill="#0F172A"/>
+      <circle cx="157.9" cy="158" r="3.25" fill="white"/>
+      <circle cx="199.5" cy="158" r="3.25" fill="white"/>
+    
+      <path d="M168.3 168.4 Q180 182.7 191.7 168.4 Q180 176.2 Z" fill="#EA580C"/>
+      <polygon points="169.6,169.7 190.4,169.7 180,182.7" fill="#F97316"/>
+      
+    </g>
+  
+
+</svg>

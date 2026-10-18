@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgStreet" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#38BDF8"/>
+            <stop offset="60%" stop-color="#7DD3FC"/>
+            <stop offset="100%" stop-color="#FED7AA"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgStreet)"/>
+        <!-- Shop / House silhouettes -->
+        <rect x="40" y="110" width="100" height="130" rx="8" fill="#FBCFE8" stroke="#F472B6" stroke-width="3"/>
+        <polygon points="90,70 150,110 30,110" fill="#EC4899"/>
+        <rect x="180" y="90" width="120" height="150" rx="8" fill="#DDD6FE" stroke="#A78BFA" stroke-width="3"/>
+        <polygon points="240,50 310,90 170,90" fill="#8B5CF6"/>
+        <!-- Tree -->
+        <rect x="490" y="160" width="16" height="85" fill="#92400E"/>
+        <circle cx="498" cy="140" r="45" fill="#22C55E"/>
+        <circle cx="475" cy="120" r="30" fill="#16A34A"/>
+        <!-- Sidewalk & Road -->
+        <rect x="0" y="240" width="600" height="40" fill="#E2E8F0"/>
+        <line x1="0" y1="280" x2="600" y2="280" stroke="#94A3B8" stroke-width="4"/>
+        <rect x="0" y="284" width="600" height="76" fill="#334155"/>
+      
+  
+  
+    <g class="penguin-character">
+      
+      <path d="M139.5 176.25 Q78.75 264 112.5 297.75 Q180 277.5 247.5 297.75 Q281.25 264 220.5 176.25 Z" fill="#DC2626" opacity="0.9"/>
+      <polygon points="155.7,176.25 180,189.75 204.3,176.25" fill="#F59E0B"/>
+    
+      <ellipse cx="155.7" cy="272.1" rx="20.25" ry="10.8" fill="#F97316"/>
+      <ellipse cx="204.3" cy="272.1" rx="20.25" ry="10.8" fill="#F97316"/>
+      <ellipse cx="180" cy="210" rx="51.300000000000004" ry="64.80000000000001" fill="#1E293B"/>
+      
+      <path d="M136.8 196.5 Q105.75 210 123.3 230.25 Q142.2 216.75 136.8 196.5 Z" fill="#1E293B"/>
+      <path d="M225.9 196.5 Q267.75 189.75 261 169.5 Q236.7 189.75 225.9 196.5 Z" fill="#1E293B"/>
+      <circle cx="261" cy="166.8" r="13.5" fill="#F97316"/>
+    
+      <ellipse cx="180" cy="218.1" rx="36.45" ry="48.6" fill="#FFFFFF"/>
+      <circle cx="147.6" cy="172.2" r="9.450000000000001" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="212.4" cy="172.2" r="9.450000000000001" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="158.4" cy="158.7" r="14.850000000000001" fill="white"/>
+      <circle cx="201.6" cy="158.7" r="14.850000000000001" fill="white"/>
+      <circle cx="158.4" cy="158.7" r="7.425000000000001" fill="#0F172A"/>
+      <circle cx="201.6" cy="158.7" r="7.425000000000001" fill="#0F172A"/>
+      <circle cx="154.35" cy="154.65" r="3.375" fill="white"/>
+      <circle cx="197.55" cy="154.65" r="3.375" fill="white"/>
+    
+      <path d="M167.85 166.8 Q180 181.65 192.15 166.8 Q180 174.9 Z" fill="#EA580C"/>
+      <polygon points="169.2,168.15 190.8,168.15 180,181.65" fill="#F97316"/>
+      
+    </g>
+  
+  <!-- Comic Shout Bubble -->
+  <g transform="translate(320, 50)">
+    <path d="M0 40 L40 0 L200 0 L240 40 L200 80 L60 80 L30 110 L40 80 Z" fill="#EF4444" stroke="white" stroke-width="4"/>
+    <text x="120" y="48" text-anchor="middle" font-size="20" font-family="Arial" fill="white" font-weight="900">CỨU CHÁU VỚI!</text>
+  </g>
+
+</svg>

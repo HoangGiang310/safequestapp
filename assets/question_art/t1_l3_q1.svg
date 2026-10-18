@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgCity" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0284C7"/>
+            <stop offset="60%" stop-color="#7DD3FC"/>
+            <stop offset="100%" stop-color="#E0F2FE"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgCity)"/>
+        <!-- City Skyline silhouettes -->
+        <rect x="50" y="110" width="60" height="130" fill="#BAE6FD" opacity="0.8"/>
+        <rect x="130" y="80" width="70" height="160" fill="#93C5FD" opacity="0.8"/>
+        <rect x="220" y="120" width="55" height="120" fill="#BAE6FD" opacity="0.8"/>
+        <rect x="380" y="90" width="65" height="150" fill="#93C5FD" opacity="0.8"/>
+        <rect x="460" y="115" width="80" height="125" fill="#BAE6FD" opacity="0.8"/>
+        <!-- Wide City Highway -->
+        <path d="M0 240 L600 240 L600 360 L0 360 Z" fill="#334155"/>
+        <line x1="50" y1="300" x2="130" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="190" y1="300" x2="270" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="330" y1="300" x2="410" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="470" y1="300" x2="550" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <rect x="0" y="235" width="600" height="8" fill="#94A3B8"/>
+      
+  
+  <g transform="translate(80, 60)">
+    <!-- Big Car Window Frame -->
+    <rect x="0" y="0" width="440" height="230" rx="24" fill="#E2E8F0" stroke="#3B82F6" stroke-width="8"/>
+    <!-- Car Interior Seat -->
+    <rect x="140" y="40" width="160" height="180" rx="20" fill="#475569"/>
+    <rect x="170" y="10" width="100" height="40" rx="12" fill="#334155"/>
+  </g>
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="277.5" cy="227.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="322.5" cy="227.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="300" cy="170" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M257.5 157.5 Q225 126.25 240 120 Z" fill="#1E293B"/>
+      <path d="M342.5 157.5 Q375 126.25 360 120 Z" fill="#1E293B"/>
+    
+      <ellipse cx="300" cy="177.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="270" cy="135" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="330" cy="135" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="280" cy="122.5" r="11.875" fill="white"/>
+      <circle cx="320" cy="122.5" r="11.875" fill="white"/>
+      <circle cx="281.25" cy="123.75" r="6.25" fill="#0F172A"/>
+      <circle cx="321.25" cy="123.75" r="6.25" fill="#0F172A"/>
+      <circle cx="278.75" cy="120" r="3.125" fill="white"/>
+      <circle cx="318.75" cy="120" r="3.125" fill="white"/>
+    
+      <path d="M288.75 130 Q300 143.75 311.25 130 Q300 137.5 Z" fill="#EA580C"/>
+      <polygon points="290,131.25 310,131.25 300,143.75" fill="#F97316"/>
+      
+    </g>
+  
+  <!-- Diagonal Seatbelt across Mascot -->
+  <line x1="220" y1="90" x2="370" y2="240" stroke="#F59E0B" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="360" cy="230" r="12" fill="#DC2626"/>
+
+</svg>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgBed" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#DDD6FE"/>
+            <stop offset="70%" stop-color="#EDE9FE"/>
+            <stop offset="100%" stop-color="#F5F3FF"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgBed)"/>
+        <!-- Starry Window -->
+        <rect x="420" y="40" width="110" height="110" rx="16" fill="#1E1B4B" stroke="#8B5CF6" stroke-width="5"/>
+        <circle cx="490" cy="70" r="16" fill="#FDE047"/>
+        <circle cx="496" cy="68" r="14" fill="#1E1B4B"/>
+        <!-- Floor with cozy wooden parquet -->
+        <rect x="0" y="240" width="600" height="120" fill="#92400E"/>
+        <rect x="0" y="234" width="600" height="8" fill="#78350F"/>
+        <!-- Fluffy Pillow Rug -->
+        <ellipse cx="280" cy="285" rx="190" ry="38" fill="#C4B5FD" opacity="0.6"/>
+      
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="156.6" cy="264.8" rx="19.5" ry="10.4" fill="#F97316"/>
+      <ellipse cx="203.4" cy="264.8" rx="19.5" ry="10.4" fill="#F97316"/>
+      <ellipse cx="180" cy="205" rx="49.4" ry="62.400000000000006" fill="#1E293B"/>
+      
+      <path d="M135.8 192 Q107.2 224.5 130.6 237.5 Z" fill="#1E293B"/>
+      <path d="M224.2 192 Q271 198.5 264.5 211.5 Z" fill="#1E293B"/>
+    
+      <ellipse cx="180" cy="212.8" rx="35.1" ry="46.800000000000004" fill="#FFFFFF"/>
+      <circle cx="148.8" cy="168.6" r="9.1" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="211.2" cy="168.6" r="9.1" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="159.2" cy="155.6" r="12.35" fill="white"/>
+      <circle cx="200.8" cy="155.6" r="12.35" fill="white"/>
+      <circle cx="160.5" cy="156.9" r="6.5" fill="#0F172A"/>
+      <circle cx="202.1" cy="156.9" r="6.5" fill="#0F172A"/>
+      <circle cx="157.9" cy="153" r="3.25" fill="white"/>
+      <circle cx="199.5" cy="153" r="3.25" fill="white"/>
+    
+      <path d="M168.3 163.4 Q180 177.7 191.7 163.4 Q180 171.2 Z" fill="#EA580C"/>
+      <polygon points="169.6,164.7 190.4,164.7 180,177.7" fill="#F97316"/>
+      
+    </g>
+  
+  
+    <g class="bear-friend">
+      <!-- Ears -->
+      <circle cx="379.2" cy="182.2" r="17.6" fill="#92400E"/>
+      <circle cx="379.2" cy="182.2" r="8.8" fill="#FDE68A"/>
+      <circle cx="440.8" cy="182.2" r="17.6" fill="#92400E"/>
+      <circle cx="440.8" cy="182.2" r="8.8" fill="#FDE68A"/>
+      <!-- Body & Head -->
+      <ellipse cx="410" cy="246" rx="37.400000000000006" ry="46.2" fill="#3B82F6"/>
+      <circle cx="410" cy="207.5" r="37.400000000000006" fill="#92400E"/>
+      <!-- Snout -->
+      <ellipse cx="410" cy="215.2" rx="17.6" ry="13.200000000000001" fill="#FDE68A"/>
+      <ellipse cx="410" cy="210.8" rx="6.6000000000000005" ry="4.4" fill="#0F172A"/>
+      <path d="M410 215.2 L410 221.8" stroke="#0F172A" stroke-width="2.2"/>
+      <!-- Eyes -->
+      <circle cx="394.6" cy="204.2" r="4.4" fill="#0F172A"/>
+      <circle cx="425.4" cy="204.2" r="4.4" fill="#0F172A"/>
+    </g>
+  
+  <g transform="translate(230, 50)">
+    <rect x="0" y="0" width="160" height="40" rx="10" fill="#3B82F6" stroke="white" stroke-width="3"/>
+    <text x="80" y="25" text-anchor="middle" font-size="14" fill="white" font-weight="bold">Cùng giữ an toàn!</text>
+  </g>
+
+</svg>

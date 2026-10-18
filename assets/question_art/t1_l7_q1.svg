@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgCity" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0284C7"/>
+            <stop offset="60%" stop-color="#7DD3FC"/>
+            <stop offset="100%" stop-color="#E0F2FE"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgCity)"/>
+        <!-- City Skyline silhouettes -->
+        <rect x="50" y="110" width="60" height="130" fill="#BAE6FD" opacity="0.8"/>
+        <rect x="130" y="80" width="70" height="160" fill="#93C5FD" opacity="0.8"/>
+        <rect x="220" y="120" width="55" height="120" fill="#BAE6FD" opacity="0.8"/>
+        <rect x="380" y="90" width="65" height="150" fill="#93C5FD" opacity="0.8"/>
+        <rect x="460" y="115" width="80" height="125" fill="#BAE6FD" opacity="0.8"/>
+        <!-- Wide City Highway -->
+        <path d="M0 240 L600 240 L600 360 L0 360 Z" fill="#334155"/>
+        <line x1="50" y1="300" x2="130" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="190" y1="300" x2="270" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="330" y1="300" x2="410" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="470" y1="300" x2="550" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <rect x="0" y="235" width="600" height="8" fill="#94A3B8"/>
+      
+  
+  <!-- Motorbike with both -->
+  <g transform="translate(200, 175)">
+    <circle cx="45" cy="95" r="28" fill="#1E293B" stroke="#475569" stroke-width="6"/>
+    <circle cx="170" cy="95" r="28" fill="#1E293B" stroke="#475569" stroke-width="6"/>
+    <path d="M45 95 L95 65 L150 65 L170 95" stroke="#F59E0B" stroke-width="14" stroke-linecap="round"/>
+    <rect x="75" y="50" width="75" height="16" rx="8" fill="#0F172A"/>
+  </g>
+  
+    <g class="parent-penguin">
+      <ellipse cx="244" cy="244.8" rx="20.8" ry="10.4" fill="#F97316"/>
+      <ellipse cx="296" cy="244.8" rx="20.8" ry="10.4" fill="#F97316"/>
+      <ellipse cx="270" cy="185" rx="49.4" ry="62.400000000000006" fill="#334155"/>
+      <ellipse cx="270" cy="192.8" rx="35.1" ry="46.800000000000004" fill="#FFFFFF"/>
+      <!-- Soft loving eyes -->
+      <path d="M241.4 135.6 Q250.5 127.8 259.6 135.6" stroke="#0F172A" stroke-width="3.9000000000000004" fill="none"/>
+      <path d="M280.4 135.6 Q289.5 127.8 298.6 135.6" stroke="#0F172A" stroke-width="3.9000000000000004" fill="none"/>
+      <!-- Beak -->
+      <polygon points="259.6,144.7 280.4,144.7 270,157.7" fill="#F97316"/>
+      <!-- Cozy blue scarf -->
+      <path d="M231 161.6 Q270 169.4 309 161.6 L306.4 178.5 Q270 185 233.6 178.5 Z" fill="#3B82F6"/>
+      <rect x="285.6" y="178.5" width="15.600000000000001" height="39" rx="3.9000000000000004" fill="#2563EB"/>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="181.1" cy="248.3" rx="15.75" ry="8.4" fill="#F97316"/>
+      <ellipse cx="218.9" cy="248.3" rx="15.75" ry="8.4" fill="#F97316"/>
+      <ellipse cx="200" cy="200" rx="39.9" ry="50.400000000000006" fill="#1E293B"/>
+      
+      <path d="M164.3 189.5 Q141.2 215.75 160.1 226.25 Z" fill="#1E293B"/>
+      <path d="M235.7 189.5 Q260.9 184.25 250.4 173.75 Z" fill="#1E293B"/>
+    
+      <ellipse cx="200" cy="206.3" rx="28.35" ry="37.800000000000004" fill="#FFFFFF"/>
+      <circle cx="174.8" cy="170.6" r="7.3500000000000005" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="225.2" cy="170.6" r="7.3500000000000005" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="183.2" cy="160.1" r="9.975" fill="white"/>
+      <circle cx="216.8" cy="160.1" r="9.975" fill="white"/>
+      <circle cx="184.25" cy="161.15" r="5.25" fill="#0F172A"/>
+      <circle cx="217.85" cy="161.15" r="5.25" fill="#0F172A"/>
+      <circle cx="182.15" cy="158" r="2.625" fill="white"/>
+      <circle cx="215.75" cy="158" r="2.625" fill="white"/>
+    
+      <path d="M190.55 166.4 Q200 177.95 209.45 166.4 Q200 172.7 Z" fill="#EA580C"/>
+      <polygon points="191.6,167.45 208.4,167.45 200,177.95" fill="#F97316"/>
+      
+      <path d="M162.2 160.1 Q200 110.75 237.8 160.1 Q200 151.7 Z" fill="#EF4444"/>
+      <ellipse cx="200" cy="158" rx="38.85" ry="7.875" fill="#DC2626"/>
+      <path d="M185.3 128.6 Q200 123.35 214.7 128.6" stroke="white" stroke-width="3.6750000000000003" stroke-linecap="round" fill="none"/>
+      <path d="M165.35 160.1 Q200 189.5 234.65 160.1" stroke="#FCD34D" stroke-width="3.6750000000000003" fill="none"/>
+    
+    </g>
+  
+
+</svg>

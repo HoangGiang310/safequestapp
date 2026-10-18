@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgCity" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0284C7"/>
+            <stop offset="60%" stop-color="#7DD3FC"/>
+            <stop offset="100%" stop-color="#E0F2FE"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgCity)"/>
+        <!-- City Skyline silhouettes -->
+        <rect x="50" y="110" width="60" height="130" fill="#BAE6FD" opacity="0.8"/>
+        <rect x="130" y="80" width="70" height="160" fill="#93C5FD" opacity="0.8"/>
+        <rect x="220" y="120" width="55" height="120" fill="#BAE6FD" opacity="0.8"/>
+        <rect x="380" y="90" width="65" height="150" fill="#93C5FD" opacity="0.8"/>
+        <rect x="460" y="115" width="80" height="125" fill="#BAE6FD" opacity="0.8"/>
+        <!-- Wide City Highway -->
+        <path d="M0 240 L600 240 L600 360 L0 360 Z" fill="#334155"/>
+        <line x1="50" y1="300" x2="130" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="190" y1="300" x2="270" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="330" y1="300" x2="410" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="470" y1="300" x2="550" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <rect x="0" y="235" width="600" height="8" fill="#94A3B8"/>
+      
+  
+  <!-- Big Golden Trophy -->
+  <g transform="translate(360, 100)">
+    <path d="M10 20 L70 20 L60 80 Q40 100 20 80 Z" fill="#FBBF24" stroke="#D97706" stroke-width="4"/>
+    <path d="M10 30 Q-15 45 10 60" stroke="#FBBF24" stroke-width="6" fill="none"/>
+    <path d="M70 30 Q95 45 70 60" stroke="#FBBF24" stroke-width="6" fill="none"/>
+    <rect x="33" y="95" width="14" height="30" fill="#D97706"/>
+    <rect x="15" y="125" width="50" height="20" rx="4" fill="#78350F"/>
+    <polygon points="40,35 44,45 54,45 46,52 49,62 40,56 31,62 34,52 26,45 36,45" fill="white"/>
+  </g>
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="165.7" cy="267.1" rx="20.25" ry="10.8" fill="#F97316"/>
+      <ellipse cx="214.3" cy="267.1" rx="20.25" ry="10.8" fill="#F97316"/>
+      <ellipse cx="190" cy="205" rx="51.300000000000004" ry="64.80000000000001" fill="#1E293B"/>
+      
+      <path d="M144.1 191.5 Q109 157.75 125.19999999999999 151 Z" fill="#1E293B"/>
+      <path d="M235.9 191.5 Q271 157.75 254.8 151 Z" fill="#1E293B"/>
+    
+      <ellipse cx="190" cy="213.1" rx="36.45" ry="48.6" fill="#FFFFFF"/>
+      <circle cx="157.6" cy="167.2" r="9.450000000000001" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="222.4" cy="167.2" r="9.450000000000001" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="168.4" cy="153.7" r="12.825000000000001" fill="white"/>
+      <circle cx="211.6" cy="153.7" r="12.825000000000001" fill="white"/>
+      <circle cx="169.75" cy="155.05" r="6.75" fill="#0F172A"/>
+      <circle cx="212.95" cy="155.05" r="6.75" fill="#0F172A"/>
+      <circle cx="167.05" cy="151" r="3.375" fill="white"/>
+      <circle cx="210.25" cy="151" r="3.375" fill="white"/>
+    
+      <path d="M177.85 161.8 Q190 176.65 202.15 161.8 Q190 169.9 Z" fill="#EA580C"/>
+      <polygon points="179.2,163.15 200.8,163.15 190,176.65" fill="#F97316"/>
+      
+      <path d="M146.8 142.9 Q190 99.69999999999999 233.2 142.9 Z" fill="#1E3A8A"/>
+      <path d="M144.1 142.9 Q190 153.7 235.9 142.9 Z" fill="#0F172A"/>
+      <circle cx="190" cy="129.39999999999998" r="9.450000000000001" fill="#F59E0B"/>
+    
+    </g>
+  
+
+</svg>

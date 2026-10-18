@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgCity" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0284C7"/>
+            <stop offset="60%" stop-color="#7DD3FC"/>
+            <stop offset="100%" stop-color="#E0F2FE"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgCity)"/>
+        <!-- City Skyline silhouettes -->
+        <rect x="50" y="110" width="60" height="130" fill="#BAE6FD" opacity="0.8"/>
+        <rect x="130" y="80" width="70" height="160" fill="#93C5FD" opacity="0.8"/>
+        <rect x="220" y="120" width="55" height="120" fill="#BAE6FD" opacity="0.8"/>
+        <rect x="380" y="90" width="65" height="150" fill="#93C5FD" opacity="0.8"/>
+        <rect x="460" y="115" width="80" height="125" fill="#BAE6FD" opacity="0.8"/>
+        <!-- Wide City Highway -->
+        <path d="M0 240 L600 240 L600 360 L0 360 Z" fill="#334155"/>
+        <line x1="50" y1="300" x2="130" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="190" y1="300" x2="270" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="330" y1="300" x2="410" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="470" y1="300" x2="550" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <rect x="0" y="235" width="600" height="8" fill="#94A3B8"/>
+      
+  
+  
+    <g transform="translate(40, 230)">
+      <ellipse cx="65" cy="55" rx="70" ry="12" fill="#0F172A" opacity="0.3"/>
+      <path d="M10 38 Q15 15 45 15 L75 15 Q95 15 115 30 L125 38 Q130 45 125 50 L10 50 Q5 45 10 38 Z" fill="#0284C7"/>
+      <path d="M35 15 Q45 0 75 0 L85 0 Q105 0 110 15 Z" fill="#93C5FD"/>
+      <path d="M42 13 Q50 3 72 3 L72 13 Z" fill="#E0F2FE"/>
+      <path d="M78 13 L78 3 Q95 3 102 13 Z" fill="#E0F2FE"/>
+      <circle cx="120" cy="38" r="6" fill="#FEF08A"/>
+      <circle cx="35" cy="50" r="14" fill="#1E293B"/>
+      <circle cx="35" cy="50" r="6" fill="#94A3B8"/>
+      <circle cx="100" cy="50" r="14" fill="#1E293B"/>
+      <circle cx="100" cy="50" r="6" fill="#94A3B8"/>
+    </g>
+  
+  
+    <g transform="translate(270, 205)">
+      <ellipse cx="100" cy="78" rx="105" ry="14" fill="#0F172A" opacity="0.3"/>
+      <rect x="0" y="0" width="200" height="75" rx="16" fill="#F59E0B"/>
+      <rect x="15" y="12" width="38" height="26" rx="6" fill="#E0F2FE"/>
+      <rect x="62" y="12" width="38" height="26" rx="6" fill="#E0F2FE"/>
+      <rect x="109" y="12" width="38" height="26" rx="6" fill="#E0F2FE"/>
+      <rect x="156" y="12" width="30" height="26" rx="6" fill="#E0F2FE"/>
+      <rect x="0" y="48" width="200" height="6" fill="#1E293B"/>
+      <circle cx="45" cy="75" r="18" fill="#1E293B"/>
+      <circle cx="45" cy="75" r="7" fill="#CBD5E1"/>
+      <circle cx="155" cy="75" r="18" fill="#1E293B"/>
+      <circle cx="155" cy="75" r="7" fill="#CBD5E1"/>
+      <circle cx="192" cy="54" r="6" fill="#FEF08A"/>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="499.3" cy="277.9" rx="17.25" ry="9.2" fill="#F97316"/>
+      <ellipse cx="540.7" cy="277.9" rx="17.25" ry="9.2" fill="#F97316"/>
+      <ellipse cx="520" cy="225" rx="43.699999999999996" ry="55.199999999999996" fill="#1E293B"/>
+      
+      <path d="M480.9 213.5 Q451 184.75 464.8 179 Z" fill="#1E293B"/>
+      <path d="M559.1 213.5 Q589 184.75 575.2 179 Z" fill="#1E293B"/>
+    
+      <ellipse cx="520" cy="231.9" rx="31.049999999999997" ry="41.4" fill="#FFFFFF"/>
+      <circle cx="492.4" cy="192.8" r="8.049999999999999" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="547.6" cy="192.8" r="8.049999999999999" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="501.6" cy="181.3" r="10.924999999999999" fill="white"/>
+      <circle cx="538.4" cy="181.3" r="10.924999999999999" fill="white"/>
+      <circle cx="502.75" cy="182.45" r="5.75" fill="#0F172A"/>
+      <circle cx="539.55" cy="182.45" r="5.75" fill="#0F172A"/>
+      <circle cx="500.45" cy="179" r="2.875" fill="white"/>
+      <circle cx="537.25" cy="179" r="2.875" fill="white"/>
+    
+      <path d="M509.65 188.2 Q520 200.85 530.35 188.2 Q520 195.1 Z" fill="#EA580C"/>
+      <polygon points="510.8,189.35 529.2,189.35 520,200.85" fill="#F97316"/>
+      
+      <path d="M478.6 181.3 Q520 127.25000000000001 561.4 181.3 Q520 172.1 Z" fill="#2563EB"/>
+      <ellipse cx="520" cy="179" rx="42.55" ry="8.625" fill="#1D4ED8"/>
+      <path d="M503.9 146.8 Q520 141.05 536.1 146.8" stroke="white" stroke-width="4.0249999999999995" stroke-linecap="round" fill="none"/>
+    
+    </g>
+  
+
+</svg>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+          <defs>
+            <linearGradient id="bgSkyD" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#38BDF8"/>
+              <stop offset="65%" stop-color="#BAE6FD"/>
+              <stop offset="100%" stop-color="#E0F2FE"/>
+            </linearGradient>
+          </defs>
+          <rect width="600" height="360" rx="24" fill="url(#bgSkyD)"/>
+          <circle cx="510" cy="65" r="30" fill="#FDE047" opacity="0.9"/>
+          <ellipse cx="100" cy="65" rx="55" ry="22" fill="white" opacity="0.8"/>
+          <ellipse cx="430" cy="75" rx="60" ry="20" fill="white" opacity="0.75"/>
+          <path d="M0 240 Q300 232 600 240 L600 360 L0 360 Z" fill="#334155"/>
+          <line x1="60" y1="300" x2="140" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+          <line x1="200" y1="300" x2="280" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+          <line x1="340" y1="300" x2="420" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+          <line x1="480" y1="300" x2="560" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+          <rect x="0" y="235" width="600" height="8" fill="#4ADE80"/>
+        
+  
+  
+    <g transform="translate(180, 180)">
+      <ellipse cx="100" cy="78" rx="105" ry="14" fill="#0F172A" opacity="0.3"/>
+      <rect x="0" y="0" width="200" height="75" rx="16" fill="#F59E0B"/>
+      <rect x="15" y="12" width="38" height="26" rx="6" fill="#E0F2FE"/>
+      <rect x="62" y="12" width="38" height="26" rx="6" fill="#E0F2FE"/>
+      <rect x="109" y="12" width="38" height="26" rx="6" fill="#E0F2FE"/>
+      <rect x="156" y="12" width="30" height="26" rx="6" fill="#E0F2FE"/>
+      <rect x="0" y="48" width="200" height="6" fill="#1E293B"/>
+      <circle cx="45" cy="75" r="18" fill="#1E293B"/>
+      <circle cx="45" cy="75" r="7" fill="#CBD5E1"/>
+      <circle cx="155" cy="75" r="18" fill="#1E293B"/>
+      <circle cx="155" cy="75" r="7" fill="#CBD5E1"/>
+      <circle cx="192" cy="54" r="6" fill="#FEF08A"/>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="77.5" cy="277.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="122.5" cy="277.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="100" cy="220" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M60 207.5 Q31.25 220 47.5 238.75 Q65 226.25 60 207.5 Z" fill="#1E293B"/>
+      <path d="M142.5 207.5 Q181.25 201.25 175 182.5 Q152.5 201.25 142.5 207.5 Z" fill="#1E293B"/>
+      <circle cx="175" cy="180" r="12.5" fill="#F97316"/>
+    
+      <ellipse cx="100" cy="227.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="70" cy="185" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="130" cy="185" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="80" cy="172.5" r="13.75" fill="white"/>
+      <circle cx="120" cy="172.5" r="13.75" fill="white"/>
+      <circle cx="80" cy="172.5" r="6.875" fill="#0F172A"/>
+      <circle cx="120" cy="172.5" r="6.875" fill="#0F172A"/>
+      <circle cx="76.25" cy="168.75" r="3.125" fill="white"/>
+      <circle cx="116.25" cy="168.75" r="3.125" fill="white"/>
+    
+      <path d="M88.75 180 Q100 193.75 111.25 180 Q100 187.5 Z" fill="#EA580C"/>
+      <polygon points="90,181.25 110,181.25 100,193.75" fill="#F97316"/>
+      
+    </g>
+  
+  <g transform="translate(420, 60)">
+    <circle cx="35" cy="35" r="35" fill="#EF4444" stroke="white" stroke-width="4"/>
+    <line x1="18" y1="18" x2="52" y2="52" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  </g>
+
+</svg>

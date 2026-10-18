@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgOutStorm" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1E293B"/>
+            <stop offset="60%" stop-color="#334155"/>
+            <stop offset="100%" stop-color="#475569"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgOutStorm)"/>
+        <!-- Dramatic storm clouds -->
+        <ellipse cx="140" cy="50" rx="100" ry="36" fill="#0F172A"/>
+        <ellipse cx="320" cy="45" rx="120" ry="40" fill="#0F172A"/>
+        <ellipse cx="490" cy="55" rx="90" ry="35" fill="#0F172A"/>
+        <!-- Golden Lightning Bolt in sky -->
+        <polygon points="310,65 290,115 310,115 295,165 335,105 315,105" fill="#FDE047" stroke="#F59E0B" stroke-width="2"/>
+        <!-- Rainy field ground -->
+        <path d="M0 240 Q300 230 600 240 L600 360 L0 360 Z" fill="#065F46"/>
+        <!-- Gazebo / Safe Shelter -->
+        <polygon points="120,130 180,170 60,170" fill="#DC2626"/>
+        <rect x="75" y="170" width="10" height="75" fill="#78350F"/>
+        <rect x="155" y="170" width="10" height="75" fill="#78350F"/>
+        <rect x="65" y="240" width="110" height="10" fill="#475569"/>
+      
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="197.5" cy="282.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="242.5" cy="282.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="220" cy="225" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M180 212.5 Q151.25 225 167.5 243.75 Q185 231.25 180 212.5 Z" fill="#1E293B"/>
+      <path d="M262.5 212.5 Q301.25 206.25 295 187.5 Q272.5 206.25 262.5 212.5 Z" fill="#1E293B"/>
+      <circle cx="295" cy="185" r="12.5" fill="#F97316"/>
+    
+      <ellipse cx="220" cy="232.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="190" cy="190" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="250" cy="190" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="200" cy="177.5" r="13.75" fill="white"/>
+      <circle cx="240" cy="177.5" r="13.75" fill="white"/>
+      <circle cx="200" cy="177.5" r="6.875" fill="#0F172A"/>
+      <circle cx="240" cy="177.5" r="6.875" fill="#0F172A"/>
+      <circle cx="196.25" cy="173.75" r="3.125" fill="white"/>
+      <circle cx="236.25" cy="173.75" r="3.125" fill="white"/>
+    
+      <path d="M208.75 185 Q220 198.75 231.25 185 Q220 192.5 Z" fill="#EA580C"/>
+      <polygon points="210,186.25 230,186.25 220,198.75" fill="#F97316"/>
+      
+    </g>
+  
+
+</svg>

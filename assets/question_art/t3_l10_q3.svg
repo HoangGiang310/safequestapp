@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgPool" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#38BDF8"/>
+            <stop offset="50%" stop-color="#BAE6FD"/>
+            <stop offset="100%" stop-color="#FEF08A"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgPool)"/>
+        <!-- Bright Sun -->
+        <circle cx="510" cy="70" r="38" fill="#FBBF24"/>
+        <!-- Palm Tree Fronds on top right -->
+        <path d="M540 0 Q480 30 460 70" stroke="#16A34A" stroke-width="8" stroke-linecap="round" fill="none"/>
+        <path d="M570 0 Q520 40 500 85" stroke="#16A34A" stroke-width="8" stroke-linecap="round" fill="none"/>
+        <!-- Pool Deck Tiles -->
+        <rect x="0" y="220" width="600" height="140" fill="#FDE68A"/>
+        <!-- Crystal Clear Water Pool -->
+        <ellipse cx="300" cy="280" rx="240" ry="60" fill="#0284C7" stroke="#38BDF8" stroke-width="8"/>
+        <ellipse cx="300" cy="280" rx="210" ry="46" fill="#38BDF8"/>
+      
+  
+  
+    <g class="bear-friend">
+      <!-- Ears -->
+      <circle cx="379.2" cy="177.2" r="17.6" fill="#92400E"/>
+      <circle cx="379.2" cy="177.2" r="8.8" fill="#FDE68A"/>
+      <circle cx="440.8" cy="177.2" r="17.6" fill="#92400E"/>
+      <circle cx="440.8" cy="177.2" r="8.8" fill="#FDE68A"/>
+      <!-- Body & Head -->
+      <ellipse cx="410" cy="241" rx="37.400000000000006" ry="46.2" fill="#3B82F6"/>
+      <circle cx="410" cy="202.5" r="37.400000000000006" fill="#92400E"/>
+      <!-- Snout -->
+      <ellipse cx="410" cy="210.2" rx="17.6" ry="13.200000000000001" fill="#FDE68A"/>
+      <ellipse cx="410" cy="205.8" rx="6.6000000000000005" ry="4.4" fill="#0F172A"/>
+      <path d="M410 210.2 L410 216.8" stroke="#0F172A" stroke-width="2.2"/>
+      <!-- Eyes -->
+      <circle cx="394.6" cy="199.2" r="4.4" fill="#0F172A"/>
+      <circle cx="425.4" cy="199.2" r="4.4" fill="#0F172A"/>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="156.6" cy="269.8" rx="19.5" ry="10.4" fill="#F97316"/>
+      <ellipse cx="203.4" cy="269.8" rx="19.5" ry="10.4" fill="#F97316"/>
+      <ellipse cx="180" cy="210" rx="49.4" ry="62.400000000000006" fill="#1E293B"/>
+      
+      <path d="M138.4 197 Q108.5 210 125.4 229.5 Q143.6 216.5 138.4 197 Z" fill="#1E293B"/>
+      <path d="M224.2 197 Q264.5 190.5 258 171 Q234.6 190.5 224.2 197 Z" fill="#1E293B"/>
+      <circle cx="258" cy="168.4" r="13" fill="#F97316"/>
+    
+      <ellipse cx="180" cy="217.8" rx="35.1" ry="46.800000000000004" fill="#FFFFFF"/>
+      <circle cx="148.8" cy="173.6" r="9.1" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="211.2" cy="173.6" r="9.1" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="159.2" cy="160.6" r="14.3" fill="white"/>
+      <circle cx="200.8" cy="160.6" r="14.3" fill="white"/>
+      <circle cx="159.2" cy="160.6" r="7.15" fill="#0F172A"/>
+      <circle cx="200.8" cy="160.6" r="7.15" fill="#0F172A"/>
+      <circle cx="155.3" cy="156.7" r="3.25" fill="white"/>
+      <circle cx="196.9" cy="156.7" r="3.25" fill="white"/>
+    
+      <path d="M168.3 168.4 Q180 182.7 191.7 168.4 Q180 176.2 Z" fill="#EA580C"/>
+      <polygon points="169.6,169.7 190.4,169.7 180,182.7" fill="#F97316"/>
+      
+    </g>
+  
+  <g transform="translate(210, 45)">
+    <rect x="0" y="0" width="180" height="40" rx="10" fill="#DC2626" stroke="white" stroke-width="3"/>
+    <text x="90" y="25" text-anchor="middle" font-size="14" fill="white" font-weight="bold">Nguy hiểm, đừng thử!</text>
+  </g>
+
+</svg>

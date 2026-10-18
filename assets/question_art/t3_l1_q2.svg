@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+          <defs>
+            <linearGradient id="bgOutD" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#38BDF8"/>
+              <stop offset="55%" stop-color="#7DD3FC"/>
+              <stop offset="100%" stop-color="#BAE6FD"/>
+            </linearGradient>
+          </defs>
+          <rect width="600" height="360" rx="24" fill="url(#bgOutD)"/>
+          <circle cx="515" cy="65" r="32" fill="#FBBF24"/>
+          <path d="M0 255 Q200 205 420 255 T600 235 L600 360 L0 360 Z" fill="#10B981"/>
+          <circle cx="90" cy="315" r="7" fill="#FB7185"/>
+          <circle cx="490" cy="310" r="8" fill="#F472B6"/>
+        
+  
+  <g transform="translate(340, 90)">
+    <!-- Sunhat -->
+    <ellipse cx="60" cy="40" rx="55" ry="16" fill="#FBBF24"/>
+    <path d="M28 40 Q60 5 92 40 Z" fill="#F59E0B"/>
+    <ellipse cx="60" cy="40" rx="32" ry="6" fill="#EF4444"/>
+    <!-- Sunglasses -->
+    <g transform="translate(20, 65)">
+      <rect x="10" y="0" width="35" height="24" rx="8" fill="#0F172A"/>
+      <rect x="55" y="0" width="35" height="24" rx="8" fill="#0F172A"/>
+      <line x1="45" y1="8" x2="55" y2="8" stroke="#0F172A" stroke-width="3"/>
+    </g>
+    <!-- Sunscreen Tube -->
+    <g transform="translate(130, 25)">
+      <rect x="0" y="25" width="36" height="65" rx="6" fill="#3B82F6"/>
+      <polygon points="0,25 36,25 28,0 8,0" fill="#F59E0B"/>
+      <text x="18" y="60" text-anchor="middle" font-size="11" font-family="Arial" fill="white" font-weight="bold">SPF50</text>
+    </g>
+  </g>
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="136.6" cy="274.8" rx="19.5" ry="10.4" fill="#F97316"/>
+      <ellipse cx="183.4" cy="274.8" rx="19.5" ry="10.4" fill="#F97316"/>
+      <ellipse cx="160" cy="215" rx="49.4" ry="62.400000000000006" fill="#1E293B"/>
+      
+      <path d="M115.8 202 Q82 169.5 97.6 163 Z" fill="#1E293B"/>
+      <path d="M204.2 202 Q238 169.5 222.4 163 Z" fill="#1E293B"/>
+    
+      <ellipse cx="160" cy="222.8" rx="35.1" ry="46.800000000000004" fill="#FFFFFF"/>
+      <circle cx="128.8" cy="178.6" r="9.1" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="191.2" cy="178.6" r="9.1" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="139.2" cy="165.6" r="12.35" fill="white"/>
+      <circle cx="180.8" cy="165.6" r="12.35" fill="white"/>
+      <circle cx="140.5" cy="166.9" r="6.5" fill="#0F172A"/>
+      <circle cx="182.1" cy="166.9" r="6.5" fill="#0F172A"/>
+      <circle cx="137.9" cy="163" r="3.25" fill="white"/>
+      <circle cx="179.5" cy="163" r="3.25" fill="white"/>
+    
+      <path d="M148.3 173.4 Q160 187.7 171.7 173.4 Q160 181.2 Z" fill="#EA580C"/>
+      <polygon points="149.6,174.7 170.4,174.7 160,187.7" fill="#F97316"/>
+      
+      <ellipse cx="160" cy="150" rx="59.800000000000004" ry="16.900000000000002" fill="#FBBF24"/>
+      <path d="M123.6 150 Q160 103.2 196.4 150 Z" fill="#F59E0B"/>
+      <ellipse cx="160" cy="150" rx="36.4" ry="7.15" fill="#EF4444"/>
+    
+    </g>
+  
+
+</svg>

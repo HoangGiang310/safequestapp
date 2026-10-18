@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgSunset" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F97316"/>
+            <stop offset="50%" stop-color="#FB923C"/>
+            <stop offset="100%" stop-color="#FED7AA"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgSunset)"/>
+        <!-- Golden sun setting -->
+        <circle cx="480" cy="120" r="45" fill="#FEF08A" opacity="0.9"/>
+        <!-- Road with warm tint -->
+        <path d="M0 240 Q300 230 600 240 L600 360 L0 360 Z" fill="#334155"/>
+        <line x1="60" y1="300" x2="140" y2="300" stroke="#FDE047" stroke-width="6" stroke-linecap="round"/>
+        <line x1="200" y1="300" x2="280" y2="300" stroke="#FDE047" stroke-width="6" stroke-linecap="round"/>
+        <line x1="340" y1="300" x2="420" y2="300" stroke="#FDE047" stroke-width="6" stroke-linecap="round"/>
+        <line x1="480" y1="300" x2="560" y2="300" stroke="#FDE047" stroke-width="6" stroke-linecap="round"/>
+      
+  
+  
+    <g class="parent-penguin">
+      <ellipse cx="154" cy="249.8" rx="20.8" ry="10.4" fill="#F97316"/>
+      <ellipse cx="206" cy="249.8" rx="20.8" ry="10.4" fill="#F97316"/>
+      <ellipse cx="180" cy="190" rx="49.4" ry="62.400000000000006" fill="#334155"/>
+      <ellipse cx="180" cy="197.8" rx="35.1" ry="46.800000000000004" fill="#FFFFFF"/>
+      <!-- Soft loving eyes -->
+      <path d="M151.4 140.6 Q160.5 132.8 169.6 140.6" stroke="#0F172A" stroke-width="3.9000000000000004" fill="none"/>
+      <path d="M190.4 140.6 Q199.5 132.8 208.6 140.6" stroke="#0F172A" stroke-width="3.9000000000000004" fill="none"/>
+      <!-- Beak -->
+      <polygon points="169.6,149.7 190.4,149.7 180,162.7" fill="#F97316"/>
+      <!-- Cozy blue scarf -->
+      <path d="M141 166.6 Q180 174.4 219 166.6 L216.4 183.5 Q180 190 143.6 183.5 Z" fill="#3B82F6"/>
+      <rect x="195.6" y="183.5" width="15.600000000000001" height="39" rx="3.9000000000000004" fill="#2563EB"/>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="320.2" cy="260.6" rx="16.5" ry="8.8" fill="#F97316"/>
+      <ellipse cx="359.8" cy="260.6" rx="16.5" ry="8.8" fill="#F97316"/>
+      <ellipse cx="340" cy="210" rx="41.800000000000004" ry="52.800000000000004" fill="#1E293B"/>
+      
+      <path d="M302.6 199 Q278.4 226.5 298.2 237.5 Z" fill="#1E293B"/>
+      <path d="M377.4 199 Q417 204.5 411.5 215.5 Z" fill="#1E293B"/>
+    
+      <ellipse cx="340" cy="216.6" rx="29.700000000000003" ry="39.6" fill="#FFFFFF"/>
+      <circle cx="313.6" cy="179.2" r="7.700000000000001" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="366.4" cy="179.2" r="7.700000000000001" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="322.4" cy="168.2" r="12.100000000000001" fill="white"/>
+      <circle cx="357.6" cy="168.2" r="12.100000000000001" fill="white"/>
+      <circle cx="322.4" cy="168.2" r="6.050000000000001" fill="#0F172A"/>
+      <circle cx="357.6" cy="168.2" r="6.050000000000001" fill="#0F172A"/>
+      <circle cx="319.1" cy="164.9" r="2.75" fill="white"/>
+      <circle cx="354.3" cy="164.9" r="2.75" fill="white"/>
+    
+      <path d="M330.1 174.8 Q340 186.9 349.9 174.8 Q340 181.4 Z" fill="#EA580C"/>
+      <polygon points="331.2,175.9 348.8,175.9 340,186.9" fill="#F97316"/>
+      
+    </g>
+  
+  <!-- Steering wheel -->
+  <g transform="translate(130, 210)">
+    <circle cx="25" cy="25" r="22" fill="none" stroke="#0F172A" stroke-width="7"/>
+    <line x1="5" y1="25" x2="45" y2="25" stroke="#0F172A" stroke-width="5"/>
+  </g>
+  <!-- No Phone Warning -->
+  <g transform="translate(430, 60)">
+    <circle cx="35" cy="35" r="35" fill="#EF4444" stroke="white" stroke-width="4"/>
+    <rect x="24" y="16" width="22" height="38" rx="4" fill="white"/>
+    <line x1="12" y1="12" x2="58" y2="58" stroke="#EF4444" stroke-width="5"/>
+  </g>
+
+</svg>

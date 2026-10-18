@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgDefense" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#7C3AED"/>
+            <stop offset="50%" stop-color="#A855F7"/>
+            <stop offset="100%" stop-color="#C084FC"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgDefense)"/>
+        <!-- Comic Sunburst Rays -->
+        <polygon points="300,180 100,0 200,0" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 400,0 500,0" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 600,100 600,200" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 0,100 0,200" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 150,360 250,360" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 450,360 550,360" fill="#DDD6FE" opacity="0.2"/>
+        <!-- Glowing Stage -->
+        <ellipse cx="300" cy="285" rx="220" ry="40" fill="#EDE9FE" opacity="0.9"/>
+      
+  
+  
+    <g class="penguin-character">
+      
+      <path d="M259.5 171.25 Q198.75 259 232.5 292.75 Q300 272.5 367.5 292.75 Q401.25 259 340.5 171.25 Z" fill="#DC2626" opacity="0.9"/>
+      <polygon points="275.7,171.25 300,184.75 324.3,171.25" fill="#F59E0B"/>
+    
+      <ellipse cx="275.7" cy="267.1" rx="20.25" ry="10.8" fill="#F97316"/>
+      <ellipse cx="324.3" cy="267.1" rx="20.25" ry="10.8" fill="#F97316"/>
+      <ellipse cx="300" cy="205" rx="51.300000000000004" ry="64.80000000000001" fill="#1E293B"/>
+      
+      <path d="M256.8 191.5 Q225.75 205 243.3 225.25 Q262.2 211.75 256.8 191.5 Z" fill="#1E293B"/>
+      <path d="M345.9 191.5 Q387.75 184.75 381 164.5 Q356.7 184.75 345.9 191.5 Z" fill="#1E293B"/>
+      <circle cx="381" cy="161.8" r="13.5" fill="#F97316"/>
+    
+      <ellipse cx="300" cy="213.1" rx="36.45" ry="48.6" fill="#FFFFFF"/>
+      <circle cx="267.6" cy="167.2" r="9.450000000000001" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="332.4" cy="167.2" r="9.450000000000001" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="278.4" cy="153.7" r="14.850000000000001" fill="white"/>
+      <circle cx="321.6" cy="153.7" r="14.850000000000001" fill="white"/>
+      <circle cx="278.4" cy="153.7" r="7.425000000000001" fill="#0F172A"/>
+      <circle cx="321.6" cy="153.7" r="7.425000000000001" fill="#0F172A"/>
+      <circle cx="274.35" cy="149.65" r="3.375" fill="white"/>
+      <circle cx="317.55" cy="149.65" r="3.375" fill="white"/>
+    
+      <path d="M287.85 161.8 Q300 176.65 312.15 161.8 Q300 169.9 Z" fill="#EA580C"/>
+      <polygon points="289.2,163.15 310.8,163.15 300,176.65" fill="#F97316"/>
+      
+    </g>
+  
+  <g transform="translate(200, 45)">
+    <rect x="0" y="0" width="200" height="42" rx="12" fill="#DC2626" stroke="white" stroke-width="3"/>
+    <text x="100" y="27" text-anchor="middle" font-size="16" fill="white" font-weight="bold">HÉT TO &amp; CHẠY NGAY!</text>
+  </g>
+
+</svg>

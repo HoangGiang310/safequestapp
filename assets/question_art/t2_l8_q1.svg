@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgBed" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#DDD6FE"/>
+            <stop offset="70%" stop-color="#EDE9FE"/>
+            <stop offset="100%" stop-color="#F5F3FF"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgBed)"/>
+        <!-- Starry Window -->
+        <rect x="420" y="40" width="110" height="110" rx="16" fill="#1E1B4B" stroke="#8B5CF6" stroke-width="5"/>
+        <circle cx="490" cy="70" r="16" fill="#FDE047"/>
+        <circle cx="496" cy="68" r="14" fill="#1E1B4B"/>
+        <!-- Floor with cozy wooden parquet -->
+        <rect x="0" y="240" width="600" height="120" fill="#92400E"/>
+        <rect x="0" y="234" width="600" height="8" fill="#78350F"/>
+        <!-- Fluffy Pillow Rug -->
+        <ellipse cx="280" cy="285" rx="190" ry="38" fill="#C4B5FD" opacity="0.6"/>
+      
+  
+  <!-- Wardrobe -->
+  <g transform="translate(380, 50)">
+    <rect x="0" y="0" width="130" height="210" rx="12" fill="#78350F"/>
+    <line x1="65" y1="0" x2="65" y2="210" stroke="#92400E" stroke-width="4"/>
+    <circle cx="50" cy="105" r="6" fill="#FDE047"/>
+    <circle cx="80" cy="105" r="6" fill="#FDE047"/>
+  </g>
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="157.5" cy="277.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="202.5" cy="277.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="180" cy="220" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M137.5 207.5 Q110 238.75 132.5 251.25 Z" fill="#1E293B"/>
+      <path d="M222.5 207.5 Q267.5 213.75 261.25 226.25 Z" fill="#1E293B"/>
+    
+      <ellipse cx="180" cy="227.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="150" cy="185" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="210" cy="185" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="160" cy="172.5" r="11.875" fill="white"/>
+      <circle cx="200" cy="172.5" r="11.875" fill="white"/>
+      <circle cx="161.25" cy="173.75" r="6.25" fill="#0F172A"/>
+      <circle cx="201.25" cy="173.75" r="6.25" fill="#0F172A"/>
+      <circle cx="158.75" cy="170" r="3.125" fill="white"/>
+      <circle cx="198.75" cy="170" r="3.125" fill="white"/>
+    
+      <path d="M168.75 180 Q180 193.75 191.25 180 Q180 187.5 Z" fill="#EA580C"/>
+      <polygon points="170,181.25 190,181.25 180,193.75" fill="#F97316"/>
+      
+    </g>
+  
+
+</svg>

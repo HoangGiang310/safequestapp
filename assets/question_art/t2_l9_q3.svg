@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+          <defs>
+            <linearGradient id="bgHomeD" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FED7AA"/>
+              <stop offset="70%" stop-color="#FFEDD5"/>
+              <stop offset="100%" stop-color="#FFF7ED"/>
+            </linearGradient>
+          </defs>
+          <rect width="600" height="360" rx="24" fill="url(#bgHomeD)"/>
+          <rect x="440" y="38" width="95" height="85" rx="12" fill="#BAE6FD" stroke="#93C5FD" stroke-width="4"/>
+          <line x1="487" y1="38" x2="487" y2="123" stroke="#93C5FD" stroke-width="3"/>
+          <line x1="440" y1="80" x2="535" y2="80" stroke="#93C5FD" stroke-width="3"/>
+          <rect x="0" y="240" width="600" height="120" fill="#B45309"/>
+          <rect x="0" y="234" width="600" height="8" fill="#78350F"/>
+          <ellipse cx="300" cy="285" rx="190" ry="35" fill="#FBCFE8" opacity="0.7"/>
+        
+  
+  
+    <g class="baby-penguin">
+      <ellipse cx="386.7" cy="281.8" rx="11.399999999999999" ry="5.699999999999999" fill="#F97316"/>
+      <ellipse cx="413.3" cy="281.8" rx="11.399999999999999" ry="5.699999999999999" fill="#F97316"/>
+      <circle cx="400" cy="240" r="34.199999999999996" fill="#475569"/>
+      <circle cx="400" cy="245.7" r="22.799999999999997" fill="#FFFFFF"/>
+      <circle cx="386.7" cy="228.6" r="7.6" fill="white"/>
+      <circle cx="413.3" cy="228.6" r="7.6" fill="white"/>
+      <circle cx="386.7" cy="228.6" r="3.8" fill="#0F172A"/>
+      <circle cx="413.3" cy="228.6" r="3.8" fill="#0F172A"/>
+      <polygon points="394.3,236.2 405.7,236.2 400,243.8" fill="#F97316"/>
+      <!-- Baby Bib -->
+      <path d="M382.9 245.7 Q400 262.8 417.1 245.7 Z" fill="#F472B6"/>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="187.5" cy="272.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="232.5" cy="272.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="210" cy="215" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M170 202.5 Q141.25 215 157.5 233.75 Q175 221.25 170 202.5 Z" fill="#1E293B"/>
+      <path d="M252.5 202.5 Q291.25 196.25 285 177.5 Q262.5 196.25 252.5 202.5 Z" fill="#1E293B"/>
+      <circle cx="285" cy="175" r="12.5" fill="#F97316"/>
+    
+      <ellipse cx="210" cy="222.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="180" cy="180" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="240" cy="180" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="190" cy="167.5" r="13.75" fill="white"/>
+      <circle cx="230" cy="167.5" r="13.75" fill="white"/>
+      <circle cx="190" cy="167.5" r="6.875" fill="#0F172A"/>
+      <circle cx="230" cy="167.5" r="6.875" fill="#0F172A"/>
+      <circle cx="186.25" cy="163.75" r="3.125" fill="white"/>
+      <circle cx="226.25" cy="163.75" r="3.125" fill="white"/>
+    
+      <path d="M198.75 175 Q210 188.75 221.25 175 Q210 182.5 Z" fill="#EA580C"/>
+      <polygon points="200,176.25 220,176.25 210,188.75" fill="#F97316"/>
+      
+    </g>
+  
+
+</svg>

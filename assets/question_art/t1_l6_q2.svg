@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgCity" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0284C7"/>
+            <stop offset="60%" stop-color="#7DD3FC"/>
+            <stop offset="100%" stop-color="#E0F2FE"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgCity)"/>
+        <!-- City Skyline silhouettes -->
+        <rect x="50" y="110" width="60" height="130" fill="#BAE6FD" opacity="0.8"/>
+        <rect x="130" y="80" width="70" height="160" fill="#93C5FD" opacity="0.8"/>
+        <rect x="220" y="120" width="55" height="120" fill="#BAE6FD" opacity="0.8"/>
+        <rect x="380" y="90" width="65" height="150" fill="#93C5FD" opacity="0.8"/>
+        <rect x="460" y="115" width="80" height="125" fill="#BAE6FD" opacity="0.8"/>
+        <!-- Wide City Highway -->
+        <path d="M0 240 L600 240 L600 360 L0 360 Z" fill="#334155"/>
+        <line x1="50" y1="300" x2="130" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="190" y1="300" x2="270" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="330" y1="300" x2="410" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <line x1="470" y1="300" x2="550" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+        <rect x="0" y="235" width="600" height="8" fill="#94A3B8"/>
+      
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="137.5" cy="277.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="182.5" cy="277.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="160" cy="220" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M120 207.5 Q91.25 220 107.5 238.75 Q125 226.25 120 207.5 Z" fill="#1E293B"/>
+      <path d="M202.5 207.5 Q241.25 201.25 235 182.5 Q212.5 201.25 202.5 207.5 Z" fill="#1E293B"/>
+      <circle cx="235" cy="180" r="12.5" fill="#F97316"/>
+    
+      <ellipse cx="160" cy="227.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="130" cy="185" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="190" cy="185" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="140" cy="172.5" r="13.75" fill="white"/>
+      <circle cx="180" cy="172.5" r="13.75" fill="white"/>
+      <circle cx="140" cy="172.5" r="6.875" fill="#0F172A"/>
+      <circle cx="180" cy="172.5" r="6.875" fill="#0F172A"/>
+      <circle cx="136.25" cy="168.75" r="3.125" fill="white"/>
+      <circle cx="176.25" cy="168.75" r="3.125" fill="white"/>
+    
+      <path d="M148.75 180 Q160 193.75 171.25 180 Q160 187.5 Z" fill="#EA580C"/>
+      <polygon points="150,181.25 170,181.25 160,193.75" fill="#F97316"/>
+      
+      <path d="M115 172.5 Q160 113.75 205 172.5 Q160 162.5 Z" fill="#2563EB"/>
+      <ellipse cx="160" cy="170" rx="46.25" ry="9.375" fill="#1D4ED8"/>
+      <path d="M142.5 135 Q160 128.75 177.5 135" stroke="white" stroke-width="4.375" stroke-linecap="round" fill="none"/>
+    
+    </g>
+  
+  <g transform="translate(320, 80)">
+    <polygon points="45,10 85,80 5,80" fill="#EF4444" stroke="white" stroke-width="4"/>
+    <text x="45" y="65" text-anchor="middle" font-size="40" fill="white" font-weight="bold">!</text>
+  </g>
+
+</svg>

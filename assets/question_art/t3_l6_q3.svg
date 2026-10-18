@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgOutStorm" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1E293B"/>
+            <stop offset="60%" stop-color="#334155"/>
+            <stop offset="100%" stop-color="#475569"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgOutStorm)"/>
+        <!-- Dramatic storm clouds -->
+        <ellipse cx="140" cy="50" rx="100" ry="36" fill="#0F172A"/>
+        <ellipse cx="320" cy="45" rx="120" ry="40" fill="#0F172A"/>
+        <ellipse cx="490" cy="55" rx="90" ry="35" fill="#0F172A"/>
+        <!-- Golden Lightning Bolt in sky -->
+        <polygon points="310,65 290,115 310,115 295,165 335,105 315,105" fill="#FDE047" stroke="#F59E0B" stroke-width="2"/>
+        <!-- Rainy field ground -->
+        <path d="M0 240 Q300 230 600 240 L600 360 L0 360 Z" fill="#065F46"/>
+        <!-- Gazebo / Safe Shelter -->
+        <polygon points="120,130 180,170 60,170" fill="#DC2626"/>
+        <rect x="75" y="170" width="10" height="75" fill="#78350F"/>
+        <rect x="155" y="170" width="10" height="75" fill="#78350F"/>
+        <rect x="65" y="240" width="110" height="10" fill="#475569"/>
+      
+  
+  
+    <g class="parent-penguin">
+      <ellipse cx="114" cy="249.8" rx="20.8" ry="10.4" fill="#F97316"/>
+      <ellipse cx="166" cy="249.8" rx="20.8" ry="10.4" fill="#F97316"/>
+      <ellipse cx="140" cy="190" rx="49.4" ry="62.400000000000006" fill="#334155"/>
+      <ellipse cx="140" cy="197.8" rx="35.1" ry="46.800000000000004" fill="#FFFFFF"/>
+      <!-- Soft loving eyes -->
+      <path d="M111.4 140.6 Q120.5 132.8 129.6 140.6" stroke="#0F172A" stroke-width="3.9000000000000004" fill="none"/>
+      <path d="M150.4 140.6 Q159.5 132.8 168.6 140.6" stroke="#0F172A" stroke-width="3.9000000000000004" fill="none"/>
+      <!-- Beak -->
+      <polygon points="129.6,149.7 150.4,149.7 140,162.7" fill="#F97316"/>
+      <!-- Cozy blue scarf -->
+      <path d="M101 166.6 Q140 174.4 179 166.6 L176.4 183.5 Q140 190 103.6 183.5 Z" fill="#3B82F6"/>
+      <rect x="155.6" y="183.5" width="15.600000000000001" height="39" rx="3.9000000000000004" fill="#2563EB"/>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="230.2" cy="270.6" rx="16.5" ry="8.8" fill="#F97316"/>
+      <ellipse cx="269.8" cy="270.6" rx="16.5" ry="8.8" fill="#F97316"/>
+      <ellipse cx="250" cy="220" rx="41.800000000000004" ry="52.800000000000004" fill="#1E293B"/>
+      
+      <path d="M212.6 209 Q188.39999999999998 236.5 208.2 247.5 Z" fill="#1E293B"/>
+      <path d="M287.4 209 Q327 214.5 321.5 225.5 Z" fill="#1E293B"/>
+    
+      <ellipse cx="250" cy="226.6" rx="29.700000000000003" ry="39.6" fill="#FFFFFF"/>
+      <circle cx="223.6" cy="189.2" r="7.700000000000001" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="276.4" cy="189.2" r="7.700000000000001" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="232.4" cy="178.2" r="12.100000000000001" fill="white"/>
+      <circle cx="267.6" cy="178.2" r="12.100000000000001" fill="white"/>
+      <circle cx="232.4" cy="178.2" r="6.050000000000001" fill="#0F172A"/>
+      <circle cx="267.6" cy="178.2" r="6.050000000000001" fill="#0F172A"/>
+      <circle cx="229.1" cy="174.9" r="2.75" fill="white"/>
+      <circle cx="264.3" cy="174.9" r="2.75" fill="white"/>
+    
+      <path d="M240.1 184.8 Q250 196.9 259.9 184.8 Q250 191.4 Z" fill="#EA580C"/>
+      <polygon points="241.2,185.9 258.8,185.9 250,196.9" fill="#F97316"/>
+      
+    </g>
+  
+
+</svg>

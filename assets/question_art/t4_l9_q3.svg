@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgSafeHome" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FEF08A"/>
+            <stop offset="50%" stop-color="#FED7AA"/>
+            <stop offset="100%" stop-color="#FFF7ED"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgSafeHome)"/>
+        <!-- Loving Home Window & Photo -->
+        <rect x="430" y="35" width="110" height="95" rx="14" fill="#BAE6FD" stroke="#60A5FA" stroke-width="5"/>
+        <line x1="485" y1="35" x2="485" y2="130" stroke="#60A5FA" stroke-width="4"/>
+        <line x1="430" y1="82" x2="540" y2="82" stroke="#60A5FA" stroke-width="4"/>
+        <!-- Family Picture Frame -->
+        <rect x="60" y="45" width="80" height="70" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-width="4"/>
+        <circle cx="90" cy="75" r="14" fill="#F59E0B"/>
+        <circle cx="115" cy="80" r="10" fill="#FB7185"/>
+        <!-- Floor with cozy rug -->
+        <rect x="0" y="240" width="600" height="120" fill="#B45309"/>
+        <rect x="0" y="234" width="600" height="8" fill="#78350F"/>
+        <ellipse cx="300" cy="285" rx="220" ry="40" fill="#C7D2FE" opacity="0.8"/>
+      
+  
+  
+    <g class="parent-penguin">
+      <ellipse cx="133" cy="252.1" rx="21.6" ry="10.8" fill="#F97316"/>
+      <ellipse cx="187" cy="252.1" rx="21.6" ry="10.8" fill="#F97316"/>
+      <ellipse cx="160" cy="190" rx="51.300000000000004" ry="64.80000000000001" fill="#334155"/>
+      <ellipse cx="160" cy="198.1" rx="36.45" ry="48.6" fill="#FFFFFF"/>
+      <!-- Soft loving eyes -->
+      <path d="M130.3 138.7 Q139.75 130.6 149.2 138.7" stroke="#0F172A" stroke-width="4.050000000000001" fill="none"/>
+      <path d="M170.8 138.7 Q180.25 130.6 189.7 138.7" stroke="#0F172A" stroke-width="4.050000000000001" fill="none"/>
+      <!-- Beak -->
+      <polygon points="149.2,148.15 170.8,148.15 160,161.65" fill="#F97316"/>
+      <!-- Cozy blue scarf -->
+      <path d="M119.5 165.7 Q160 173.8 200.5 165.7 L197.8 183.25 Q160 190 122.19999999999999 183.25 Z" fill="#3B82F6"/>
+      <rect x="176.2" y="183.25" width="16.200000000000003" height="40.5" rx="4.050000000000001" fill="#2563EB"/>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <path d="M237 192.5 Q187.5 264 215 291.5 Q270 275 325 291.5 Q352.5 264 303 192.5 Z" fill="#DC2626" opacity="0.9"/>
+      <polygon points="250.2,192.5 270,203.5 289.8,192.5" fill="#F59E0B"/>
+    
+      <ellipse cx="250.2" cy="270.6" rx="16.5" ry="8.8" fill="#F97316"/>
+      <ellipse cx="289.8" cy="270.6" rx="16.5" ry="8.8" fill="#F97316"/>
+      <ellipse cx="270" cy="220" rx="41.800000000000004" ry="52.800000000000004" fill="#1E293B"/>
+      
+      <path d="M232.6 209 Q204 181.5 217.2 176 Z" fill="#1E293B"/>
+      <path d="M307.4 209 Q336 181.5 322.8 176 Z" fill="#1E293B"/>
+    
+      <ellipse cx="270" cy="226.6" rx="29.700000000000003" ry="39.6" fill="#FFFFFF"/>
+      <circle cx="243.6" cy="189.2" r="7.700000000000001" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="296.4" cy="189.2" r="7.700000000000001" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="252.4" cy="178.2" r="10.450000000000001" fill="white"/>
+      <circle cx="287.6" cy="178.2" r="10.450000000000001" fill="white"/>
+      <circle cx="253.5" cy="179.3" r="5.5" fill="#0F172A"/>
+      <circle cx="288.7" cy="179.3" r="5.5" fill="#0F172A"/>
+      <circle cx="251.3" cy="176" r="2.75" fill="white"/>
+      <circle cx="286.5" cy="176" r="2.75" fill="white"/>
+    
+      <path d="M260.1 184.8 Q270 196.9 279.9 184.8 Q270 191.4 Z" fill="#EA580C"/>
+      <polygon points="261.2,185.9 278.8,185.9 270,196.9" fill="#F97316"/>
+      
+    </g>
+  
+
+</svg>

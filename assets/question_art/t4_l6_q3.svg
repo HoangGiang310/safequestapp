@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgDefense" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#7C3AED"/>
+            <stop offset="50%" stop-color="#A855F7"/>
+            <stop offset="100%" stop-color="#C084FC"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgDefense)"/>
+        <!-- Comic Sunburst Rays -->
+        <polygon points="300,180 100,0 200,0" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 400,0 500,0" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 600,100 600,200" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 0,100 0,200" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 150,360 250,360" fill="#DDD6FE" opacity="0.2"/>
+        <polygon points="300,180 450,360 550,360" fill="#DDD6FE" opacity="0.2"/>
+        <!-- Glowing Stage -->
+        <ellipse cx="300" cy="285" rx="220" ry="40" fill="#EDE9FE" opacity="0.9"/>
+      
+  
+  
+    <g class="penguin-character">
+      
+      <path d="M159.5 176.25 Q98.75 264 132.5 297.75 Q200 277.5 267.5 297.75 Q301.25 264 240.5 176.25 Z" fill="#DC2626" opacity="0.9"/>
+      <polygon points="175.7,176.25 200,189.75 224.3,176.25" fill="#F59E0B"/>
+    
+      <ellipse cx="175.7" cy="272.1" rx="20.25" ry="10.8" fill="#F97316"/>
+      <ellipse cx="224.3" cy="272.1" rx="20.25" ry="10.8" fill="#F97316"/>
+      <ellipse cx="200" cy="210" rx="51.300000000000004" ry="64.80000000000001" fill="#1E293B"/>
+      
+      <path d="M156.8 196.5 Q125.75 210 143.3 230.25 Q162.2 216.75 156.8 196.5 Z" fill="#1E293B"/>
+      <path d="M245.9 196.5 Q287.75 189.75 281 169.5 Q256.7 189.75 245.9 196.5 Z" fill="#1E293B"/>
+      <circle cx="281" cy="166.8" r="13.5" fill="#F97316"/>
+    
+      <ellipse cx="200" cy="218.1" rx="36.45" ry="48.6" fill="#FFFFFF"/>
+      <circle cx="167.6" cy="172.2" r="9.450000000000001" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="232.4" cy="172.2" r="9.450000000000001" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="178.4" cy="158.7" r="12.825000000000001" fill="white"/>
+      <circle cx="221.6" cy="158.7" r="12.825000000000001" fill="white"/>
+      <circle cx="181.1" cy="160.05" r="6.75" fill="#0F172A"/>
+      <circle cx="224.3" cy="160.05" r="6.75" fill="#0F172A"/>
+      <path d="M164.9 146.55 Q178.4 153.3 191.9 147.9" stroke="#0F172A" stroke-width="4.050000000000001" stroke-linecap="round" fill="none"/>
+      <path d="M208.1 147.9 Q221.6 153.3 235.1 146.55" stroke="#0F172A" stroke-width="4.050000000000001" stroke-linecap="round" fill="none"/>
+    
+      <path d="M187.85 166.8 Q200 181.65 212.15 166.8 Q200 174.9 Z" fill="#EA580C"/>
+      <polygon points="189.2,168.15 210.8,168.15 200,181.65" fill="#F97316"/>
+      
+    </g>
+  
+  <g transform="translate(340, 80)">
+    <rect x="0" y="0" width="180" height="42" rx="12" fill="#10B981" stroke="white" stroke-width="3"/>
+    <text x="90" y="26" text-anchor="middle" font-size="14" fill="white" font-weight="bold">Luôn kể cho bố mẹ!</text>
+  </g>
+
+</svg>

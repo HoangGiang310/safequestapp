@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgSunset" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F97316"/>
+            <stop offset="50%" stop-color="#FB923C"/>
+            <stop offset="100%" stop-color="#FED7AA"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgSunset)"/>
+        <!-- Golden sun setting -->
+        <circle cx="480" cy="120" r="45" fill="#FEF08A" opacity="0.9"/>
+        <!-- Road with warm tint -->
+        <path d="M0 240 Q300 230 600 240 L600 360 L0 360 Z" fill="#334155"/>
+        <line x1="60" y1="300" x2="140" y2="300" stroke="#FDE047" stroke-width="6" stroke-linecap="round"/>
+        <line x1="200" y1="300" x2="280" y2="300" stroke="#FDE047" stroke-width="6" stroke-linecap="round"/>
+        <line x1="340" y1="300" x2="420" y2="300" stroke="#FDE047" stroke-width="6" stroke-linecap="round"/>
+        <line x1="480" y1="300" x2="560" y2="300" stroke="#FDE047" stroke-width="6" stroke-linecap="round"/>
+      
+  
+  
+    <g transform="translate(30, 170)">
+      <ellipse cx="100" cy="78" rx="105" ry="14" fill="#0F172A" opacity="0.3"/>
+      <rect x="0" y="0" width="200" height="75" rx="16" fill="#3B82F6"/>
+      <rect x="15" y="12" width="38" height="26" rx="6" fill="#E0F2FE"/>
+      <rect x="62" y="12" width="38" height="26" rx="6" fill="#E0F2FE"/>
+      <rect x="109" y="12" width="38" height="26" rx="6" fill="#E0F2FE"/>
+      <rect x="156" y="12" width="30" height="26" rx="6" fill="#E0F2FE"/>
+      <rect x="0" y="48" width="200" height="6" fill="#1E293B"/>
+      <circle cx="45" cy="75" r="18" fill="#1E293B"/>
+      <circle cx="45" cy="75" r="7" fill="#CBD5E1"/>
+      <circle cx="155" cy="75" r="18" fill="#1E293B"/>
+      <circle cx="155" cy="75" r="7" fill="#CBD5E1"/>
+      <circle cx="192" cy="54" r="6" fill="#FEF08A"/>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="337.5" cy="267.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="382.5" cy="267.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="360" cy="210" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M317.5 197.5 Q290 228.75 312.5 241.25 Z" fill="#1E293B"/>
+      <path d="M402.5 197.5 Q447.5 203.75 441.25 216.25 Z" fill="#1E293B"/>
+    
+      <ellipse cx="360" cy="217.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="330" cy="175" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="390" cy="175" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="340" cy="162.5" r="13.75" fill="white"/>
+      <circle cx="380" cy="162.5" r="13.75" fill="white"/>
+      <circle cx="340" cy="162.5" r="6.875" fill="#0F172A"/>
+      <circle cx="380" cy="162.5" r="6.875" fill="#0F172A"/>
+      <circle cx="336.25" cy="158.75" r="3.125" fill="white"/>
+      <circle cx="376.25" cy="158.75" r="3.125" fill="white"/>
+    
+      <path d="M348.75 170 Q360 183.75 371.25 170 Q360 177.5 Z" fill="#EA580C"/>
+      <polygon points="350,171.25 370,171.25 360,183.75" fill="#F97316"/>
+      
+    </g>
+  
+  <g transform="translate(420, 60)">
+    <circle cx="32" cy="32" r="32" fill="#22C55E" stroke="white" stroke-width="4"/>
+    <text x="32" y="39" text-anchor="middle" font-size="20" fill="white" font-weight="bold">✓</text>
+  </g>
+
+</svg>

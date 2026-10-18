@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgKitchen" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E0F2FE"/>
+            <stop offset="70%" stop-color="#BAE6FD"/>
+            <stop offset="100%" stop-color="#F1F5F9"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgKitchen)"/>
+        <!-- Kitchen Wall Tiles -->
+        <line x1="0" y1="60" x2="600" y2="60" stroke="#93C5FD" stroke-width="2" opacity="0.4"/>
+        <line x1="0" y1="120" x2="600" y2="120" stroke="#93C5FD" stroke-width="2" opacity="0.4"/>
+        <line x1="0" y1="180" x2="600" y2="180" stroke="#93C5FD" stroke-width="2" opacity="0.4"/>
+        <!-- Countertop -->
+        <rect x="0" y="230" width="600" height="130" fill="#CBD5E1"/>
+        <rect x="0" y="222" width="600" height="12" rx="4" fill="#64748B"/>
+        <!-- Upper Cabinets -->
+        <rect x="60" y="0" width="140" height="60" fill="#94A3B8" opacity="0.6"/>
+        <rect x="400" y="0" width="140" height="60" fill="#94A3B8" opacity="0.6"/>
+      
+  
+  <!-- Chemical bottles -->
+  <g transform="translate(300, 120)">
+    <rect x="0" y="30" width="45" height="85" rx="10" fill="#8B5CF6"/>
+    <rect x="15" y="10" width="15" height="20" fill="#A78BFA"/>
+    <rect x="65" y="15" width="55" height="100" rx="12" fill="#06B6D4"/>
+    <rect x="85" y="0" width="15" height="15" fill="#22D3EE"/>
+    <!-- Skull cross warning -->
+    <circle cx="92" cy="55" r="16" fill="#EF4444"/>
+    <text x="92" y="62" text-anchor="middle" font-size="18" fill="white" font-weight="bold">☠</text>
+  </g>
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="117.5" cy="277.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="162.5" cy="277.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="140" cy="220" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M100 207.5 Q71.25 220 87.5 238.75 Q105 226.25 100 207.5 Z" fill="#1E293B"/>
+      <path d="M182.5 207.5 Q221.25 201.25 215 182.5 Q192.5 201.25 182.5 207.5 Z" fill="#1E293B"/>
+      <circle cx="215" cy="180" r="12.5" fill="#F97316"/>
+    
+      <ellipse cx="140" cy="227.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="110" cy="185" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="170" cy="185" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="120" cy="172.5" r="13.75" fill="white"/>
+      <circle cx="160" cy="172.5" r="13.75" fill="white"/>
+      <circle cx="120" cy="172.5" r="6.875" fill="#0F172A"/>
+      <circle cx="160" cy="172.5" r="6.875" fill="#0F172A"/>
+      <circle cx="116.25" cy="168.75" r="3.125" fill="white"/>
+      <circle cx="156.25" cy="168.75" r="3.125" fill="white"/>
+    
+      <path d="M128.75 180 Q140 193.75 151.25 180 Q140 187.5 Z" fill="#EA580C"/>
+      <polygon points="130,181.25 150,181.25 140,193.75" fill="#F97316"/>
+      
+    </g>
+  
+
+</svg>

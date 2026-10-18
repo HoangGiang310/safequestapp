@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+          <defs>
+            <linearGradient id="bgSkyD" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#38BDF8"/>
+              <stop offset="65%" stop-color="#BAE6FD"/>
+              <stop offset="100%" stop-color="#E0F2FE"/>
+            </linearGradient>
+          </defs>
+          <rect width="600" height="360" rx="24" fill="url(#bgSkyD)"/>
+          <circle cx="510" cy="65" r="30" fill="#FDE047" opacity="0.9"/>
+          <ellipse cx="100" cy="65" rx="55" ry="22" fill="white" opacity="0.8"/>
+          <ellipse cx="430" cy="75" rx="60" ry="20" fill="white" opacity="0.75"/>
+          <path d="M0 240 Q300 232 600 240 L600 360 L0 360 Z" fill="#334155"/>
+          <line x1="60" y1="300" x2="140" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+          <line x1="200" y1="300" x2="280" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+          <line x1="340" y1="300" x2="420" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+          <line x1="480" y1="300" x2="560" y2="300" stroke="#FDE047" stroke-width="5" stroke-linecap="round"/>
+          <rect x="0" y="235" width="600" height="8" fill="#4ADE80"/>
+        
+  
+  
+    <rect x="453" y="170" width="14" height="120" rx="6" fill="#64748B"/>
+    <rect x="428" y="50" width="64" height="135" rx="20" fill="#1E293B" stroke="#334155" stroke-width="4"/>
+    <path d="M438 72 Q460 56 482 72" stroke="#0F172A" stroke-width="5" fill="none"/>
+    <path d="M438 112 Q460 96 482 112" stroke="#0F172A" stroke-width="5" fill="none"/>
+    <path d="M438 152 Q460 136 482 152" stroke="#0F172A" stroke-width="5" fill="none"/>
+    <circle cx="460" cy="80" r="16" fill="#450A0A"/>
+    
+    <circle cx="460" cy="120" r="16" fill="#451A03"/>
+    
+    <circle cx="460" cy="160" r="16" fill="#22C55E"/>
+    <circle cx="460" cy="160" r="22" fill="#22C55E" opacity="0.35"/><circle cx="456" cy="156" r="5" fill="white" opacity="0.8"/>
+  
+  
+    <g class="parent-penguin">
+      <ellipse cx="154" cy="249.8" rx="20.8" ry="10.4" fill="#F97316"/>
+      <ellipse cx="206" cy="249.8" rx="20.8" ry="10.4" fill="#F97316"/>
+      <ellipse cx="180" cy="190" rx="49.4" ry="62.400000000000006" fill="#334155"/>
+      <ellipse cx="180" cy="197.8" rx="35.1" ry="46.800000000000004" fill="#FFFFFF"/>
+      <!-- Soft loving eyes -->
+      <path d="M151.4 140.6 Q160.5 132.8 169.6 140.6" stroke="#0F172A" stroke-width="3.9000000000000004" fill="none"/>
+      <path d="M190.4 140.6 Q199.5 132.8 208.6 140.6" stroke="#0F172A" stroke-width="3.9000000000000004" fill="none"/>
+      <!-- Beak -->
+      <polygon points="169.6,149.7 190.4,149.7 180,162.7" fill="#F97316"/>
+      <!-- Cozy blue scarf -->
+      <path d="M141 166.6 Q180 174.4 219 166.6 L216.4 183.5 Q180 190 143.6 183.5 Z" fill="#3B82F6"/>
+      <rect x="195.6" y="183.5" width="15.600000000000001" height="39" rx="3.9000000000000004" fill="#2563EB"/>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="250.2" cy="270.6" rx="16.5" ry="8.8" fill="#F97316"/>
+      <ellipse cx="289.8" cy="270.6" rx="16.5" ry="8.8" fill="#F97316"/>
+      <ellipse cx="270" cy="220" rx="41.800000000000004" ry="52.800000000000004" fill="#1E293B"/>
+      
+      <path d="M232.6 209 Q204 181.5 217.2 176 Z" fill="#1E293B"/>
+      <path d="M307.4 209 Q336 181.5 322.8 176 Z" fill="#1E293B"/>
+    
+      <ellipse cx="270" cy="226.6" rx="29.700000000000003" ry="39.6" fill="#FFFFFF"/>
+      <circle cx="243.6" cy="189.2" r="7.700000000000001" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="296.4" cy="189.2" r="7.700000000000001" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="252.4" cy="178.2" r="10.450000000000001" fill="white"/>
+      <circle cx="287.6" cy="178.2" r="10.450000000000001" fill="white"/>
+      <circle cx="253.5" cy="179.3" r="5.5" fill="#0F172A"/>
+      <circle cx="288.7" cy="179.3" r="5.5" fill="#0F172A"/>
+      <circle cx="251.3" cy="176" r="2.75" fill="white"/>
+      <circle cx="286.5" cy="176" r="2.75" fill="white"/>
+    
+      <path d="M260.1 184.8 Q270 196.9 279.9 184.8 Q270 191.4 Z" fill="#EA580C"/>
+      <polygon points="261.2,185.9 278.8,185.9 270,196.9" fill="#F97316"/>
+      
+      <path d="M230.4 178.2 Q270 126.49999999999999 309.6 178.2 Q270 169.4 Z" fill="#EF4444"/>
+      <ellipse cx="270" cy="176" rx="40.7" ry="8.25" fill="#DC2626"/>
+      <path d="M254.6 145.2 Q270 139.7 285.4 145.2" stroke="white" stroke-width="3.8500000000000005" stroke-linecap="round" fill="none"/>
+      <path d="M233.7 178.2 Q270 209 306.3 178.2" stroke="#FCD34D" stroke-width="3.8500000000000005" fill="none"/>
+    
+    </g>
+  
+
+</svg>

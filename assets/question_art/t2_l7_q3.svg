@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgBath" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#CCFBF1"/>
+            <stop offset="65%" stop-color="#99F6E4"/>
+            <stop offset="100%" stop-color="#5EEAD4"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgBath)"/>
+        <!-- Tile Grid -->
+        <line x1="0" y1="70" x2="600" y2="70" stroke="#2DD4BF" stroke-width="2" opacity="0.5"/>
+        <line x1="0" y1="140" x2="600" y2="140" stroke="#2DD4BF" stroke-width="2" opacity="0.5"/>
+        <line x1="0" y1="210" x2="600" y2="210" stroke="#2DD4BF" stroke-width="2" opacity="0.5"/>
+        <!-- Mirror -->
+        <rect x="250" y="30" width="100" height="100" rx="50" fill="#E0F2FE" stroke="#38BDF8" stroke-width="6"/>
+        <!-- Floor -->
+        <rect x="0" y="240" width="600" height="120" fill="#0D9488"/>
+        <!-- Bubbles -->
+        <circle cx="100" cy="110" r="14" fill="white" opacity="0.6"/>
+        <circle cx="120" cy="85" r="8" fill="white" opacity="0.6"/>
+        <circle cx="480" cy="120" r="16" fill="white" opacity="0.6"/>
+      
+  
+  
+    <g class="parent-penguin">
+      <ellipse cx="134" cy="249.8" rx="20.8" ry="10.4" fill="#F97316"/>
+      <ellipse cx="186" cy="249.8" rx="20.8" ry="10.4" fill="#F97316"/>
+      <ellipse cx="160" cy="190" rx="49.4" ry="62.400000000000006" fill="#334155"/>
+      <ellipse cx="160" cy="197.8" rx="35.1" ry="46.800000000000004" fill="#FFFFFF"/>
+      <!-- Soft loving eyes -->
+      <path d="M131.4 140.6 Q140.5 132.8 149.6 140.6" stroke="#0F172A" stroke-width="3.9000000000000004" fill="none"/>
+      <path d="M170.4 140.6 Q179.5 132.8 188.6 140.6" stroke="#0F172A" stroke-width="3.9000000000000004" fill="none"/>
+      <!-- Beak -->
+      <polygon points="149.6,149.7 170.4,149.7 160,162.7" fill="#F97316"/>
+      <!-- Cozy blue scarf -->
+      <path d="M121 166.6 Q160 174.4 199 166.6 L196.4 183.5 Q160 190 123.6 183.5 Z" fill="#3B82F6"/>
+      <rect x="175.6" y="183.5" width="15.600000000000001" height="39" rx="3.9000000000000004" fill="#2563EB"/>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="260.2" cy="270.6" rx="16.5" ry="8.8" fill="#F97316"/>
+      <ellipse cx="299.8" cy="270.6" rx="16.5" ry="8.8" fill="#F97316"/>
+      <ellipse cx="280" cy="220" rx="41.800000000000004" ry="52.800000000000004" fill="#1E293B"/>
+      
+      <path d="M242.6 209 Q218.39999999999998 236.5 238.2 247.5 Z" fill="#1E293B"/>
+      <path d="M317.4 209 Q357 214.5 351.5 225.5 Z" fill="#1E293B"/>
+    
+      <ellipse cx="280" cy="226.6" rx="29.700000000000003" ry="39.6" fill="#FFFFFF"/>
+      <circle cx="253.6" cy="189.2" r="7.700000000000001" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="306.4" cy="189.2" r="7.700000000000001" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="262.4" cy="178.2" r="10.450000000000001" fill="white"/>
+      <circle cx="297.6" cy="178.2" r="10.450000000000001" fill="white"/>
+      <circle cx="263.5" cy="179.3" r="5.5" fill="#0F172A"/>
+      <circle cx="298.7" cy="179.3" r="5.5" fill="#0F172A"/>
+      <circle cx="261.3" cy="176" r="2.75" fill="white"/>
+      <circle cx="296.5" cy="176" r="2.75" fill="white"/>
+    
+      <path d="M270.1 184.8 Q280 196.9 289.9 184.8 Q280 191.4 Z" fill="#EA580C"/>
+      <polygon points="271.2,185.9 288.8,185.9 280,196.9" fill="#F97316"/>
+      
+    </g>
+  
+
+</svg>

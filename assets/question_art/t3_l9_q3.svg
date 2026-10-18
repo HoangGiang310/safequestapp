@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgMtn" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#60A5FA"/>
+            <stop offset="60%" stop-color="#93C5FD"/>
+            <stop offset="100%" stop-color="#E2E8F0"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgMtn)"/>
+        <!-- Distant Mountain Peaks -->
+        <polygon points="120,80 230,240 10,240" fill="#94A3B8"/>
+        <polygon points="120,80 150,130 90,130" fill="white"/>
+        <polygon points="320,60 460,240 180,240" fill="#64748B"/>
+        <polygon points="320,60 360,120 280,120" fill="white"/>
+        <polygon points="480,100 580,240 380,240" fill="#94A3B8"/>
+        <!-- Green Pine Forest Ground -->
+        <path d="M0 240 Q300 220 600 240 L600 360 L0 360 Z" fill="#15803D"/>
+        <!-- Dirt Trail Path -->
+        <path d="M220 240 Q290 290 350 360 L410 360 Q340 290 280 240 Z" fill="#B45309"/>
+      
+  
+  
+    <g class="bear-friend">
+      <!-- Ears -->
+      <circle cx="369.2" cy="177.2" r="17.6" fill="#92400E"/>
+      <circle cx="369.2" cy="177.2" r="8.8" fill="#FDE68A"/>
+      <circle cx="430.8" cy="177.2" r="17.6" fill="#92400E"/>
+      <circle cx="430.8" cy="177.2" r="8.8" fill="#FDE68A"/>
+      <!-- Body & Head -->
+      <ellipse cx="400" cy="241" rx="37.400000000000006" ry="46.2" fill="#3B82F6"/>
+      <circle cx="400" cy="202.5" r="37.400000000000006" fill="#92400E"/>
+      <!-- Snout -->
+      <ellipse cx="400" cy="210.2" rx="17.6" ry="13.200000000000001" fill="#FDE68A"/>
+      <ellipse cx="400" cy="205.8" rx="6.6000000000000005" ry="4.4" fill="#0F172A"/>
+      <path d="M400 210.2 L400 216.8" stroke="#0F172A" stroke-width="2.2"/>
+      <!-- Eyes -->
+      <circle cx="384.6" cy="199.2" r="4.4" fill="#0F172A"/>
+      <circle cx="415.4" cy="199.2" r="4.4" fill="#0F172A"/>
+    </g>
+  
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="167.5" cy="267.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="212.5" cy="267.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="190" cy="210" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M147.5 197.5 Q120 228.75 142.5 241.25 Z" fill="#1E293B"/>
+      <path d="M232.5 197.5 Q277.5 203.75 271.25 216.25 Z" fill="#1E293B"/>
+    
+      <ellipse cx="190" cy="217.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="160" cy="175" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="220" cy="175" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="170" cy="162.5" r="11.875" fill="white"/>
+      <circle cx="210" cy="162.5" r="11.875" fill="white"/>
+      <circle cx="171.25" cy="163.75" r="6.25" fill="#0F172A"/>
+      <circle cx="211.25" cy="163.75" r="6.25" fill="#0F172A"/>
+      <circle cx="168.75" cy="160" r="3.125" fill="white"/>
+      <circle cx="208.75" cy="160" r="3.125" fill="white"/>
+    
+      <path d="M178.75 170 Q190 183.75 201.25 170 Q190 177.5 Z" fill="#EA580C"/>
+      <polygon points="180,171.25 200,171.25 190,183.75" fill="#F97316"/>
+      
+      <rect x="137.5" y="185" width="20" height="47.5" rx="7.5" fill="#059669"/>
+    
+    </g>
+  
+
+</svg>

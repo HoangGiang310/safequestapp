@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  
+        <defs>
+          <linearGradient id="bgRain" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#475569"/>
+            <stop offset="70%" stop-color="#64748B"/>
+            <stop offset="100%" stop-color="#94A3B8"/>
+          </linearGradient>
+        </defs>
+        <rect width="600" height="360" rx="24" fill="url(#bgRain)"/>
+        <!-- Dark storm clouds -->
+        <ellipse cx="120" cy="50" rx="80" ry="30" fill="#334155"/>
+        <ellipse cx="280" cy="40" rx="90" ry="32" fill="#1E293B"/>
+        <ellipse cx="460" cy="55" rx="85" ry="30" fill="#334155"/>
+        <!-- Rain streaks -->
+        <line x1="80" y1="90" x2="60" y2="140" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"/>
+        <line x1="160" y1="80" x2="140" y2="130" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"/>
+        <line x1="240" y1="90" x2="220" y2="140" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"/>
+        <line x1="340" y1="80" x2="320" y2="130" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"/>
+        <line x1="440" y1="90" x2="420" y2="140" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"/>
+        <line x1="520" y1="85" x2="500" y2="135" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"/>
+        <!-- Wet glossy road with puddles -->
+        <path d="M0 240 Q300 230 600 240 L600 360 L0 360 Z" fill="#1E293B"/>
+        <ellipse cx="200" cy="275" rx="55" ry="12" fill="#38BDF8" opacity="0.4"/>
+        <ellipse cx="440" cy="285" rx="65" ry="14" fill="#38BDF8" opacity="0.4"/>
+      
+  
+  <!-- Slippery Road Sign -->
+  <g transform="translate(410, 60)">
+    <rect x="22" y="75" width="8" height="110" fill="#64748B"/>
+    <polygon points="26,10 65,75 -13,75" fill="#FBBF24" stroke="#D97706" stroke-width="5"/>
+    <path d="M12 55 Q20 40 30 55 T40 55" stroke="#0F172A" stroke-width="4" fill="none"/>
+  </g>
+  
+    <g class="penguin-character">
+      
+      <ellipse cx="167.5" cy="282.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="212.5" cy="282.5" rx="18.75" ry="10" fill="#F97316"/>
+      <ellipse cx="190" cy="225" rx="47.5" ry="60" fill="#1E293B"/>
+      
+      <path d="M150 212.5 Q121.25 225 137.5 243.75 Q155 231.25 150 212.5 Z" fill="#1E293B"/>
+      <path d="M232.5 212.5 Q271.25 206.25 265 187.5 Q242.5 206.25 232.5 212.5 Z" fill="#1E293B"/>
+      <circle cx="265" cy="185" r="12.5" fill="#F97316"/>
+    
+      <ellipse cx="190" cy="232.5" rx="33.75" ry="45" fill="#FFFFFF"/>
+      <circle cx="160" cy="190" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      <circle cx="220" cy="190" r="8.75" fill="#FDA4AF" opacity="0.8"/>
+      
+      <circle cx="170" cy="177.5" r="13.75" fill="white"/>
+      <circle cx="210" cy="177.5" r="13.75" fill="white"/>
+      <circle cx="170" cy="177.5" r="6.875" fill="#0F172A"/>
+      <circle cx="210" cy="177.5" r="6.875" fill="#0F172A"/>
+      <circle cx="166.25" cy="173.75" r="3.125" fill="white"/>
+      <circle cx="206.25" cy="173.75" r="3.125" fill="white"/>
+    
+      <path d="M178.75 185 Q190 198.75 201.25 185 Q190 192.5 Z" fill="#EA580C"/>
+      <polygon points="180,186.25 200,186.25 190,198.75" fill="#F97316"/>
+      
+    </g>
+  
+
+</svg>
