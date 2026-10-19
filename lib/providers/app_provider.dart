@@ -177,26 +177,14 @@ class AppProvider with ChangeNotifier {
   }
   
   Future<bool> register(String username, String password) async {
-    // Check if exists
-    final accounts = await DataService().getAccounts();
-    if (accounts.any((e) => e.username == username)) {
-      return false; // Already exists
+    final newAccount = await DataService().registerAccount(username, password);
+    if (newAccount != null) {
+      _currentAccount = newAccount;
+      await _prefs?.setInt('currentAccountId', newAccount.id);
+      notifyListeners();
+      return true;
     }
-    
-    final newId = await DataService().generateNewAccountId();
-    final newAccount = Account(
-      id: newId,
-      username: username,
-      password: password,
-      role: Role.CUSTOMER,
-      createdAt: DateTime.now(),
-    );
-    
-    await DataService().saveAccount(newAccount);
-    _currentAccount = newAccount;
-    await _prefs?.setInt('currentAccountId', newAccount.id);
-    notifyListeners();
-    return true;
+    return false;
   }
 
   Future<void> logout() async {

@@ -33,9 +33,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
 
     final provider = Provider.of<AppProvider>(context, listen: false);
-    await provider.register(_usernameController.text.trim(), _passwordController.text.trim());
+    final success = await provider.register(_usernameController.text.trim(), _passwordController.text.trim());
     
     if (!mounted) return;
+    if (!success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Tên đăng nhập đã tồn tại hoặc không hợp lệ')),
+      );
+      return;
+    }
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => const CreateProfileScreen()),

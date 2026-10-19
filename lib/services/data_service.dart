@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import '../models/models.dart';
 import '../data/mock_data.dart';
 
@@ -8,6 +11,28 @@ class DataService {
   DataService._internal();
 
   late SharedPreferences _prefs;
+
+  FirebaseAuth? get _auth {
+    try {
+      return FirebaseAuth.instance;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  FirebaseFirestore? get _firestore {
+    try {
+      return FirebaseFirestore.instance;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  String _formatEmail(String username) {
+    final clean = username.trim().toLowerCase();
+    if (clean.contains('@')) return clean;
+    return '$clean@safequest.app';
+  }
 
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -42,11 +67,49 @@ class DataService {
 
   // --- ACCOUNTS ---
   Future<List<Account>> getAccounts() async {
+    // 1. Try to sync latest accounts from Firestore online
+    try {
+      if (_firestore != null) {
+        final snapshot = await _firestore!.collection('accounts').get().timeout(const Duration(seconds: 4));
+        if (snapshot.docs.isNotEmpty) {
+          final remoteAccounts = snapshot.docs.map((d) => Account.fromMap(d.data())).toList();
+          final localList = _prefs.getStringList('accounts') ?? [];
+          final localAccounts = localList.map((e) => Account.fromJson(e)).toList();
+          
+          for (var remote in remoteAccounts) {
+            final idx = localAccounts.indexWhere((l) => l.id == remote.id);
+            if (idx >= 0) {
+              localAccounts[idx] = remote;
+            } else {
+              localAccounts.add(remote);
+            }
+          }
+          await _prefs.setStringList('accounts', localAccounts.map((e) => e.toJson()).toList());
+          return localAccounts;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getAccounts notice / fallback to local: $e');
+    }
+
     final list = _prefs.getStringList('accounts') ?? [];
     return list.map((e) => Account.fromJson(e)).toList();
   }
   
   Future<Account?> getAccountById(int id) async {
+    try {
+      if (_firestore != null) {
+        final doc = await _firestore!.collection('accounts').doc(id.toString()).get().timeout(const Duration(seconds: 3));
+        if (doc.exists && doc.data() != null) {
+          final acc = Account.fromMap(doc.data()!);
+          await _saveAccountLocally(acc);
+          return acc;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getAccountById notice: $e');
+    }
+
     final accounts = await getAccounts();
     try {
       return accounts.firstWhere((e) => e.id == id);
@@ -55,8 +118,9 @@ class DataService {
     }
   }
 
-  Future<Account> saveAccount(Account account) async {
-    final accounts = await getAccounts();
+  Future<void> _saveAccountLocally(Account account) async {
+    final list = _prefs.getStringList('accounts') ?? [];
+    final accounts = list.map((e) => Account.fromJson(e)).toList();
     final index = accounts.indexWhere((e) => e.id == account.id);
     if (index >= 0) {
       accounts[index] = account;
@@ -64,29 +128,158 @@ class DataService {
       accounts.add(account);
     }
     await _prefs.setStringList('accounts', accounts.map((e) => e.toJson()).toList());
+  }
+
+  Future<Account> saveAccount(Account account) async {
+    await _saveAccountLocally(account);
+
+    // Sync online to Firestore
+    try {
+      if (_firestore != null) {
+        await _firestore!
+            .collection('accounts')
+            .doc(account.id.toString())
+            .set(account.toMap(), SetOptions(merge: true))
+            .timeout(const Duration(seconds: 4));
+      }
+    } catch (e) {
+      debugPrint('Firestore saveAccount notice: $e');
+    }
+
     return account;
   }
   
   Future<Account?> authenticate(String username, String password) async {
+    final cleanUsername = username.trim();
+
+    // 1. Admin local/special check
+    if (cleanUsername == 'admin' && password == '123') {
+      final accounts = await getAccounts();
+      final admin = accounts.firstWhere(
+        (e) => e.username == 'admin',
+        orElse: () => Account(id: 1000, username: 'admin', password: '123', role: Role.ADMIN, createdAt: DateTime.now()),
+      );
+      return admin;
+    }
+
+    // 2. Try Firebase Auth + Firestore
+    try {
+      if (_auth != null && _firestore != null) {
+        final email = _formatEmail(cleanUsername);
+        final safePass = password.length < 6 ? password.padRight(6, '0') : password;
+        
+        try {
+          await _auth!.signInWithEmailAndPassword(email: email, password: safePass).timeout(const Duration(seconds: 5));
+        } catch (authErr) {
+          debugPrint('Firebase signIn notice: $authErr');
+        }
+
+        // Search Firestore for account by username
+        final query = await _firestore!
+            .collection('accounts')
+            .where('username', isEqualTo: cleanUsername)
+            .limit(1)
+            .get()
+            .timeout(const Duration(seconds: 4));
+
+        if (query.docs.isNotEmpty) {
+          final acc = Account.fromMap(query.docs.first.data());
+          if (acc.password == password) {
+            await _saveAccountLocally(acc);
+            return acc;
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint('Online authenticate notice: $e');
+    }
+
+    // 3. Fallback to local accounts
     final accounts = await getAccounts();
     try {
-      return accounts.firstWhere((e) => e.username == username && e.password == password);
+      return accounts.firstWhere((e) => e.username.toLowerCase() == cleanUsername.toLowerCase() && e.password == password);
     } catch (e) {
       return null;
     }
   }
+
+  Future<Account?> registerAccount(String username, String password) async {
+    final cleanUsername = username.trim();
+
+    // 1. Check if username exists locally
+    final accounts = await getAccounts();
+    if (accounts.any((e) => e.username.toLowerCase() == cleanUsername.toLowerCase())) {
+      return null;
+    }
+
+    // 2. Check if username exists online in Firestore
+    try {
+      if (_firestore != null) {
+        final query = await _firestore!
+            .collection('accounts')
+            .where('username', isEqualTo: cleanUsername)
+            .limit(1)
+            .get()
+            .timeout(const Duration(seconds: 4));
+        if (query.docs.isNotEmpty) {
+          return null; // Username already taken
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore check existing user notice: $e');
+    }
+
+    // 3. Register user with Firebase Auth
+    try {
+      if (_auth != null) {
+        final email = _formatEmail(cleanUsername);
+        final safePass = password.length < 6 ? password.padRight(6, '0') : password;
+        await _auth!.createUserWithEmailAndPassword(email: email, password: safePass).timeout(const Duration(seconds: 5));
+      }
+    } catch (e) {
+      debugPrint('FirebaseAuth createUser notice: $e');
+    }
+
+    // 4. Generate unique ID & Save to Firestore and local
+    final newId = await generateNewAccountId();
+    final newAccount = Account(
+      id: newId,
+      username: cleanUsername,
+      password: password,
+      role: Role.CUSTOMER,
+      createdAt: DateTime.now(),
+    );
+
+    await saveAccount(newAccount);
+    return newAccount;
+  }
   
   Future<int> generateNewAccountId() async {
-    final accounts = await getAccounts();
     int maxId = 1000;
-    for (var acc in accounts) {
-      if (acc.id > maxId) maxId = acc.id;
-    }
+    try {
+      final accounts = await getAccounts();
+      for (var acc in accounts) {
+        if (acc.id > maxId) maxId = acc.id;
+      }
+    } catch (_) {}
     return maxId + 1;
   }
 
   // --- TRANSACTIONS ---
   Future<List<Transaction>> getTransactions() async {
+    try {
+      if (_firestore != null) {
+        final snap = await _firestore!.collection('transactions').get().timeout(const Duration(seconds: 4));
+        if (snap.docs.isNotEmpty) {
+          final remoteList = snap.docs.map((d) => Transaction.fromMap(d.data())).toList();
+          await _prefs.setStringList('transactions', remoteList.map((e) => e.toJson()).toList());
+          return remoteList;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getTransactions notice: $e');
+    }
+
     final list = _prefs.getStringList('transactions') ?? [];
     return list.map((e) => Transaction.fromJson(e)).toList();
   }
@@ -105,6 +298,18 @@ class DataService {
       transactions.add(transaction);
     }
     await _prefs.setStringList('transactions', transactions.map((e) => e.toJson()).toList());
+
+    try {
+      if (_firestore != null) {
+        await _firestore!
+            .collection('transactions')
+            .doc(transaction.id.toString())
+            .set(transaction.toMap(), SetOptions(merge: true))
+            .timeout(const Duration(seconds: 4));
+      }
+    } catch (e) {
+      debugPrint('Firestore saveTransaction notice: $e');
+    }
   }
 
   // --- TOPICS ---
@@ -171,6 +376,24 @@ class DataService {
   }
   
   Future<ChildProfile?> getChildProfileByAccountId(int accountId) async {
+    // 1. Fetch from Firestore online so Device B gets the latest profile
+    try {
+      if (_firestore != null) {
+        final doc = await _firestore!
+            .collection('childProfiles')
+            .doc(accountId.toString())
+            .get()
+            .timeout(const Duration(seconds: 4));
+        if (doc.exists && doc.data() != null) {
+          final profile = ChildProfile.fromMap(doc.data()!);
+          await _saveChildProfileLocally(profile);
+          return profile;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getChildProfile notice: $e');
+    }
+
     final profiles = await getChildProfiles();
     try {
       return profiles.firstWhere((e) => e.accountId == accountId);
@@ -179,7 +402,7 @@ class DataService {
     }
   }
 
-  Future<void> saveChildProfile(ChildProfile profile) async {
+  Future<void> _saveChildProfileLocally(ChildProfile profile) async {
     final profiles = await getChildProfiles();
     final index = profiles.indexWhere((e) => e.id == profile.id);
     if (index >= 0) {
@@ -188,5 +411,22 @@ class DataService {
       profiles.add(profile);
     }
     await _prefs.setStringList('childProfiles', profiles.map((e) => e.toJson()).toList());
+  }
+
+  Future<void> saveChildProfile(ChildProfile profile) async {
+    await _saveChildProfileLocally(profile);
+
+    // Sync online to Firestore
+    try {
+      if (_firestore != null) {
+        await _firestore!
+            .collection('childProfiles')
+            .doc(profile.accountId.toString())
+            .set(profile.toMap(), SetOptions(merge: true))
+            .timeout(const Duration(seconds: 4));
+      }
+    } catch (e) {
+      debugPrint('Firestore saveChildProfile notice: $e');
+    }
   }
 }
