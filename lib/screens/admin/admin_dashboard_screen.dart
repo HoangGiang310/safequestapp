@@ -8,6 +8,7 @@ import '../welcome/welcome_screen.dart';
 import 'admin_topics_screen.dart';
 import 'admin_users_screen.dart';
 import 'admin_user_list_screen.dart';
+import 'admin_feedback_screen.dart';
 import 'admin_transactions_screen.dart';
 import '../../models/models.dart';
 import '../../core/widgets/change_password_dialog.dart';
@@ -22,6 +23,7 @@ class AdminDashboardScreen extends StatefulWidget {
 class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   int totalUsers = 0;
   int pendingTopupRequests = 0;
+  int totalFeedbacks = 0;
 
   @override
   void initState() {
@@ -32,10 +34,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   void _loadStats() async {
     final users = await DataService().getAccounts();
     final txs = await DataService().getTransactions();
+    final fbs = await DataService().getFeedbacks();
     if (mounted) {
       setState(() {
         totalUsers = users.where((u) => u.role == Role.CUSTOMER).length;
         pendingTopupRequests = txs.where((tx) => tx.status == TransactionStatus.PENDING).length;
+        totalFeedbacks = fbs.length;
       });
     }
   }
@@ -205,6 +209,21 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 badgeShadow: const Color(0xFF7B1FA2),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminUserListScreen()));
+                },
+              ),
+              const SizedBox(height: 14),
+
+              _buildCartoonMenuCard(
+                title: 'Xem Feedback Người dùng',
+                subtitle: 'Xem toàn bộ đánh giá, ý kiến từ mới đến cũ của học viên',
+                badgeText: 'FEEDBACK',
+                badgeCount: totalFeedbacks,
+                cardColor: const Color(0xFFFFF3E0),
+                badgeColor: const Color(0xFFFF9800),
+                badgeShadow: const Color(0xFFE65100),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminFeedbackScreen()))
+                      .then((_) => _loadStats());
                 },
               ),
               const SizedBox(height: 14),

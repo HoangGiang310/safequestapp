@@ -8,6 +8,7 @@ import '../welcome/welcome_screen.dart';
 import 'top_up_screen.dart';
 import 'upgrade_screen.dart';
 import '../../core/widgets/change_password_dialog.dart';
+import '../../core/widgets/feedback_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -500,6 +501,15 @@ class ProfileScreen extends StatelessWidget {
                 badgeColor: const Color(0xFF3F51B5),
                 badgeShadow: const Color(0xFF283593),
                 onTap: () => showChangePasswordDialog(context),
+              ),
+              _buildCartoonActionCard(
+                title: 'Gửi phản hồi & Đánh giá',
+                subtitle: 'Đóng góp ý kiến về app cho SafeQuest',
+                badgeText: 'FEEDBACK',
+                cardColor: const Color(0xFFE0F7FA),
+                badgeColor: const Color(0xFF00ACC1),
+                badgeShadow: const Color(0xFF00838F),
+                onTap: () => showFeedbackDialog(context),
               ),
               const SizedBox(height: 16),
 

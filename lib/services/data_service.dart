@@ -521,4 +521,66 @@ class DataService {
       debugPrint('Firestore saveChildProfile notice: $e');
     }
   }
+
+  // --- FEEDBACKS ---
+  Future<List<UserFeedback>> getFeedbacks() async {
+    try {
+      if (_firestore != null) {
+        final snap = await _firestore!
+            .collection('feedbacks')
+            .get()
+            .timeout(const Duration(seconds: 4));
+        if (snap.docs.isNotEmpty) {
+          final remoteFeedbacks = snap.docs.map((d) => UserFeedback.fromMap(d.data())).toList();
+          final localList = _prefs.getStringList('feedbacks') ?? [];
+          final localFeedbacks = localList.map((e) => UserFeedback.fromJson(e)).toList();
+
+          for (var remote in remoteFeedbacks) {
+            final idx = localFeedbacks.indexWhere((l) => l.id == remote.id);
+            if (idx >= 0) {
+              localFeedbacks[idx] = remote;
+            } else {
+              localFeedbacks.add(remote);
+            }
+          }
+          await _prefs.setStringList('feedbacks', localFeedbacks.map((e) => e.toJson()).toList());
+          localFeedbacks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+          return localFeedbacks;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getFeedbacks notice / fallback: $e');
+    }
+
+    final list = _prefs.getStringList('feedbacks') ?? [];
+    final feedbacks = list.map((e) => UserFeedback.fromJson(e)).toList();
+    feedbacks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return feedbacks;
+  }
+
+  Future<bool> saveFeedback(UserFeedback feedback) async {
+    final list = _prefs.getStringList('feedbacks') ?? [];
+    final feedbacks = list.map((e) => UserFeedback.fromJson(e)).toList();
+    final idx = feedbacks.indexWhere((f) => f.id == feedback.id);
+    if (idx >= 0) {
+      feedbacks[idx] = feedback;
+    } else {
+      feedbacks.insert(0, feedback);
+    }
+    await _prefs.setStringList('feedbacks', feedbacks.map((e) => e.toJson()).toList());
+
+    try {
+      if (_firestore != null) {
+        await _firestore!
+            .collection('feedbacks')
+            .doc(feedback.id)
+            .set(feedback.toMap(), SetOptions(merge: true))
+            .timeout(const Duration(seconds: 4));
+      }
+    } catch (e) {
+      debugPrint('Firestore saveFeedback notice: $e');
+    }
+
+    return true;
+  }
 }

@@ -493,3 +493,53 @@ class ChildProfile {
     );
   }
 }
+
+class UserFeedback {
+  final String id;
+  final int accountId;
+  final String userName;
+  final String userEmail;
+  final String content;
+  final int rating;
+  final DateTime createdAt;
+
+  UserFeedback({
+    required this.id,
+    required this.accountId,
+    required this.userName,
+    required this.userEmail,
+    required this.content,
+    this.rating = 5,
+    required this.createdAt,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'accountId': accountId,
+      'userName': userName,
+      'userEmail': userEmail,
+      'content': content,
+      'rating': rating,
+      'createdAt': createdAt.toIso8601String(),
+    };
+  }
+
+  factory UserFeedback.fromMap(Map<String, dynamic> map) {
+    return UserFeedback(
+      id: map['id']?.toString() ?? '',
+      accountId: map['accountId']?.toInt() ?? 0,
+      userName: map['userName'] ?? '',
+      userEmail: map['userEmail'] ?? '',
+      content: map['content'] ?? '',
+      rating: map['rating']?.toInt() ?? 5,
+      createdAt: map['createdAt'] != null
+          ? DateTime.tryParse(map['createdAt'].toString()) ?? DateTime.now()
+          : DateTime.now(),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory UserFeedback.fromJson(String source) => UserFeedback.fromMap(json.decode(source));
+}

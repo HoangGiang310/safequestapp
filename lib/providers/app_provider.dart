@@ -394,6 +394,38 @@ class AppProvider with ChangeNotifier {
     }
   }
 
+  // --- FEEDBACK ---
+
+  Future<Map<String, dynamic>> submitFeedback({
+    required String content,
+    int rating = 5,
+  }) async {
+    final cleanContent = content.trim();
+    if (cleanContent.isEmpty) {
+      return {'success': false, 'message': 'Vui lòng nhập nội dung đánh giá hoặc góp ý!'};
+    }
+    if (_currentAccount == null) {
+      return {'success': false, 'message': 'Vui lòng đăng nhập để gửi phản hồi!'};
+    }
+
+    final feedback = UserFeedback(
+      id: 'fb_${DateTime.now().millisecondsSinceEpoch}',
+      accountId: _currentAccount!.id,
+      userName: _profile?.name.isNotEmpty == true ? _profile!.name : _currentAccount!.username,
+      userEmail: _currentAccount!.username,
+      content: cleanContent,
+      rating: rating,
+      createdAt: DateTime.now(),
+    );
+
+    final success = await DataService().saveFeedback(feedback);
+    if (success) {
+      return {'success': true, 'message': 'Cảm ơn bạn! Phản hồi đã được gửi đến Admin SafeQuest.'};
+    } else {
+      return {'success': false, 'message': 'Không thể gửi phản hồi. Vui lòng thử lại!'};
+    }
+  }
+
   // --- PROFILE ---
 
   Future<void> saveProfile(String name, int age, String avatar) async {
