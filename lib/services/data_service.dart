@@ -285,6 +285,43 @@ class DataService {
     return newAccount;
   }
   
+  Future<bool> changePassword({
+    required String username,
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    final cleanUsername = username.trim().toLowerCase();
+    final accounts = await getAccounts();
+
+    final idx = accounts.indexWhere(
+      (a) => a.username.trim().toLowerCase() == cleanUsername && a.password == oldPassword,
+    );
+
+    if (idx < 0) {
+      return false;
+    }
+
+    final targetAccount = accounts[idx];
+    final updatedAccount = targetAccount.copyWith(password: newPassword);
+
+    await saveAccount(updatedAccount);
+
+    // Update Firebase Auth password if current user matches
+    try {
+      if (_auth != null && _auth!.currentUser != null) {
+        final currentEmail = _auth!.currentUser!.email?.toLowerCase();
+        final targetEmail = _formatEmail(cleanUsername).toLowerCase();
+        if (currentEmail == targetEmail) {
+          await _auth!.currentUser!.updatePassword(newPassword);
+        }
+      }
+    } catch (e) {
+      debugPrint('FirebaseAuth updatePassword notice: $e');
+    }
+
+    return true;
+  }
+
   Future<int> generateNewAccountId() async {
     int maxId = 1000;
     try {

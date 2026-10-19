@@ -348,6 +348,52 @@ class AppProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<Map<String, dynamic>> changePassword({
+    required String username,
+    required String oldPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    final cleanUsername = username.trim();
+    if (cleanUsername.isEmpty || oldPassword.isEmpty || newPassword.isEmpty || confirmPassword.isEmpty) {
+      return {'success': false, 'message': 'Vui lòng nhập đầy đủ các trường thông tin.'};
+    }
+
+    if (_currentAccount == null || _currentAccount!.username.trim().toLowerCase() != cleanUsername.toLowerCase()) {
+      return {'success': false, 'message': 'Tài khoản không trùng khớp với tài khoản hiện tại.'};
+    }
+
+    if (_currentAccount!.password != oldPassword) {
+      return {'success': false, 'message': 'Mật khẩu cũ không chính xác.'};
+    }
+
+    if (newPassword.length < 6) {
+      return {'success': false, 'message': 'Mật khẩu mới phải có tối thiểu 6 ký tự.'};
+    }
+
+    if (newPassword == oldPassword) {
+      return {'success': false, 'message': 'Mật khẩu mới phải khác với mật khẩu cũ.'};
+    }
+
+    if (newPassword != confirmPassword) {
+      return {'success': false, 'message': 'Xác nhận mật khẩu mới không khớp.'};
+    }
+
+    final success = await DataService().changePassword(
+      username: cleanUsername,
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+    );
+
+    if (success) {
+      _currentAccount = _currentAccount!.copyWith(password: newPassword);
+      notifyListeners();
+      return {'success': true, 'message': 'Đổi mật khẩu thành công!'};
+    } else {
+      return {'success': false, 'message': 'Không thể đổi mật khẩu. Vui lòng thử lại.'};
+    }
+  }
+
   // --- PROFILE ---
 
   Future<void> saveProfile(String name, int age, String avatar) async {

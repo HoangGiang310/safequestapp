@@ -7,8 +7,10 @@ import '../../services/data_service.dart';
 import '../welcome/welcome_screen.dart';
 import 'admin_topics_screen.dart';
 import 'admin_users_screen.dart';
+import 'admin_user_list_screen.dart';
 import 'admin_transactions_screen.dart';
 import '../../models/models.dart';
+import '../../core/widgets/change_password_dialog.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
@@ -194,29 +196,41 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               ),
               const SizedBox(height: 14),
 
-              // Menu Cards (NO ICONS IN BUTTONS OR TEXT)
               _buildCartoonMenuCard(
-                title: 'Nội dung Bài học',
-                subtitle: 'Thêm, sửa, xóa các chủ đề và tình huống',
-                badgeText: 'QUẢN LÝ',
-                cardColor: const Color(0xFFE8F8F5),
-                badgeColor: const Color(0xFF2ECC71),
-                badgeShadow: const Color(0xFF27AE60),
+                title: 'Danh sách Người dùng',
+                subtitle: 'Xem toàn bộ thông tin: Tên, Gmail, ID, Coin, Rank và số ngày học',
+                badgeText: 'XEM TOÀN BỘ',
+                cardColor: const Color(0xFFF3E5F5),
+                badgeColor: const Color(0xFFAB47BC),
+                badgeShadow: const Color(0xFF7B1FA2),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminTopicsScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminUserListScreen()));
                 },
               ),
               const SizedBox(height: 14),
 
               _buildCartoonMenuCard(
                 title: 'Quản lý Người dùng',
-                subtitle: 'Tra cứu tài khoản, chỉnh sửa Coin và Hạng',
-                badgeText: 'TRA CỨU',
+                subtitle: 'Tra cứu tài khoản, điều chỉnh số dư Coin và Hạng thành viên',
+                badgeText: 'CHỈNH SỬA',
                 cardColor: const Color(0xFFE3F2FD),
                 badgeColor: const Color(0xFF2196F3),
                 badgeShadow: const Color(0xFF1976D2),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminUsersScreen()));
+                },
+              ),
+              const SizedBox(height: 14),
+
+              _buildCartoonMenuCard(
+                title: 'Nội dung Bài học',
+                subtitle: 'Thêm, sửa, xóa các chủ đề và tình huống câu hỏi',
+                badgeText: 'BÀI HỌC',
+                cardColor: const Color(0xFFE8F8F5),
+                badgeColor: const Color(0xFF2ECC71),
+                badgeShadow: const Color(0xFF27AE60),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminTopicsScreen()));
                 },
               ),
               const SizedBox(height: 14),
@@ -232,6 +246,19 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminTransactionsScreen()))
                       .then((_) => _loadStats());
+                },
+              ),
+              const SizedBox(height: 14),
+
+              _buildCartoonMenuCard(
+                title: 'Đổi Mật khẩu Admin',
+                subtitle: 'Cập nhật mật khẩu đăng nhập của tài khoản Quản trị',
+                badgeText: 'BẢO MẬT',
+                cardColor: const Color(0xFFEDE7F6),
+                badgeColor: const Color(0xFF5C6BC0),
+                badgeShadow: const Color(0xFF3949AB),
+                onTap: () {
+                  showChangePasswordDialog(context);
                 },
               ),
             ],

@@ -7,6 +7,7 @@ import '../../models/models.dart';
 import '../welcome/welcome_screen.dart';
 import 'top_up_screen.dart';
 import 'upgrade_screen.dart';
+import '../../core/widgets/change_password_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -490,6 +491,15 @@ class ProfileScreen extends StatelessWidget {
                 badgeColor: const Color(0xFFEC407A),
                 badgeShadow: const Color(0xFFC2185B),
                 onTap: () => _showAvatarPicker(context, provider),
+              ),
+              _buildCartoonActionCard(
+                title: 'Đổi mật khẩu',
+                subtitle: 'Cập nhật mật khẩu bảo vệ tài khoản',
+                badgeText: 'BẢO MẬT',
+                cardColor: const Color(0xFFE8EAF6),
+                badgeColor: const Color(0xFF3F51B5),
+                badgeShadow: const Color(0xFF283593),
+                onTap: () => showChangePasswordDialog(context),
               ),
               const SizedBox(height: 16),
 
