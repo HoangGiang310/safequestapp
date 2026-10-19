@@ -72,20 +72,48 @@ class DataService {
       if (_firestore != null) {
         final snapshot = await _firestore!.collection('accounts').get().timeout(const Duration(seconds: 4));
         if (snapshot.docs.isNotEmpty) {
-          final remoteAccounts = snapshot.docs.map((d) => Account.fromMap(d.data())).toList();
+          final remoteAccounts = <Account>[];
+          final seenUsernames = <String, DocumentReference>{};
+
+          for (var doc in snapshot.docs) {
+            try {
+              final acc = Account.fromMap(doc.data());
+              final key = acc.username.trim().toLowerCase();
+              if (seenUsernames.containsKey(key)) {
+                // Duplicate account in Firestore! Clean up the extra document
+                debugPrint('Removing duplicate remote account doc: ${doc.id}');
+                doc.reference.delete();
+              } else {
+                seenUsernames[key] = doc.reference;
+                remoteAccounts.add(acc);
+              }
+            } catch (e) {
+              debugPrint('Error parsing account doc: $e');
+            }
+          }
+
           final localList = _prefs.getStringList('accounts') ?? [];
           final localAccounts = localList.map((e) => Account.fromJson(e)).toList();
           
           for (var remote in remoteAccounts) {
-            final idx = localAccounts.indexWhere((l) => l.id == remote.id);
+            final idx = localAccounts.indexWhere((l) => 
+              l.id == remote.id || l.username.trim().toLowerCase() == remote.username.trim().toLowerCase()
+            );
             if (idx >= 0) {
               localAccounts[idx] = remote;
             } else {
               localAccounts.add(remote);
             }
           }
-          await _prefs.setStringList('accounts', localAccounts.map((e) => e.toJson()).toList());
-          return localAccounts;
+
+          // Deduplicate localAccounts by username (case-insensitive)
+          final unique = <String, Account>{};
+          for (var acc in localAccounts) {
+            unique[acc.username.trim().toLowerCase()] = acc;
+          }
+          final cleanList = unique.values.toList();
+          await _prefs.setStringList('accounts', cleanList.map((e) => e.toJson()).toList());
+          return cleanList;
         }
       }
     } catch (e) {
@@ -93,7 +121,12 @@ class DataService {
     }
 
     final list = _prefs.getStringList('accounts') ?? [];
-    return list.map((e) => Account.fromJson(e)).toList();
+    final accounts = list.map((e) => Account.fromJson(e)).toList();
+    final unique = <String, Account>{};
+    for (var acc in accounts) {
+      unique[acc.username.trim().toLowerCase()] = acc;
+    }
+    return unique.values.toList();
   }
   
   Future<Account?> getAccountById(int id) async {
@@ -121,7 +154,9 @@ class DataService {
   Future<void> _saveAccountLocally(Account account) async {
     final list = _prefs.getStringList('accounts') ?? [];
     final accounts = list.map((e) => Account.fromJson(e)).toList();
-    final index = accounts.indexWhere((e) => e.id == account.id);
+    final index = accounts.indexWhere((e) => 
+      e.id == account.id || e.username.trim().toLowerCase() == account.username.trim().toLowerCase()
+    );
     if (index >= 0) {
       accounts[index] = account;
     } else {
@@ -151,6 +186,7 @@ class DataService {
   
   Future<Account?> authenticate(String username, String password) async {
     final cleanUsername = username.trim();
+    final lowerUser = cleanUsername.toLowerCase();
 
     // 1. Admin local/special check
     if (cleanUsername == 'admin' && password == '123') {
@@ -174,17 +210,11 @@ class DataService {
           debugPrint('Firebase signIn notice: $authErr');
         }
 
-        // Search Firestore for account by username
-        final query = await _firestore!
-            .collection('accounts')
-            .where('username', isEqualTo: cleanUsername)
-            .limit(1)
-            .get()
-            .timeout(const Duration(seconds: 4));
-
-        if (query.docs.isNotEmpty) {
-          final acc = Account.fromMap(query.docs.first.data());
-          if (acc.password == password) {
+        // Get all accounts from Firestore and match case-insensitively
+        final snap = await _firestore!.collection('accounts').get().timeout(const Duration(seconds: 4));
+        for (var doc in snap.docs) {
+          final acc = Account.fromMap(doc.data());
+          if (acc.username.trim().toLowerCase() == lowerUser && acc.password == password) {
             await _saveAccountLocally(acc);
             return acc;
           }
@@ -197,7 +227,7 @@ class DataService {
     // 3. Fallback to local accounts
     final accounts = await getAccounts();
     try {
-      return accounts.firstWhere((e) => e.username.toLowerCase() == cleanUsername.toLowerCase() && e.password == password);
+      return accounts.firstWhere((e) => e.username.trim().toLowerCase() == lowerUser && e.password == password);
     } catch (e) {
       return null;
     }
@@ -205,24 +235,23 @@ class DataService {
 
   Future<Account?> registerAccount(String username, String password) async {
     final cleanUsername = username.trim();
+    final lowerUser = cleanUsername.toLowerCase();
 
     // 1. Check if username exists locally
     final accounts = await getAccounts();
-    if (accounts.any((e) => e.username.toLowerCase() == cleanUsername.toLowerCase())) {
+    if (accounts.any((e) => e.username.trim().toLowerCase() == lowerUser)) {
       return null;
     }
 
     // 2. Check if username exists online in Firestore
     try {
       if (_firestore != null) {
-        final query = await _firestore!
-            .collection('accounts')
-            .where('username', isEqualTo: cleanUsername)
-            .limit(1)
-            .get()
-            .timeout(const Duration(seconds: 4));
-        if (query.docs.isNotEmpty) {
-          return null; // Username already taken
+        final snap = await _firestore!.collection('accounts').get().timeout(const Duration(seconds: 4));
+        for (var doc in snap.docs) {
+          final u = (doc.data()['username'] as String? ?? '').trim().toLowerCase();
+          if (u == lowerUser) {
+            return null; // Username already taken
+          }
         }
       }
     } catch (e) {
@@ -238,6 +267,8 @@ class DataService {
       }
     } catch (e) {
       debugPrint('FirebaseAuth createUser notice: $e');
+      // If Firebase Auth fails (e.g. email already in use), reject registration!
+      return null;
     }
 
     // 4. Generate unique ID & Save to Firestore and local
@@ -371,6 +402,30 @@ class DataService {
 
   // --- CHILD PROFILES ---
   Future<List<ChildProfile>> getChildProfiles() async {
+    try {
+      if (_firestore != null) {
+        final snap = await _firestore!.collection('childProfiles').get().timeout(const Duration(seconds: 4));
+        if (snap.docs.isNotEmpty) {
+          final remoteProfiles = snap.docs.map((d) => ChildProfile.fromMap(d.data())).toList();
+          final localList = _prefs.getStringList('childProfiles') ?? [];
+          final localProfiles = localList.map((e) => ChildProfile.fromJson(e)).toList();
+
+          for (var remote in remoteProfiles) {
+            final idx = localProfiles.indexWhere((l) => l.accountId == remote.accountId || l.id == remote.id);
+            if (idx >= 0) {
+              localProfiles[idx] = remote;
+            } else {
+              localProfiles.add(remote);
+            }
+          }
+          await _prefs.setStringList('childProfiles', localProfiles.map((e) => e.toJson()).toList());
+          return localProfiles;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getChildProfiles notice / fallback: $e');
+    }
+
     final list = _prefs.getStringList('childProfiles') ?? [];
     return list.map((e) => ChildProfile.fromJson(e)).toList();
   }
@@ -404,7 +459,7 @@ class DataService {
 
   Future<void> _saveChildProfileLocally(ChildProfile profile) async {
     final profiles = await getChildProfiles();
-    final index = profiles.indexWhere((e) => e.id == profile.id);
+    final index = profiles.indexWhere((e) => e.id == profile.id || e.accountId == profile.accountId);
     if (index >= 0) {
       profiles[index] = profile;
     } else {

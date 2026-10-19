@@ -1,11 +1,20 @@
+import 'dart:async';
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 import '../models/models.dart';
 import '../data/mock_data.dart';
 import '../services/data_service.dart';
+import '../app.dart';
+import '../screens/auth/login_screen.dart';
+import '../core/theme/app_colors.dart';
 
 class AppProvider with ChangeNotifier {
   SharedPreferences? _prefs;
+
+  StreamSubscription<DocumentSnapshot>? _sessionSubscription;
+  String? _myCurrentSessionId;
 
   bool _isInitialized = false;
   bool get isInitialized => _isInitialized;
@@ -77,6 +86,20 @@ class AppProvider with ChangeNotifier {
             _checkAndUpdateStreak();
           }
         }
+
+        // Restore or initialize session listener
+        String? mySessionId = _prefs?.getString('myCurrentSessionId');
+        if (mySessionId == null) {
+          mySessionId = '${DateTime.now().millisecondsSinceEpoch}_${accountId}_${math.Random().nextInt(99999)}';
+          await _prefs?.setString('myCurrentSessionId', mySessionId);
+          try {
+            await FirebaseFirestore.instance
+                .collection('accounts')
+                .doc(accountId.toString())
+                .set({'currentSessionId': mySessionId}, SetOptions(merge: true));
+          } catch (_) {}
+        }
+        _startSessionListener(accountId, mySessionId);
       } catch (e) {
         _currentAccount = null;
       }
@@ -158,6 +181,23 @@ class AppProvider with ChangeNotifier {
     if (account != null) {
       _currentAccount = account;
       await _prefs?.setInt('currentAccountId', account.id);
+
+      // Generate unique session ID for this device login
+      final sessionId = '${DateTime.now().millisecondsSinceEpoch}_${account.id}_${math.Random().nextInt(99999)}';
+      _myCurrentSessionId = sessionId;
+      await _prefs?.setString('myCurrentSessionId', sessionId);
+
+      try {
+        await FirebaseFirestore.instance
+            .collection('accounts')
+            .doc(account.id.toString())
+            .set({'currentSessionId': sessionId}, SetOptions(merge: true));
+      } catch (e) {
+        debugPrint('Error syncing currentSessionId on login: $e');
+      }
+
+      _startSessionListener(account.id, sessionId);
+
       await _loadContent();
       
       if (account.role == Role.CUSTOMER) {
@@ -181,13 +221,121 @@ class AppProvider with ChangeNotifier {
     if (newAccount != null) {
       _currentAccount = newAccount;
       await _prefs?.setInt('currentAccountId', newAccount.id);
+
+      final sessionId = '${DateTime.now().millisecondsSinceEpoch}_${newAccount.id}_${math.Random().nextInt(99999)}';
+      _myCurrentSessionId = sessionId;
+      await _prefs?.setString('myCurrentSessionId', sessionId);
+
+      try {
+        await FirebaseFirestore.instance
+            .collection('accounts')
+            .doc(newAccount.id.toString())
+            .set({'currentSessionId': sessionId}, SetOptions(merge: true));
+      } catch (e) {
+        debugPrint('Error syncing currentSessionId on register: $e');
+      }
+
+      _startSessionListener(newAccount.id, sessionId);
+
       notifyListeners();
       return true;
     }
     return false;
   }
 
+  void _startSessionListener(int accountId, String mySessionId) {
+    _sessionSubscription?.cancel();
+    _sessionSubscription = null;
+    _myCurrentSessionId = mySessionId;
+
+    try {
+      _sessionSubscription = FirebaseFirestore.instance
+          .collection('accounts')
+          .doc(accountId.toString())
+          .snapshots()
+          .listen((snapshot) {
+        if (snapshot.exists && snapshot.data() != null) {
+          final remoteSessionId = snapshot.data()?['currentSessionId'] as String?;
+          if (remoteSessionId != null &&
+              _myCurrentSessionId != null &&
+              remoteSessionId != _myCurrentSessionId) {
+            debugPrint('Single session violation: remote=$remoteSessionId != current=$_myCurrentSessionId');
+            _handleKickedOut();
+          }
+        }
+      }, onError: (err) {
+        debugPrint('Session listener error: $err');
+      });
+    } catch (e) {
+      debugPrint('Error starting session listener: $e');
+    }
+  }
+
+  void _handleKickedOut() async {
+    _sessionSubscription?.cancel();
+    _sessionSubscription = null;
+    _myCurrentSessionId = null;
+
+    await logout();
+
+    final navContext = SafeQuestApp.navigatorKey.currentContext;
+    if (navContext != null) {
+      Navigator.of(navContext).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+        (route) => false,
+      );
+
+      showDialog(
+        context: SafeQuestApp.navigatorKey.currentContext ?? navContext,
+        barrierDismissible: false,
+        builder: (ctx) => AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+            side: const BorderSide(color: AppColors.cartoonBorder, width: 3),
+          ),
+          title: const Row(
+            children: [
+              Text('⚠️ ', style: TextStyle(fontSize: 22)),
+              Expanded(
+                child: Text(
+                  'ĐĂNG XUẤT THIẾT BỊ',
+                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: AppColors.textPrimary),
+                ),
+              ),
+            ],
+          ),
+          content: const Text(
+            'Tài khoản này vừa được đăng nhập trên một thiết bị khác. Bạn đã bị đăng xuất để bảo đảm an toàn!',
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: AppColors.textSecondary),
+          ),
+          actions: [
+            GestureDetector(
+              onTap: () => Navigator.pop(ctx),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: AppColors.cartoonBorder, width: 2),
+                ),
+                alignment: Alignment.center,
+                child: const Text('ĐÃ HIỂU', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900)),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   Future<void> logout() async {
+    _sessionSubscription?.cancel();
+    _sessionSubscription = null;
+    _myCurrentSessionId = null;
+    await _prefs?.remove('myCurrentSessionId');
+
     _currentAccount = null;
     _profile = null;
     _progress = {};
@@ -824,6 +972,12 @@ class AppProvider with ChangeNotifier {
     }
 
     return {};
+  }
+
+  @override
+  void dispose() {
+    _sessionSubscription?.cancel();
+    super.dispose();
   }
 }
 

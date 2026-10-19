@@ -32,9 +32,24 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
       map[p.accountId] = p;
     }
 
+    // Group & deduplicate accounts by username (case-insensitive)
+    final uniqueAccounts = <String, Account>{};
+    for (var acc in accounts.where((a) => a.role == Role.CUSTOMER)) {
+      final key = acc.username.trim().toLowerCase();
+      if (!uniqueAccounts.containsKey(key)) {
+        uniqueAccounts[key] = acc;
+      } else {
+        // Prefer the account entry that has a linked profile
+        final existing = uniqueAccounts[key]!;
+        if (map[existing.id] == null && map[acc.id] != null) {
+          uniqueAccounts[key] = acc;
+        }
+      }
+    }
+
     if (mounted) {
       setState(() {
-        _accounts = accounts.where((a) => a.role == Role.CUSTOMER).toList();
+        _accounts = uniqueAccounts.values.toList();
         _profileMap = map;
         _filterUsers(_searchCtrl.text);
       });

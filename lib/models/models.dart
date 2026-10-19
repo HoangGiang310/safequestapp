@@ -13,6 +13,7 @@ class Account {
   final int coinBalance;
   final MembershipType membershipType;
   final DateTime createdAt;
+  final String? currentSessionId;
 
   Account({
     required this.id,
@@ -22,6 +23,7 @@ class Account {
     this.coinBalance = 0,
     this.membershipType = MembershipType.FREE,
     required this.createdAt,
+    this.currentSessionId,
   });
 
   Map<String, dynamic> toMap() {
@@ -33,6 +35,7 @@ class Account {
       'coinBalance': coinBalance,
       'membershipType': membershipType.index,
       'createdAt': createdAt.toIso8601String(),
+      'currentSessionId': currentSessionId,
     };
   }
 
@@ -45,6 +48,7 @@ class Account {
       coinBalance: map['coinBalance']?.toInt() ?? 0,
       membershipType: MembershipType.values[map['membershipType'] ?? 0],
       createdAt: DateTime.parse(map['createdAt']),
+      currentSessionId: map['currentSessionId'] as String?,
     );
   }
 
@@ -56,6 +60,7 @@ class Account {
     int? coinBalance,
     MembershipType? membershipType,
     DateTime? createdAt,
+    String? currentSessionId,
   }) {
     return Account(
       id: id ?? this.id,
@@ -65,6 +70,7 @@ class Account {
       coinBalance: coinBalance ?? this.coinBalance,
       membershipType: membershipType ?? this.membershipType,
       createdAt: createdAt ?? this.createdAt,
+      currentSessionId: currentSessionId ?? this.currentSessionId,
     );
   }
 
