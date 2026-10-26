@@ -490,94 +490,67 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
             ),
           ),
 
-          // Video Meta Info
+          // Bottom Bar: Status & Play action
           Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  video.title,
-                  style: const TextStyle(
-                    fontFamily: 'Nunito',
-                    fontSize: 15.5,
-                    fontWeight: FontWeight.w900,
-                    color: AppColors.textPrimary,
-                    height: 1.3,
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFF3E0),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  video.description,
-                  style: const TextStyle(
-                    fontFamily: 'Nunito',
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF64748B),
-                    height: 1.35,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFF3E0),
-                        borderRadius: BorderRadius.circular(10),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.video_library_rounded, size: 14, color: Color(0xFFE65100)),
+                      const SizedBox(width: 5),
+                      Text(
+                        video.youtubeUrl.isNotEmpty ? 'Đã gắn video' : 'Sẵn sàng gắn video',
+                        style: const TextStyle(
+                          fontFamily: 'Nunito',
+                          fontSize: 11,
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xFFE65100),
+                        ),
                       ),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.video_library_rounded, size: 14, color: Color(0xFFE65100)),
-                          SizedBox(width: 4),
-                          Text(
-                            'Sẵn sàng gắn video',
-                            style: TextStyle(
-                              fontFamily: 'Nunito',
-                              fontSize: 11,
-                              fontWeight: FontWeight.w900,
-                              color: Color(0xFFE65100),
-                            ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _onTapVideo(context, video),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE53935),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFFB71C1C).withOpacity(0.4),
+                          offset: const Offset(0, 3),
+                          blurRadius: 0,
+                        ),
+                      ],
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.play_circle_fill_rounded, color: Colors.white, size: 16),
+                        SizedBox(width: 6),
+                        Text(
+                          'PHÁT VIDEO',
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
                           ),
-                        ],
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => _onTapVideo(context, video),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFE53935),
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xFFB71C1C).withOpacity(0.4),
-                              offset: const Offset(0, 3),
-                              blurRadius: 0,
-                            ),
-                          ],
                         ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.play_circle_fill_rounded, color: Colors.white, size: 16),
-                            SizedBox(width: 6),
-                            Text(
-                              'PHÁT VIDEO',
-                              style: TextStyle(
-                                fontFamily: 'Nunito',
-                                fontSize: 11.5,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
@@ -638,27 +611,29 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  video.title,
+                  video.title.isNotEmpty ? video.title : 'Bài ${video.order}',
                   style: const TextStyle(
                     fontFamily: 'Nunito',
-                    fontSize: 14.5,
+                    fontSize: 15,
                     fontWeight: FontWeight.w800,
                     color: Color(0xFF2563EB),
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  video.description,
-                  style: const TextStyle(
-                    fontFamily: 'Nunito',
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF64748B),
-                    height: 1.35,
+                if (video.description.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    video.description,
+                    style: const TextStyle(
+                      fontFamily: 'Nunito',
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF64748B),
+                      height: 1.35,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
-                ),
+                ],
                 const SizedBox(height: 14),
                 Container(
                   padding: const EdgeInsets.all(12),

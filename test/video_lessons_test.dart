@@ -37,9 +37,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Check banner presence
+    // Check banner presence: "Video Bài Giảng" and "XEM", no "GÓC XEM PHIM"
     expect(find.byKey(const Key('video_lessons_banner_button')), findsOneWidget);
-    expect(find.text('GÓC XEM PHIM'), findsOneWidget);
+    expect(find.text('GÓC XEM PHIM'), findsNothing);
     expect(find.text('Video Bài Giảng'), findsOneWidget);
     expect(find.text('4 chủ đề kĩ năng sinh động'), findsOneWidget);
     expect(find.text('XEM'), findsOneWidget);
@@ -59,13 +59,12 @@ void main() {
     expect(find.text('An toàn ngoài trời'), findsWidgets);
     expect(find.text('An toàn với người lạ'), findsWidgets);
 
-    // Check topic 1 default videos (3 video cards)
+    // Check topic 1 default videos (3 video cards with badges and NO surrounding explanation text)
     expect(find.text('Bài 1 / 3'), findsOneWidget);
     expect(find.text('Bài 2 / 3'), findsOneWidget);
     expect(find.text('Bài 3 / 3'), findsOneWidget);
-    expect(find.text('Nhận biết tín hiệu đèn giao thông & vạch kẻ đường'), findsOneWidget);
-    expect(find.text('Kỹ năng đi bộ qua đường an toàn cùng người lớn'), findsOneWidget);
-    expect(find.text('Đội mũ bảo hiểm đúng cách khi ngồi xe máy'), findsOneWidget);
+    expect(find.text('PHÁT VIDEO'), findsWidgets);
+    expect(find.text('Nhận biết tín hiệu đèn giao thông & vạch kẻ đường'), findsNothing);
 
     // 3. Tap on the first video card to open preview dialog
     await tester.tap(find.text('PHÁT VIDEO').first);
@@ -85,10 +84,11 @@ void main() {
     await tester.tap(find.text('An toàn trong nhà').first);
     await tester.pumpAndSettle();
 
-    // Verify 3 videos for Topic 2
-    expect(find.text('Phòng tránh bỏng và nguy hiểm từ nước sôi, bếp lửa'), findsOneWidget);
-    expect(find.text('An toàn với các ổ cắm điện và thiết bị gia dụng'), findsOneWidget);
-    expect(find.text('Cẩn thận lan can, cửa sổ và trơn trượt cầu thang'), findsOneWidget);
+    // Verify 3 video cards for Topic 2 and no explanation text
+    expect(find.text('Bài 1 / 3'), findsOneWidget);
+    expect(find.text('Bài 2 / 3'), findsOneWidget);
+    expect(find.text('Bài 3 / 3'), findsOneWidget);
+    expect(find.text('Phòng tránh bỏng và nguy hiểm từ nước sôi, bếp lửa'), findsNothing);
 
     // 5. Switch to Topic 3 ("An toàn ngoài trời")
     await tester.ensureVisible(find.text('An toàn ngoài trời').first);
@@ -96,9 +96,8 @@ void main() {
     await tester.tap(find.text('An toàn ngoài trời').first);
     await tester.pumpAndSettle();
 
-    expect(find.text('Quy tắc an toàn khi chơi gần ao, hồ, sông suối'), findsOneWidget);
-    expect(find.text('Ứng phó khi gặp mưa giông, sấm sét ngoài trời'), findsOneWidget);
-    expect(find.text('Vui chơi an toàn tại công viên và khu trò chơi'), findsOneWidget);
+    expect(find.text('Bài 1 / 3'), findsOneWidget);
+    expect(find.text('Quy tắc an toàn khi chơi gần ao, hồ, sông suối'), findsNothing);
 
     // 6. Switch to Topic 4 ("An toàn với người lạ")
     await tester.ensureVisible(find.text('An toàn với người lạ').first);
@@ -106,9 +105,8 @@ void main() {
     await tester.tap(find.text('An toàn với người lạ').first);
     await tester.pumpAndSettle();
 
-    expect(find.text('Quy tắc 5 ngón tay phòng chống xâm hại'), findsOneWidget);
-    expect(find.text('Nói KHÔNG khi người lạ cho kẹo, đồ chơi hoặc rủ đi'), findsOneWidget);
-    expect(find.text('Kỹ năng tìm sự giúp đỡ khi bị lạc nơi đông người'), findsOneWidget);
+    expect(find.text('Bài 1 / 3'), findsOneWidget);
+    expect(find.text('Quy tắc 5 ngón tay phòng chống xâm hại'), findsNothing);
 
     // 7. Test Quick Practice Button navigation to TopicDetailScreen
     await tester.ensureVisible(find.text('LÀM BÀI TẬP ÔN LUYỆN CHỦ ĐỀ NÀY'));

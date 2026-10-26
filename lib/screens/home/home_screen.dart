@@ -703,14 +703,14 @@ class HomeScreen extends StatelessWidget {
         );
       },
       child: Container(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Color(0xFF7E57C2), Color(0xFF5C6BC0)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(24),
           border: Border.all(color: const Color(0xFF3949AB), width: 2.5),
           boxShadow: const [
             BoxShadow(
@@ -722,57 +722,11 @@ class HomeScreen extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Cinema Film Icon Box
-            Container(
-              width: 56,
-              height: 56,
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFD54F),
-                borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: const Color(0xFFFFA000), width: 2),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0xFFFF8F00),
-                    offset: Offset(0, 3),
-                    blurRadius: 0,
-                  ),
-                ],
-              ),
-              child: const Center(
-                child: Text('🎬', style: TextStyle(fontSize: 30)),
-              ),
-            ),
-            const SizedBox(width: 14),
-
             // Title and Subtitle
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFF5252),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Text(
-                          'GÓC XEM PHIM',
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontSize: 9.5,
-                            fontWeight: FontWeight.w900,
-                            color: Colors.white,
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      const Text('✨', style: TextStyle(fontSize: 12)),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
                   const Text(
                     'Video Bài Giảng',
                     style: TextStyle(
@@ -782,12 +736,12 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 3),
                   Text(
                     '4 chủ đề kĩ năng sinh động',
                     style: TextStyle(
                       fontFamily: 'Nunito',
-                      fontSize: 12,
+                      fontSize: 12.5,
                       fontWeight: FontWeight.w700,
                       color: Colors.white.withOpacity(0.9),
                     ),
@@ -796,11 +750,11 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(width: 8),
+            const SizedBox(width: 12),
 
             // Action Button Pill
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
               decoration: BoxDecoration(
                 color: const Color(0xFFFFB300),
                 borderRadius: BorderRadius.circular(18),
@@ -813,21 +767,14 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'XEM',
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                      fontSize: 13,
-                      fontWeight: FontWeight.w900,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                  SizedBox(width: 4),
-                  Icon(Icons.play_arrow_rounded, color: AppColors.textPrimary, size: 18),
-                ],
+              child: const Text(
+                'XEM',
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontSize: 13,
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.textPrimary,
+                ),
               ),
             ),
           ],
