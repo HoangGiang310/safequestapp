@@ -462,6 +462,7 @@ class ChildProfile {
   final List<String> unlockedBadges;
   final List<String> completedLevels;
   final List<String> wrongQuestions;
+  final String? lastCheckInDate; // Format: "YYYY-MM-DD"
 
   ChildProfile({
     required this.id,
@@ -477,6 +478,7 @@ class ChildProfile {
     required this.unlockedBadges,
     required this.completedLevels,
     required this.wrongQuestions,
+    this.lastCheckInDate,
   });
 
   Map<String, dynamic> toMap() {
@@ -494,6 +496,7 @@ class ChildProfile {
       'unlockedBadges': unlockedBadges,
       'completedLevels': completedLevels,
       'wrongQuestions': wrongQuestions,
+      'lastCheckInDate': lastCheckInDate,
     };
   }
 
@@ -512,6 +515,7 @@ class ChildProfile {
       unlockedBadges: List<String>.from(map['unlockedBadges'] ?? []),
       completedLevels: List<String>.from(map['completedLevels'] ?? []),
       wrongQuestions: List<String>.from(map['wrongQuestions'] ?? []),
+      lastCheckInDate: map['lastCheckInDate'] as String?,
     );
   }
 
@@ -533,6 +537,7 @@ class ChildProfile {
     List<String>? unlockedBadges,
     List<String>? completedLevels,
     List<String>? wrongQuestions,
+    String? lastCheckInDate,
   }) {
     return ChildProfile(
       id: id ?? this.id,
@@ -548,6 +553,7 @@ class ChildProfile {
       unlockedBadges: unlockedBadges ?? this.unlockedBadges,
       completedLevels: completedLevels ?? this.completedLevels,
       wrongQuestions: wrongQuestions ?? this.wrongQuestions,
+      lastCheckInDate: lastCheckInDate ?? this.lastCheckInDate,
     );
   }
 }

@@ -450,6 +450,7 @@ class AppProvider with ChangeNotifier {
       unlockedBadges: _unlockedBadges,
       completedLevels: _progress.keys.toList(),
       wrongQuestions: _wrongQuestions,
+      lastCheckInDate: _profile?.lastCheckInDate,
     );
     await DataService().saveChildProfile(_profile!);
     notifyListeners();
@@ -493,6 +494,7 @@ class AppProvider with ChangeNotifier {
         unlockedBadges: _unlockedBadges,
         completedLevels: _progress.keys.toList(),
         wrongQuestions: _wrongQuestions,
+        lastCheckInDate: null,
       );
       await DataService().saveChildProfile(_profile!);
     }
@@ -711,20 +713,60 @@ class AppProvider with ChangeNotifier {
     }
   }
 
+  // --- DAILY CHECK-IN (ĐIỂM DANH HÀNG NGÀY) ---
+  bool get isTodayCheckedIn {
+    if (_profile == null) return false;
+    final now = DateTime.now();
+    final todayStr = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+    return _profile!.lastCheckInDate == todayStr;
+  }
+
+  Future<bool> checkInDaily() async {
+    if (_profile == null) return false;
+    final now = DateTime.now();
+    final todayStr = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+
+    if (isTodayCheckedIn) {
+      return false;
+    }
+
+    List<String> updatedStudyDates = List.from(_profile!.studyDates);
+    if (!updatedStudyDates.contains(todayStr)) {
+      updatedStudyDates.add(todayStr);
+    }
+
+    // Điểm danh: +30 điểm học tập, +1 ngày sử dụng app (studyDates), không tăng streak học tập
+    _profile = _profile!.copyWith(
+      points: _profile!.points + 30,
+      studyDates: updatedStudyDates,
+      lastCheckInDate: todayStr,
+    );
+
+    _checkBadges();
+    await _saveProfileInternal();
+    notifyListeners();
+    return true;
+  }
+
   bool _recordLearningActivity({DateTime? customDate}) {
     if (_profile == null) return false;
     
     final now = customDate ?? DateTime.now();
     final todayStr = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
     
-    List<String> updatedStudyDates = List.from(_profile!.studyDates);
-    
-    if (updatedStudyDates.contains(todayStr)) {
-      // Đã hoàn thành ít nhất 1 level mới hôm nay rồi, không tăng thêm chuỗi trong cùng một ngày
-      return false;
+    // Kiểm tra xem hôm nay đã ghi nhận hoàn thành bài học (tăng chuỗi streak) chưa
+    if (_profile!.lastStudyDate != null) {
+      final last = _profile!.lastStudyDate!;
+      if (last.year == now.year && last.month == now.month && last.day == now.day) {
+        // Đã hoàn thành ít nhất 1 level mới hôm nay rồi, không tăng thêm chuỗi trong cùng một ngày
+        return false;
+      }
     }
     
-    updatedStudyDates.add(todayStr);
+    List<String> updatedStudyDates = List.from(_profile!.studyDates);
+    if (!updatedStudyDates.contains(todayStr)) {
+      updatedStudyDates.add(todayStr);
+    }
     
     int baseStreak = _profile!.streak;
     if (_profile!.lastStudyDate != null) {

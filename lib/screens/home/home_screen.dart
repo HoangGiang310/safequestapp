@@ -4,6 +4,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/widgets/custom_widgets.dart';
 import '../../data/mock_data.dart';
 import '../../providers/app_provider.dart';
+import '../../services/celebration_sound_manager.dart';
 import '../topics/topic_detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -74,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Kid Profile Island Header
-                    _buildProfileHeader(profile),
+                    _buildProfileHeader(context, provider, profile),
 
                     const SizedBox(height: 20),
 
@@ -113,7 +114,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileHeader(dynamic profile) {
+  Widget _buildProfileHeader(BuildContext context, AppProvider provider, dynamic profile) {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
@@ -130,49 +131,62 @@ class HomeScreen extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              // Avatar circle
-              Container(
-                width: 58,
-                height: 58,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryLight,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.primary, width: 2.2),
-                ),
-                child: Center(
-                  child: Text(profile.avatar, style: const TextStyle(fontSize: 32)),
-                ),
-              ),
-              const SizedBox(width: 14),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Chào ${profile.name}!',
-                    style: const TextStyle(
-                      fontFamily: 'Nunito',
-                      fontSize: 19,
-                      fontWeight: FontWeight.w900,
-                      color: AppColors.textPrimary,
-                    ),
+          Expanded(
+            child: Row(
+              children: [
+                // Avatar circle
+                Container(
+                  width: 58,
+                  height: 58,
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryLight,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.primary, width: 2.2),
                   ),
-                  const SizedBox(height: 2),
-                  const Text(
-                    'Cùng khám phá bài học mới nào!',
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF64748B),
-                    ),
+                  child: Center(
+                    child: Text(profile.avatar, style: const TextStyle(fontSize: 32)),
                   ),
-                ],
-              ),
-            ],
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Chào ${profile.name}!',
+                        style: const TextStyle(
+                          fontFamily: 'Nunito',
+                          fontSize: 19,
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.textPrimary,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 2),
+                      const Text(
+                        'Cùng khám phá bài học mới nào!',
+                        style: TextStyle(
+                          fontFamily: 'Nunito',
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF64748B),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 8),
+                      // Nút Điểm Danh ngay dưới chỗ: Chào ... Cùng khám phá bài học mới nào!
+                      _buildCheckInButton(context, provider),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
+          const SizedBox(width: 8),
 
           // Streak flame badge
           Container(
@@ -207,6 +221,218 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCheckInButton(BuildContext context, AppProvider provider) {
+    final isCheckedIn = provider.isTodayCheckedIn;
+
+    return GestureDetector(
+      onTap: () async {
+        if (isCheckedIn) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Hôm nay con đã điểm danh và nhận 30 điểm rồi! Cùng làm bài để tăng chuỗi streak nhé! 🎉'),
+              backgroundColor: Color(0xFF00B0FF),
+              duration: Duration(seconds: 2),
+            ),
+          );
+          return;
+        }
+
+        final success = await provider.checkInDaily();
+        if (success && context.mounted) {
+          CelebrationSoundManager().playBadgeUnlock();
+          _showCheckInSuccessDialog(context);
+        }
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        decoration: BoxDecoration(
+          color: isCheckedIn ? const Color(0xFFE8F5E9) : const Color(0xFFFF9800),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: isCheckedIn ? const Color(0xFF81C784) : const Color(0xFFF57C00),
+            width: 1.6,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: isCheckedIn ? const Color(0xFFC8E6C9) : const Color(0xFFE65100),
+              offset: const Offset(0, 2.5),
+              blurRadius: 0,
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              isCheckedIn ? '✅' : '🎁',
+              style: const TextStyle(fontSize: 13),
+            ),
+            const SizedBox(width: 5),
+            Text(
+              isCheckedIn ? 'Đã điểm danh' : 'Điểm Danh',
+              style: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: 12,
+                fontWeight: FontWeight.w900,
+                color: isCheckedIn ? const Color(0xFF2E7D32) : Colors.white,
+              ),
+            ),
+            if (!isCheckedIn) ...[
+              const SizedBox(width: 5),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Text(
+                  '+30 ⭐',
+                  style: TextStyle(
+                    fontFamily: 'Nunito',
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFFE65100),
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showCheckInSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (ctx) => Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          padding: const EdgeInsets.all(22),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(28),
+            border: Border.all(color: AppColors.cartoonBorder, width: 2.5),
+            boxShadow: const [
+              BoxShadow(
+                color: AppColors.cartoonBorder,
+                offset: Offset(0, 6),
+                blurRadius: 0,
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Celebratory Icon Bubble
+              Container(
+                width: 72,
+                height: 72,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFF9C4),
+                  shape: BoxShape.circle,
+                  border: Border.all(color: const Color(0xFFFFD54F), width: 2.5),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0xFFFFE082),
+                      offset: Offset(0, 4),
+                      blurRadius: 0,
+                    ),
+                  ],
+                ),
+                child: const Center(
+                  child: Text('🎉', style: TextStyle(fontSize: 38)),
+                ),
+              ),
+              const SizedBox(height: 14),
+              const Text(
+                'Điểm Danh Thành Công!',
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontSize: 21,
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.textPrimary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              // Points Reward Pod
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFF3E0),
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: const Color(0xFFFFB74D), width: 1.8),
+                ),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('⭐', style: TextStyle(fontSize: 22)),
+                    SizedBox(width: 8),
+                    Text(
+                      '+30 Điểm Học Tập',
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFFE65100),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Tài khoản của con đã được cộng 30 điểm học tập và tính thêm 1 ngày sử dụng app!',
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF475569),
+                  height: 1.35,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF1F5F9),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Row(
+                  children: [
+                    Text('🔥', style: TextStyle(fontSize: 15)),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Chuỗi streak chỉ tăng khi con hoàn thành bài học nhé!',
+                        style: TextStyle(
+                          fontFamily: 'Nunito',
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFF64748B),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              PrimaryButton(
+                text: 'NHẬN ĐIỂM NGAY',
+                color: AppColors.success,
+                onPressed: () => Navigator.of(ctx).pop(),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
