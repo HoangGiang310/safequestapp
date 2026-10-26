@@ -15,10 +15,10 @@ class AudioService extends ChangeNotifier {
 
   bool isSpeaking(String text) => _isPlaying && _currentSpeakingText == text.trim();
 
-  // Tốc độ chuẩn vừa phải, rõ ràng cho trẻ em dễ nghe (0.48)
-  static const double defaultSpeechRate = 0.48;
-  // Cao độ giọng đọc tự nhiên, ấm áp (1.0)
-  static const double defaultPitch = 1.0;
+  // Tốc độ đọc ổn định, rõ ràng, không nhanh không chậm, phù hợp cho trẻ em (0.52)
+  static const double defaultSpeechRate = 0.52;
+  // Cao độ giọng đọc tươi vui, trong trẻo, gần gũi với trẻ thơ (1.2)
+  static const double defaultPitch = 1.2;
   static const double defaultVolume = 1.0;
   
   AudioService._internal() {
@@ -29,14 +29,24 @@ class AudioService extends ChangeNotifier {
     if (_isInitialized) return;
     try {
       await _flutterTts.setLanguage("vi-VN");
-      // Cố gắng chọn giọng đọc tiếng Việt mượt mà
+      // Ưu tiên chọn giọng đọc tiếng Việt nữ / trẻ trung / truyền cảm mượt mà
       try {
         List<dynamic> voices = await _flutterTts.getVoices;
+        Map<String, String>? bestVoice;
         for (var voice in voices) {
-          if (voice["locale"] == "vi-VN" && voice["name"].toString().contains("network")) {
-            await _flutterTts.setVoice({"name": voice["name"], "locale": voice["locale"]});
-            break;
+          final locale = voice["locale"]?.toString() ?? "";
+          final name = voice["name"]?.toString().toLowerCase() ?? "";
+          if (locale.toLowerCase().contains("vi")) {
+            // Ưu tiên giọng network hoặc voice nữ có độ tự nhiên cao
+            if (name.contains("network") || name.contains("female") || name.contains("vic") || name.contains("vif")) {
+              bestVoice = {"name": voice["name"].toString(), "locale": locale};
+              break;
+            }
+            bestVoice ??= {"name": voice["name"].toString(), "locale": locale};
           }
+        }
+        if (bestVoice != null) {
+          await _flutterTts.setVoice(bestVoice);
         }
       } catch (e) {
         debugPrint("Error setting voice: $e");
@@ -78,6 +88,15 @@ class AudioService extends ChangeNotifier {
     }
   }
 
+  String prepareChildFriendlyText(String text) {
+    var formatted = text.trim();
+    // Thay thế dấu hai chấm bằng dấu phẩy ngắt nhịp tự nhiên để TTS không đọc "hai chấm"
+    formatted = formatted.replaceAll(RegExp(r':\s*'), ', ');
+    // Loại bỏ các ký tự thô như *, _, #
+    formatted = formatted.replaceAll(RegExp(r'[\*_~#]'), '');
+    return formatted;
+  }
+
   Future<void> speak(String text, {double? rate, double? pitch}) async {
     final cleanText = text.trim();
     if (cleanText.isEmpty) return;
@@ -93,7 +112,9 @@ class AudioService extends ChangeNotifier {
       await _flutterTts.setSpeechRate(rate ?? defaultSpeechRate);
       await _flutterTts.setPitch(pitch ?? defaultPitch);
       await _flutterTts.setVolume(defaultVolume);
-      await _flutterTts.speak(cleanText);
+
+      final childFriendlyText = prepareChildFriendlyText(cleanText);
+      await _flutterTts.speak(childFriendlyText);
 
       if (_currentSpeakingText == cleanText) {
         _isPlaying = false;

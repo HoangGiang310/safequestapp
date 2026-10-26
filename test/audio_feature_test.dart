@@ -11,9 +11,13 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('AudioService child speed and pitch configuration is optimal for children', () {
-    expect(AudioService.defaultSpeechRate, 0.48);
-    expect(AudioService.defaultPitch, 1.0);
+    expect(AudioService.defaultSpeechRate, 0.52);
+    expect(AudioService.defaultPitch, 1.2);
     expect(AudioService.defaultVolume, 1.0);
+
+    final service = AudioService();
+    final prepared = service.prepareChildFriendlyText('Thử lại nhé! Gợi ý: *Hãy nhìn đèn tín hiệu*');
+    expect(prepared, 'Thử lại nhé! Gợi ý, Hãy nhìn đèn tín hiệu');
   });
 
   testWidgets('AudioButton renders in Question Card, "Tuyệt vời", and "Thử lại nhé" sheets', (WidgetTester tester) async {
