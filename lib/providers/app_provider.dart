@@ -151,6 +151,11 @@ class AppProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> reloadContent() async {
+    await _loadContent();
+    notifyListeners();
+  }
+
   // --- AUTHENTICATION ---
   
   Future<void> reloadAdminContent() async {

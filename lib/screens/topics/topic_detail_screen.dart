@@ -5,15 +5,30 @@ import '../../models/models.dart';
 import '../../providers/app_provider.dart';
 import '../game/game_screen.dart';
 
-class TopicDetailScreen extends StatelessWidget {
+class TopicDetailScreen extends StatefulWidget {
   final Topic topic;
 
   const TopicDetailScreen({super.key, required this.topic});
 
   @override
+  State<TopicDetailScreen> createState() => _TopicDetailScreenState();
+}
+
+class _TopicDetailScreenState extends State<TopicDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        Provider.of<AppProvider>(context, listen: false).reloadContent();
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AppProvider>(context);
-    final currentTopic = provider.adminTopics.firstWhere((t) => t.id == topic.id, orElse: () => topic);
+    final currentTopic = provider.adminTopics.firstWhere((t) => t.id == widget.topic.id, orElse: () => widget.topic);
     final levels = provider.levels.where((l) => l.topicId == currentTopic.id).toList();
 
     levels.sort((a, b) => a.order.compareTo(b.order));
@@ -154,6 +169,7 @@ class TopicDetailScreen extends StatelessWidget {
                           return Column(
                             children: [
                               GestureDetector(
+                                behavior: HitTestBehavior.opaque,
                                 onTap: !isUnlocked
                                     ? null
                                     : () {

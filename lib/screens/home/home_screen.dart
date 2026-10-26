@@ -62,43 +62,49 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 110),
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Kid Profile Island Header
-                  _buildProfileHeader(profile),
+            RefreshIndicator(
+              onRefresh: () async {
+                await provider.reloadContent();
+              },
+              color: AppColors.primary,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 110),
+                physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Kid Profile Island Header
+                    _buildProfileHeader(profile),
 
-                  const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                  // Weekly Stepping Stones
-                  _buildWeeklySteppingStones(profile),
+                    // Weekly Stepping Stones
+                    _buildWeeklySteppingStones(profile),
 
-                  const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                  // Continue Learning Card
-                  if (continueTopic != null && continueLevel != null)
-                    _buildContinueLearningCard(context, provider, continueTopic, continueLevel),
+                    // Continue Learning Card
+                    if (continueTopic != null && continueLevel != null)
+                      _buildContinueLearningCard(context, provider, continueTopic, continueLevel),
 
-                  const SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
-                  // Topic Section Header
-                  const Text(
-                    'Thế Giới An Toàn',
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                      fontSize: 22,
-                      fontWeight: FontWeight.w900,
-                      color: AppColors.textPrimary,
+                    // Topic Section Header
+                    const Text(
+                      'Thế Giới An Toàn',
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 14),
+                    const SizedBox(height: 14),
 
-                  // 2-Column Creative Cartoon Topic Cards
-                  _buildTopicGrid(context, provider, topics),
-                ],
+                    // 2-Column Creative Cartoon Topic Cards
+                    _buildTopicGrid(context, provider, topics),
+                  ],
+                ),
               ),
             ),
           ],

@@ -371,15 +371,28 @@ class Question {
   }
 
   factory Question.fromMap(Map<String, dynamic> map) {
+    final typeVal = map['type'];
+    final typeIndex = (typeVal is int && typeVal >= 0 && typeVal < QuestionType.values.length) ? typeVal : 0;
+
+    final rawAnswers = map['correctAnswers'];
+    final List<int> parsedAnswers = (rawAnswers is List)
+        ? rawAnswers.map((e) => (e is num) ? e.toInt() : int.tryParse(e.toString()) ?? 0).toList()
+        : [];
+
+    final rawOptions = map['options'];
+    final List<String> parsedOptions = (rawOptions is List)
+        ? rawOptions.map((e) => e.toString()).toList()
+        : [];
+
     return Question(
       id: map['id'] ?? '',
       levelId: map['levelId'] ?? '',
-      type: QuestionType.values[map['type'] ?? 0],
+      type: QuestionType.values[typeIndex],
       question: map['question'] ?? '',
       image: map['image'],
       audio: map['audio'],
-      options: List<String>.from(map['options'] ?? []),
-      correctAnswers: List<int>.from(map['correctAnswers'] ?? []),
+      options: parsedOptions,
+      correctAnswers: parsedAnswers,
       hint: map['hint'] ?? '',
       explanation: map['explanation'] ?? '',
       characterDialogue: map['characterDialogue'],

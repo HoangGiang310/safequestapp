@@ -63,6 +63,30 @@ class DataService {
     if (savedQuestions == null || savedQuestions.isEmpty) {
       await _prefs.setStringList('questions', questions);
     }
+
+    // Seed initial content to Firestore if Firestore is active and collection is empty
+    try {
+      if (_firestore != null) {
+        final qCheck = await _firestore!.collection('questions').limit(1).get().timeout(const Duration(seconds: 4));
+        if (qCheck.docs.isEmpty) {
+          debugPrint('Seeding default topics, levels, and questions to Firestore...');
+          final batch = _firestore!.batch();
+          for (var t in MockContentRepository.topics) {
+            batch.set(_firestore!.collection('topics').doc(t.id), t.toMap());
+          }
+          for (var l in MockContentRepository.levels) {
+            batch.set(_firestore!.collection('levels').doc(l.id), l.toMap());
+          }
+          for (var q in MockContentRepository.questions) {
+            batch.set(_firestore!.collection('questions').doc(q.id), q.toMap());
+          }
+          await batch.commit().timeout(const Duration(seconds: 8));
+          debugPrint('Successfully seeded initial content to Firestore');
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore initial content seed notice: $e');
+    }
   }
 
   // --- ACCOUNTS ---
@@ -372,6 +396,19 @@ class DataService {
 
   // --- TOPICS ---
   Future<List<Topic>> getTopics() async {
+    try {
+      if (_firestore != null) {
+        final snap = await _firestore!.collection('topics').get().timeout(const Duration(seconds: 4));
+        if (snap.docs.isNotEmpty) {
+          final remoteTopics = snap.docs.map((d) => Topic.fromMap(d.data())).toList();
+          await _prefs.setStringList('topics', remoteTopics.map((e) => e.toJson()).toList());
+          return remoteTopics;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getTopics fallback: $e');
+    }
+
     final list = _prefs.getStringList('topics') ?? [];
     return list.map((e) => Topic.fromJson(e)).toList();
   }
@@ -385,10 +422,35 @@ class DataService {
       topics.add(topic);
     }
     await _prefs.setStringList('topics', topics.map((e) => e.toJson()).toList());
+
+    try {
+      if (_firestore != null) {
+        await _firestore!
+            .collection('topics')
+            .doc(topic.id)
+            .set(topic.toMap(), SetOptions(merge: true))
+            .timeout(const Duration(seconds: 4));
+      }
+    } catch (e) {
+      debugPrint('Firestore saveTopic notice: $e');
+    }
   }
 
   // --- LEVELS ---
   Future<List<Level>> getLevels() async {
+    try {
+      if (_firestore != null) {
+        final snap = await _firestore!.collection('levels').get().timeout(const Duration(seconds: 4));
+        if (snap.docs.isNotEmpty) {
+          final remoteLevels = snap.docs.map((d) => Level.fromMap(d.data())).toList();
+          await _prefs.setStringList('levels', remoteLevels.map((e) => e.toJson()).toList());
+          return remoteLevels;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getLevels fallback: $e');
+    }
+
     final list = _prefs.getStringList('levels') ?? [];
     return list.map((e) => Level.fromJson(e)).toList();
   }
@@ -402,10 +464,35 @@ class DataService {
       levels.add(level);
     }
     await _prefs.setStringList('levels', levels.map((e) => e.toJson()).toList());
+
+    try {
+      if (_firestore != null) {
+        await _firestore!
+            .collection('levels')
+            .doc(level.id)
+            .set(level.toMap(), SetOptions(merge: true))
+            .timeout(const Duration(seconds: 4));
+      }
+    } catch (e) {
+      debugPrint('Firestore saveLevel notice: $e');
+    }
   }
 
   // --- QUESTIONS ---
   Future<List<Question>> getQuestions() async {
+    try {
+      if (_firestore != null) {
+        final snap = await _firestore!.collection('questions').get().timeout(const Duration(seconds: 4));
+        if (snap.docs.isNotEmpty) {
+          final remoteQuestions = snap.docs.map((d) => Question.fromMap(d.data())).toList();
+          await _prefs.setStringList('questions', remoteQuestions.map((e) => e.toJson()).toList());
+          return remoteQuestions;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getQuestions fallback: $e');
+    }
+
     final list = _prefs.getStringList('questions') ?? [];
     return list.map((e) => Question.fromJson(e)).toList();
   }
@@ -419,12 +506,36 @@ class DataService {
       questions.add(question);
     }
     await _prefs.setStringList('questions', questions.map((e) => e.toJson()).toList());
+
+    try {
+      if (_firestore != null) {
+        await _firestore!
+            .collection('questions')
+            .doc(question.id)
+            .set(question.toMap(), SetOptions(merge: true))
+            .timeout(const Duration(seconds: 4));
+      }
+    } catch (e) {
+      debugPrint('Firestore saveQuestion notice: $e');
+    }
   }
   
   Future<void> deleteQuestion(String id) async {
     final questions = await getQuestions();
     questions.removeWhere((e) => e.id == id);
     await _prefs.setStringList('questions', questions.map((e) => e.toJson()).toList());
+
+    try {
+      if (_firestore != null) {
+        await _firestore!
+            .collection('questions')
+            .doc(id)
+            .delete()
+            .timeout(const Duration(seconds: 4));
+      }
+    } catch (e) {
+      debugPrint('Firestore deleteQuestion notice: $e');
+    }
   }
 
   // --- CHILD PROFILES ---
