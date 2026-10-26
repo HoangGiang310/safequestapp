@@ -64,6 +64,11 @@ class DataService {
       await _prefs.setStringList('questions', questions);
     }
 
+    final savedLessonVideos = _prefs.getStringList('lesson_videos');
+    if (savedLessonVideos == null || savedLessonVideos.isEmpty) {
+      await _prefs.setStringList('lesson_videos', MockContentRepository.lessonVideos.map((e) => e.toJson()).toList());
+    }
+
     // Seed initial content to Firestore if Firestore is active and collection is empty
     try {
       if (_firestore != null) {
@@ -82,6 +87,17 @@ class DataService {
           }
           await batch.commit().timeout(const Duration(seconds: 8));
           debugPrint('Successfully seeded initial content to Firestore');
+        }
+
+        final vCheck = await _firestore!.collection('lesson_videos').limit(1).get().timeout(const Duration(seconds: 4));
+        if (vCheck.docs.isEmpty) {
+          debugPrint('Seeding default lesson videos to Firestore...');
+          final vBatch = _firestore!.batch();
+          for (var v in MockContentRepository.lessonVideos) {
+            vBatch.set(_firestore!.collection('lesson_videos').doc(v.id), v.toMap());
+          }
+          await vBatch.commit().timeout(const Duration(seconds: 8));
+          debugPrint('Successfully seeded lesson videos to Firestore');
         }
       }
     } catch (e) {
@@ -535,6 +551,55 @@ class DataService {
       }
     } catch (e) {
       debugPrint('Firestore deleteQuestion notice: $e');
+    }
+  }
+
+  // --- LESSON VIDEOS ---
+  Future<List<LessonVideo>> getLessonVideos() async {
+    try {
+      if (_firestore != null) {
+        final snap = await _firestore!.collection('lesson_videos').get().timeout(const Duration(seconds: 4));
+        if (snap.docs.isNotEmpty) {
+          final remoteVideos = snap.docs.map((d) => LessonVideo.fromMap(d.data())).toList();
+          remoteVideos.sort((a, b) => a.order.compareTo(b.order));
+          await _prefs.setStringList('lesson_videos', remoteVideos.map((e) => e.toJson()).toList());
+          return remoteVideos;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getLessonVideos fallback: $e');
+    }
+
+    final list = _prefs.getStringList('lesson_videos') ?? [];
+    if (list.isNotEmpty) {
+      final cached = list.map((e) => LessonVideo.fromJson(e)).toList();
+      cached.sort((a, b) => a.order.compareTo(b.order));
+      return cached;
+    }
+
+    return MockContentRepository.lessonVideos;
+  }
+
+  Future<void> saveLessonVideo(LessonVideo video) async {
+    final videos = await getLessonVideos();
+    final index = videos.indexWhere((e) => e.id == video.id);
+    if (index >= 0) {
+      videos[index] = video;
+    } else {
+      videos.add(video);
+    }
+    await _prefs.setStringList('lesson_videos', videos.map((e) => e.toJson()).toList());
+
+    try {
+      if (_firestore != null) {
+        await _firestore!
+            .collection('lesson_videos')
+            .doc(video.id)
+            .set(video.toMap(), SetOptions(merge: true))
+            .timeout(const Duration(seconds: 4));
+      }
+    } catch (e) {
+      debugPrint('Firestore saveLessonVideo notice: $e');
     }
   }
 

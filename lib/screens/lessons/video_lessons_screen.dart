@@ -21,114 +21,6 @@ class VideoLessonsScreen extends StatefulWidget {
 class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
   late String _selectedTopicId;
 
-  // 12 video mẫu phân bổ đều cho 4 chủ đề chính (mỗi chủ đề 3 video)
-  static final Map<String, List<LessonVideo>> _defaultVideosByTopic = {
-    't1': [
-      LessonVideo(
-        id: 'v_t1_1',
-        topicId: 't1',
-        title: 'Nhận biết tín hiệu đèn giao thông & vạch kẻ đường',
-        description: 'Bé học cách phân biệt đèn xanh, đèn đỏ, đèn vàng và quy tắc đi bộ an toàn trên vạch ngựa vằn.',
-        duration: '03:45',
-        order: 1,
-      ),
-      LessonVideo(
-        id: 'v_t1_2',
-        topicId: 't1',
-        title: 'Kỹ năng đi bộ qua đường an toàn cùng người lớn',
-        description: 'Cách quan sát trái phải trước khi qua đường và luôn nắm tay người lớn khi ở nơi đông xe cộ.',
-        duration: '04:15',
-        order: 2,
-      ),
-      LessonVideo(
-        id: 'v_t1_3',
-        topicId: 't1',
-        title: 'Đội mũ bảo hiểm đúng cách khi ngồi xe máy',
-        description: 'Vì sao bé cần đội mũ bảo hiểm và cách cài quai nón vừa vặn để bảo vệ an toàn cho đầu.',
-        duration: '03:20',
-        order: 3,
-      ),
-    ],
-    't2': [
-      LessonVideo(
-        id: 'v_t2_1',
-        topicId: 't2',
-        title: 'Phòng tránh bỏng và nguy hiểm từ nước sôi, bếp lửa',
-        description: 'Bé nhận biết những vật dụng nóng nguy hiểm trong nhà và tuyệt đối không nghịch gần bếp.',
-        duration: '03:50',
-        order: 1,
-      ),
-      LessonVideo(
-        id: 'v_t2_2',
-        topicId: 't2',
-        title: 'An toàn với các ổ cắm điện và thiết bị gia dụng',
-        description: 'Điện vô cùng nguy hiểm! Bé không được chọc que vào ổ cắm hay chạm tay ướt vào dây điện.',
-        duration: '04:05',
-        order: 2,
-      ),
-      LessonVideo(
-        id: 'v_t2_3',
-        topicId: 't2',
-        title: 'Cẩn thận lan can, cửa sổ và trơn trượt cầu thang',
-        description: 'Không leo trèo lên bàn ghế gần cửa sổ, luôn bám vào tay vịn khi đi lên xuống cầu thang.',
-        duration: '03:30',
-        order: 3,
-      ),
-    ],
-    't3': [
-      LessonVideo(
-        id: 'v_t3_1',
-        topicId: 't3',
-        title: 'Quy tắc an toàn khi chơi gần ao, hồ, sông suối',
-        description: 'Phòng chống đuối nước: Bé tuyệt đối không tự ý lại gần mép nước nếu không có áo phao và người lớn.',
-        duration: '04:30',
-        order: 1,
-      ),
-      LessonVideo(
-        id: 'v_t3_2',
-        topicId: 't3',
-        title: 'Ứng phó khi gặp mưa giông, sấm sét ngoài trời',
-        description: 'Tìm nơi trú ẩn an toàn, không đứng dưới gốc cây to hoặc cầm que kim loại khi có sét.',
-        duration: '03:40',
-        order: 2,
-      ),
-      LessonVideo(
-        id: 'v_t3_3',
-        topicId: 't3',
-        title: 'Vui chơi an toàn tại công viên và khu trò chơi',
-        description: 'Biết xếp hàng chờ đến lượt ở cầu trượt, xích đu và không chen lấn xô đẩy các bạn.',
-        duration: '03:15',
-        order: 3,
-      ),
-    ],
-    't4': [
-      LessonVideo(
-        id: 'v_t4_1',
-        topicId: 't4',
-        title: 'Quy tắc 5 ngón tay phòng chống xâm hại',
-        description: 'Bài học 5 ngón tay bảo vệ cơ thể: Biết ai được ôm, ai được bắt tay và ai bé cần giữ khoảng cách.',
-        duration: '04:45',
-        order: 1,
-      ),
-      LessonVideo(
-        id: 'v_t4_2',
-        topicId: 't4',
-        title: 'Nói KHÔNG khi người lạ cho kẹo, đồ chơi hoặc rủ đi',
-        description: 'Tuyệt đối không nhận quà và không đi theo bất kỳ ai lạ mặt khi chưa được bố mẹ đồng ý.',
-        duration: '03:55',
-        order: 2,
-      ),
-      LessonVideo(
-        id: 'v_t4_3',
-        topicId: 't4',
-        title: 'Kỹ năng tìm sự giúp đỡ khi bị lạc nơi đông người',
-        description: 'Khi bị lạc ở siêu thị hoặc công viên, bé hãy đứng yên và tìm chú công an hoặc nhân viên bảo vệ.',
-        duration: '04:10',
-        order: 3,
-      ),
-    ],
-  };
-
   @override
   void initState() {
     super.initState();
@@ -145,7 +37,7 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
     );
     final topicColor = Color(currentTopic.colorValue);
 
-    final videos = _defaultVideosByTopic[_selectedTopicId] ?? [];
+    final videos = provider.getVideosForTopic(_selectedTopicId);
 
     return Scaffold(
       backgroundColor: const Color(0xFFEEF6FF),
@@ -696,6 +588,10 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
   }
 
   void _onTapVideo(BuildContext context, LessonVideo video) {
+    final provider = Provider.of<AppProvider>(context, listen: false);
+    final isAdmin = provider.isAdmin;
+    final urlController = TextEditingController(text: video.youtubeUrl);
+
     showDialog(
       context: context,
       builder: (ctx) => Dialog(
@@ -714,116 +610,205 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
               ),
             ],
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 64,
-                height: 64,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFFFEBEE),
-                  shape: BoxShape.circle,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFFFEBEE),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Center(
+                    child: Icon(Icons.smart_display_rounded, size: 36, color: Color(0xFFE53935)),
+                  ),
                 ),
-                child: const Center(
-                  child: Icon(Icons.smart_display_rounded, size: 36, color: Color(0xFFE53935)),
+                const SizedBox(height: 14),
+                const Text(
+                  'Chuẩn Bị Video Bài Giảng',
+                  style: TextStyle(
+                    fontFamily: 'Nunito',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.textPrimary,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(height: 14),
-              const Text(
-                'Chuẩn Bị Video Bài Giảng',
-                style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w900,
-                  color: AppColors.textPrimary,
+                const SizedBox(height: 6),
+                Text(
+                  video.title,
+                  style: const TextStyle(
+                    fontFamily: 'Nunito',
+                    fontSize: 14.5,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF2563EB),
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 6),
-              Text(
-                video.title,
-                style: const TextStyle(
-                  fontFamily: 'Nunito',
-                  fontSize: 14.5,
-                  fontWeight: FontWeight.w800,
-                  color: Color(0xFF2563EB),
+                const SizedBox(height: 10),
+                Text(
+                  video.description,
+                  style: const TextStyle(
+                    fontFamily: 'Nunito',
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF64748B),
+                    height: 1.35,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
-              Text(
-                video.description,
-                style: const TextStyle(
-                  fontFamily: 'Nunito',
-                  fontSize: 12.5,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF64748B),
-                  height: 1.35,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 14),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9),
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xFFE2E8F0)),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.info_outline, size: 18, color: Color(0xFF475569)),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Vị trí video này đã sẵn sàng. Bạn có thể gắn đường link YouTube bài giảng vào để bé xem trực tiếp trong app!',
-                        style: TextStyle(
-                          fontFamily: 'Nunito',
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w800,
-                          color: Color(0xFF475569),
+                const SizedBox(height: 14),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF1F5F9),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: const Color(0xFFE2E8F0)),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.info_outline, size: 18, color: Color(0xFF475569)),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          video.youtubeUrl.isNotEmpty
+                              ? 'Đã gắn link YouTube: ${video.youtubeUrl}'
+                              : 'Vị trí video này đã sẵn sàng. Bạn có thể gắn đường link YouTube bài giảng vào để bé xem trực tiếp trong app!',
+                          style: const TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w800,
+                            color: Color(0xFF475569),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => Navigator.of(ctx).pop(),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(18),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: AppColors.primaryDark,
-                              offset: Offset(0, 3),
-                              blurRadius: 0,
+                if (isAdmin) ...[
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFF8E1),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: const Color(0xFFFFB300), width: 1.5),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Row(
+                          children: [
+                            Icon(Icons.admin_panel_settings_rounded, size: 16, color: Color(0xFFE65100)),
+                            SizedBox(width: 6),
+                            Text(
+                              'ADMIN: GẮN LINK YOUTUBE',
+                              style: TextStyle(
+                                fontFamily: 'Nunito',
+                                fontSize: 11,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFFE65100),
+                              ),
                             ),
                           ],
                         ),
-                        child: const Center(
-                          child: Text(
-                            'ĐÃ HIỂU',
-                            style: TextStyle(
-                              fontFamily: 'Nunito',
-                              fontSize: 13,
-                              fontWeight: FontWeight.w900,
-                              color: Colors.white,
+                        const SizedBox(height: 8),
+                        TextField(
+                          controller: urlController,
+                          decoration: InputDecoration(
+                            hintText: 'https://www.youtube.com/watch?v=...',
+                            hintStyle: const TextStyle(fontFamily: 'Nunito', fontSize: 12),
+                            isDense: true,
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(color: Color(0xFFCBD5E1)),
+                            ),
+                          ),
+                          style: const TextStyle(fontFamily: 'Nunito', fontSize: 12),
+                        ),
+                        const SizedBox(height: 10),
+                        GestureDetector(
+                          onTap: () async {
+                            final newUrl = urlController.text.trim();
+                            final updated = video.copyWith(youtubeUrl: newUrl);
+                            await provider.saveLessonVideo(updated);
+                            if (ctx.mounted) {
+                              Navigator.of(ctx).pop();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Đã cập nhật link video lên Firebase thành công! 🎉'),
+                                  backgroundColor: Color(0xFF2E7D32),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                            }
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF2E7D32),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'LƯU VÀO FIREBASE',
+                                style: TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => Navigator.of(ctx).pop(),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(18),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: AppColors.primaryDark,
+                                offset: Offset(0, 3),
+                                blurRadius: 0,
+                              ),
+                            ],
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'ĐÃ HIỂU',
+                              style: TextStyle(
+                                fontFamily: 'Nunito',
+                                fontSize: 13,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

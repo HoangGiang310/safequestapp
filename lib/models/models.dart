@@ -654,4 +654,30 @@ class LessonVideo {
       order: map['order']?.toInt() ?? 1,
     );
   }
+
+  LessonVideo copyWith({
+    String? id,
+    String? topicId,
+    String? title,
+    String? description,
+    String? youtubeUrl,
+    String? duration,
+    String? thumbnailUrl,
+    int? order,
+  }) {
+    return LessonVideo(
+      id: id ?? this.id,
+      topicId: topicId ?? this.topicId,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      youtubeUrl: youtubeUrl ?? this.youtubeUrl,
+      duration: duration ?? this.duration,
+      thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+      order: order ?? this.order,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory LessonVideo.fromJson(String source) => LessonVideo.fromMap(json.decode(source));
 }

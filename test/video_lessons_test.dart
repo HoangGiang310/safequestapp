@@ -138,4 +138,56 @@ void main() {
 
     expect(find.byType(HomeScreen), findsOneWidget);
   });
+
+  testWidgets('Admin can edit YouTube link and save to Firestore/local', (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(800, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    SharedPreferences.setMockInitialValues({});
+    final provider = AppProvider();
+    await tester.pump(const Duration(milliseconds: 200));
+
+    // Login as default admin
+    final loggedIn = await provider.login('admin', '123');
+    expect(loggedIn, true);
+    expect(provider.isAdmin, true);
+
+    await tester.pumpWidget(
+      ChangeNotifierProvider<AppProvider>.value(
+        value: provider,
+        child: const MaterialApp(
+          home: VideoLessonsScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // Tap on first video
+    await tester.tap(find.text('PHÁT VIDEO').first);
+    await tester.pumpAndSettle();
+
+    // Verify Admin box is shown
+    expect(find.text('ADMIN: GẮN LINK YOUTUBE'), findsOneWidget);
+    expect(find.text('LƯU VÀO FIREBASE'), findsOneWidget);
+
+    // Enter YouTube URL
+    await tester.enterText(find.byType(TextField), 'https://www.youtube.com/watch?v=safety123');
+    await tester.pumpAndSettle();
+
+    // Tap save
+    await tester.tap(find.text('LƯU VÀO FIREBASE'));
+    await tester.pumpAndSettle();
+
+    // Verify dialog dismissed and snackbar shown
+    expect(find.text('ADMIN: GẮN LINK YOUTUBE'), findsNothing);
+    expect(find.textContaining('Đã cập nhật link video lên Firebase'), findsOneWidget);
+
+    // Verify updated in provider
+    final updatedVideo = provider.getVideosForTopic('t1').first;
+    expect(updatedVideo.youtubeUrl, 'https://www.youtube.com/watch?v=safety123');
+  });
 }

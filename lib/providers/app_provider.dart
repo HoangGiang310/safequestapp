@@ -39,6 +39,7 @@ class AppProvider with ChangeNotifier {
   List<Topic> _topics = [];
   List<Level> _levels = [];
   List<Question> _questions = [];
+  List<LessonVideo> _lessonVideos = [];
 
   List<Topic> get topics => _topics.where((t) => t.isActive).toList();
   List<Topic> get adminTopics => _topics;
@@ -46,6 +47,17 @@ class AppProvider with ChangeNotifier {
   List<Level> get levels => _levels;
   
   List<Question> get questions => _questions;
+
+  List<LessonVideo> get lessonVideos => _lessonVideos;
+
+  List<LessonVideo> getVideosForTopic(String topicId) {
+    final vids = _lessonVideos.where((v) => v.topicId == topicId).toList();
+    if (vids.isNotEmpty) {
+      vids.sort((a, b) => a.order.compareTo(b.order));
+      return vids;
+    }
+    return MockContentRepository.getVideosByTopic(topicId);
+  }
 
   // Progress map
   Map<String, bool> _progress = {};
@@ -113,6 +125,7 @@ class AppProvider with ChangeNotifier {
     _topics = await DataService().getTopics();
     _levels = await DataService().getLevels();
     _questions = await DataService().getQuestions();
+    _lessonVideos = await DataService().getLessonVideos();
   }
   
   void _loadProgressData() {
@@ -147,6 +160,12 @@ class AppProvider with ChangeNotifier {
 
   Future<void> deleteQuestion(String questionId) async {
     await DataService().deleteQuestion(questionId);
+    await _loadContent();
+    notifyListeners();
+  }
+
+  Future<void> saveLessonVideo(LessonVideo video) async {
+    await DataService().saveLessonVideo(video);
     await _loadContent();
     notifyListeners();
   }
