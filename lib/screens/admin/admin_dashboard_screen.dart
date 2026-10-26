@@ -24,6 +24,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   int totalUsers = 0;
   int pendingTopupRequests = 0;
   int totalFeedbacks = 0;
+  int totalRevenue = 0;
+  int vipUsers = 0;
+  int premiumUsers = 0;
+  AppProvider? _appProvider;
 
   @override
   void initState() {
@@ -31,17 +35,53 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     _loadStats();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final newProvider = Provider.of<AppProvider>(context, listen: false);
+    if (_appProvider != newProvider) {
+      _appProvider?.removeListener(_onProviderUpdate);
+      _appProvider = newProvider;
+      _appProvider?.addListener(_onProviderUpdate);
+    }
+  }
+
+  void _onProviderUpdate() {
+    if (mounted) {
+      _loadStats();
+    }
+  }
+
+  @override
+  void dispose() {
+    _appProvider?.removeListener(_onProviderUpdate);
+    super.dispose();
+  }
+
   void _loadStats() async {
     final users = await DataService().getAccounts();
     final txs = await DataService().getTransactions();
     final fbs = await DataService().getFeedbacks();
     if (mounted) {
+      final customerUsers = users.where((u) => u.role == Role.CUSTOMER).toList();
+      final confirmedTxs = txs.where((tx) => tx.status == TransactionStatus.CONFIRMED).toList();
+      final calculatedRevenue = confirmedTxs.fold<int>(0, (sum, tx) => sum + tx.amount);
+
       setState(() {
-        totalUsers = users.where((u) => u.role == Role.CUSTOMER).length;
+        totalUsers = customerUsers.length;
         pendingTopupRequests = txs.where((tx) => tx.status == TransactionStatus.PENDING).length;
         totalFeedbacks = fbs.length;
+        totalRevenue = calculatedRevenue;
+        vipUsers = customerUsers.where((u) => u.membershipType == MembershipType.VIP).length;
+        premiumUsers = customerUsers.where((u) => u.membershipType == MembershipType.PREMIUM).length;
       });
     }
+  }
+
+  String _formatVnd(int amount) {
+    final str = amount.toString();
+    final reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+    return str.replaceAllMapped(reg, (Match m) => '${m[1]}.');
   }
 
   @override
@@ -150,6 +190,89 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
+
+                    // Tổng Doanh Thu Banner
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE8F5E9),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: AppColors.cartoonBorder, width: 2),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0xFF388E3C),
+                            offset: Offset(0, 3),
+                            blurRadius: 0,
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'TỔNG DOANH THU',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w900,
+                                    color: AppColors.textSecondary,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Wrap(
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    Text(
+                                      '$totalRevenue VND',
+                                      style: const TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w900,
+                                        color: Color(0xFF2E7D32),
+                                      ),
+                                    ),
+                                    if (totalRevenue >= 1000) ...[
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        '(${_formatVnd(totalRevenue)} đ)',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          color: Color(0xFF388E3C),
+                                        ),
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF2E7D32),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: AppColors.cartoonBorder, width: 1.5),
+                            ),
+                            child: const Text(
+                              'ĐÃ DUYỆT',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 11,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+
+                    // Row 1: Content & Users
                     Row(
                       children: [
                         Expanded(
@@ -183,6 +306,38 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 10),
+
+                    // Row 2: Member ranks (VIP & Premium)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildKidStatPod(
+                            badgeText: 'VIP',
+                            badgeColor: const Color(0xFF0288D1),
+                            badgeTextColor: Colors.white,
+                            title: 'NGƯỜI DÙNG VIP',
+                            value: '$vipUsers',
+                            bgColor: const Color(0xFFE1F5FE),
+                            shadowColor: const Color(0xFF0288D1),
+                            textColor: const Color(0xFF0277BD),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: _buildKidStatPod(
+                            badgeText: 'PREMIUM',
+                            badgeColor: const Color(0xFF7B1FA2),
+                            badgeTextColor: Colors.white,
+                            title: 'NGƯỜI DÙNG PREMIUM',
+                            value: '$premiumUsers',
+                            bgColor: const Color(0xFFF3E5F5),
+                            shadowColor: const Color(0xFF7B1FA2),
+                            textColor: const Color(0xFF6A1B9A),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -208,7 +363,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 badgeColor: const Color(0xFFAB47BC),
                 badgeShadow: const Color(0xFF7B1FA2),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminUserListScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminUserListScreen()))
+                      .then((_) => _loadStats());
                 },
               ),
               const SizedBox(height: 14),
@@ -218,6 +374,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 subtitle: 'Xem toàn bộ đánh giá, ý kiến từ mới đến cũ của học viên',
                 badgeText: 'FEEDBACK',
                 badgeCount: totalFeedbacks,
+                badgeCountText: '$totalFeedbacks',
                 cardColor: const Color(0xFFFFF3E0),
                 badgeColor: const Color(0xFFFF9800),
                 badgeShadow: const Color(0xFFE65100),
@@ -236,7 +393,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 badgeColor: const Color(0xFF2196F3),
                 badgeShadow: const Color(0xFF1976D2),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminUsersScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminUsersScreen()))
+                      .then((_) => _loadStats());
                 },
               ),
               const SizedBox(height: 14),
@@ -249,7 +407,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 badgeColor: const Color(0xFF2ECC71),
                 badgeShadow: const Color(0xFF27AE60),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminTopicsScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminTopicsScreen()))
+                      .then((_) => _loadStats());
                 },
               ),
               const SizedBox(height: 14),
@@ -293,9 +452,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     required Color bgColor,
     required Color shadowColor,
     required Color textColor,
+    String? badgeText,
+    Color? badgeColor,
+    Color? badgeTextColor,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(18),
@@ -309,7 +471,28 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         ],
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
+          if (badgeText != null) ...[
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                color: badgeColor ?? Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.cartoonBorder, width: 1.5),
+              ),
+              child: Text(
+                badgeText,
+                style: TextStyle(
+                  fontSize: 9,
+                  fontWeight: FontWeight.w900,
+                  color: badgeTextColor ?? AppColors.textPrimary,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+          ],
           Text(
             value,
             style: TextStyle(
@@ -343,6 +526,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     required Color badgeShadow,
     required VoidCallback onTap,
     int badgeCount = 0,
+    String? badgeCountText,
   }) {
     return Container(
       decoration: BoxDecoration(
@@ -400,7 +584,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       border: Border.all(color: Colors.white, width: 1.5),
                     ),
                     child: Text(
-                      '$badgeCount ĐANG CHỜ',
+                      badgeCountText ?? '$badgeCount ĐANG CHỜ',
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w900,

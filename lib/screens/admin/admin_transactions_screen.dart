@@ -151,6 +151,7 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen> {
     final provider = Provider.of<AppProvider>(context);
     final txs = _getFilteredTransactions(provider.allTransactions);
     final groupedTransactions = _getGroupedTransactions(provider.allTransactions);
+    final confirmedCount = provider.allTransactions.where((t) => t.status == TransactionStatus.CONFIRMED).length;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -164,6 +165,113 @@ class _AdminTransactionsScreenState extends State<AdminTransactionsScreen> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
+              // Thống kê tổng số đơn đã được duyệt
+              Container(
+                margin: const EdgeInsets.only(bottom: 14),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE8F5E9),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: AppColors.cartoonBorder, width: 2),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0xFF388E3C),
+                      offset: Offset(0, 3),
+                      blurRadius: 0,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2E7D32),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: AppColors.cartoonBorder, width: 1.5),
+                      ),
+                      child: const Text(
+                        '✓',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'TỔNG SỐ ĐƠN ĐÃ DUYỆT',
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w900,
+                              color: AppColors.textSecondary,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              Text(
+                                '$confirmedCount',
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w900,
+                                  color: Color(0xFF2E7D32),
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              const Text(
+                                'đơn đã duyệt',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF388E3C),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() => _groupFilter = _TransactionGroupFilter.confirmed);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: AppColors.cartoonBorder, width: 1.5),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0xFF388E3C),
+                              offset: Offset(0, 2),
+                              blurRadius: 0,
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          '$confirmedCount ĐƠN',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w900,
+                            color: Color(0xFF2E7D32),
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(

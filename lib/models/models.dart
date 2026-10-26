@@ -40,14 +40,38 @@ class Account {
   }
 
   factory Account.fromMap(Map<String, dynamic> map) {
+    DateTime parsedDate;
+    try {
+      final raw = map['createdAt'];
+      if (raw == null) {
+        parsedDate = DateTime.now();
+      } else if (raw is String) {
+        parsedDate = DateTime.tryParse(raw) ?? DateTime.now();
+      } else {
+        try {
+          parsedDate = (raw as dynamic).toDate();
+        } catch (_) {
+          parsedDate = DateTime.now();
+        }
+      }
+    } catch (_) {
+      parsedDate = DateTime.now();
+    }
+
+    final roleVal = map['role'];
+    final roleIndex = (roleVal is int && roleVal >= 0 && roleVal < Role.values.length) ? roleVal : 1;
+
+    final membershipVal = map['membershipType'];
+    final membershipIndex = (membershipVal is int && membershipVal >= 0 && membershipVal < MembershipType.values.length) ? membershipVal : 0;
+
     return Account(
       id: map['id']?.toInt() ?? 0,
       username: map['username'] ?? '',
       password: map['password'] ?? '',
-      role: Role.values[map['role'] ?? 1],
+      role: Role.values[roleIndex],
       coinBalance: map['coinBalance']?.toInt() ?? 0,
-      membershipType: MembershipType.values[map['membershipType'] ?? 0],
-      createdAt: DateTime.parse(map['createdAt']),
+      membershipType: MembershipType.values[membershipIndex],
+      createdAt: parsedDate,
       currentSessionId: map['currentSessionId'] as String?,
     );
   }
@@ -116,16 +140,37 @@ class Transaction {
   }
 
   factory Transaction.fromMap(Map<String, dynamic> map) {
+    DateTime parsedDate;
+    try {
+      final raw = map['createdAt'];
+      if (raw == null) {
+        parsedDate = DateTime.now();
+      } else if (raw is String) {
+        parsedDate = DateTime.tryParse(raw) ?? DateTime.now();
+      } else {
+        try {
+          parsedDate = (raw as dynamic).toDate();
+        } catch (_) {
+          parsedDate = DateTime.now();
+        }
+      }
+    } catch (_) {
+      parsedDate = DateTime.now();
+    }
+
+    final statusVal = map['status'];
+    final statusIndex = (statusVal is int && statusVal >= 0 && statusVal < TransactionStatus.values.length) ? statusVal : 0;
+
     return Transaction(
       id: map['id'] ?? '',
       transactionCode: map['transactionCode'] ?? '',
       userId: map['userId']?.toInt() ?? 0,
       amount: map['amount']?.toInt() ?? 0,
       coinAmount: map['coinAmount']?.toInt() ?? 0,
-      status: TransactionStatus.values[map['status'] ?? 0],
+      status: TransactionStatus.values[statusIndex],
       transferContent: map['transferContent'] ?? '',
       rejectReason: map['rejectReason'],
-      createdAt: DateTime.parse(map['createdAt']),
+      createdAt: parsedDate,
     );
   }
   
@@ -449,7 +494,7 @@ class ChildProfile {
       points: map['points']?.toInt() ?? 0,
       streak: map['streak']?.toInt() ?? 0,
       longestStreak: map['longestStreak']?.toInt() ?? 0,
-      lastStudyDate: map['lastStudyDate'] != null ? DateTime.parse(map['lastStudyDate']) : null,
+      lastStudyDate: map['lastStudyDate'] != null ? DateTime.tryParse(map['lastStudyDate'].toString()) : null,
       studyDates: List<String>.from(map['studyDates'] ?? []),
       unlockedBadges: List<String>.from(map['unlockedBadges'] ?? []),
       completedLevels: List<String>.from(map['completedLevels'] ?? []),

@@ -71,50 +71,40 @@ class DataService {
     try {
       if (_firestore != null) {
         final snapshot = await _firestore!.collection('accounts').get().timeout(const Duration(seconds: 4));
-        if (snapshot.docs.isNotEmpty) {
-          final remoteAccounts = <Account>[];
-          final seenUsernames = <String, DocumentReference>{};
+        final remoteAccounts = <Account>[];
+        final seenUsernames = <String, DocumentReference>{};
 
-          for (var doc in snapshot.docs) {
-            try {
-              final acc = Account.fromMap(doc.data());
-              final key = acc.username.trim().toLowerCase();
-              if (seenUsernames.containsKey(key)) {
-                // Duplicate account in Firestore! Clean up the extra document
-                debugPrint('Removing duplicate remote account doc: ${doc.id}');
-                doc.reference.delete();
-              } else {
-                seenUsernames[key] = doc.reference;
-                remoteAccounts.add(acc);
-              }
-            } catch (e) {
-              debugPrint('Error parsing account doc: $e');
-            }
-          }
-
-          final localList = _prefs.getStringList('accounts') ?? [];
-          final localAccounts = localList.map((e) => Account.fromJson(e)).toList();
-          
-          for (var remote in remoteAccounts) {
-            final idx = localAccounts.indexWhere((l) => 
-              l.id == remote.id || l.username.trim().toLowerCase() == remote.username.trim().toLowerCase()
-            );
-            if (idx >= 0) {
-              localAccounts[idx] = remote;
+        for (var doc in snapshot.docs) {
+          try {
+            final acc = Account.fromMap(doc.data());
+            final key = acc.username.trim().toLowerCase();
+            if (seenUsernames.containsKey(key)) {
+              // Duplicate account in Firestore! Clean up the extra document
+              debugPrint('Removing duplicate remote account doc: ${doc.id}');
+              doc.reference.delete();
             } else {
-              localAccounts.add(remote);
+              seenUsernames[key] = doc.reference;
+              remoteAccounts.add(acc);
             }
+          } catch (e) {
+            debugPrint('Error parsing account doc: $e');
           }
-
-          // Deduplicate localAccounts by username (case-insensitive)
-          final unique = <String, Account>{};
-          for (var acc in localAccounts) {
-            unique[acc.username.trim().toLowerCase()] = acc;
-          }
-          final cleanList = unique.values.toList();
-          await _prefs.setStringList('accounts', cleanList.map((e) => e.toJson()).toList());
-          return cleanList;
         }
+
+        // Ensure default admin account exists
+        if (!remoteAccounts.any((a) => a.username.trim().toLowerCase() == 'admin')) {
+          remoteAccounts.insert(0, Account(
+            id: 1000,
+            username: 'admin',
+            password: '123',
+            role: Role.ADMIN,
+            createdAt: DateTime.now(),
+          ));
+        }
+
+        // Source of truth is Firestore: update local cache with clean remote accounts
+        await _prefs.setStringList('accounts', remoteAccounts.map((e) => e.toJson()).toList());
+        return remoteAccounts;
       }
     } catch (e) {
       debugPrint('Firestore getAccounts notice / fallback to local: $e');
@@ -199,8 +189,8 @@ class DataService {
     }
 
     // 2. Try Firebase Auth + Firestore
-    try {
-      if (_auth != null && _firestore != null) {
+    if (_auth != null && _firestore != null) {
+      try {
         final email = _formatEmail(cleanUsername);
         final safePass = password.length < 6 ? password.padRight(6, '0') : password;
         
@@ -219,12 +209,14 @@ class DataService {
             return acc;
           }
         }
+        // If Firestore is reachable and user is not in Firestore -> Reject!
+        return null;
+      } catch (e) {
+        debugPrint('Online authenticate notice / fallback: $e');
       }
-    } catch (e) {
-      debugPrint('Online authenticate notice: $e');
     }
 
-    // 3. Fallback to local accounts
+    // 3. Fallback to local accounts ONLY if Firestore is unreachable
     final accounts = await getAccounts();
     try {
       return accounts.firstWhere((e) => e.username.trim().toLowerCase() == lowerUser && e.password == password);
@@ -338,11 +330,9 @@ class DataService {
     try {
       if (_firestore != null) {
         final snap = await _firestore!.collection('transactions').get().timeout(const Duration(seconds: 4));
-        if (snap.docs.isNotEmpty) {
-          final remoteList = snap.docs.map((d) => Transaction.fromMap(d.data())).toList();
-          await _prefs.setStringList('transactions', remoteList.map((e) => e.toJson()).toList());
-          return remoteList;
-        }
+        final remoteList = snap.docs.map((d) => Transaction.fromMap(d.data())).toList();
+        await _prefs.setStringList('transactions', remoteList.map((e) => e.toJson()).toList());
+        return remoteList;
       }
     } catch (e) {
       debugPrint('Firestore getTransactions notice: $e');
@@ -442,22 +432,9 @@ class DataService {
     try {
       if (_firestore != null) {
         final snap = await _firestore!.collection('childProfiles').get().timeout(const Duration(seconds: 4));
-        if (snap.docs.isNotEmpty) {
-          final remoteProfiles = snap.docs.map((d) => ChildProfile.fromMap(d.data())).toList();
-          final localList = _prefs.getStringList('childProfiles') ?? [];
-          final localProfiles = localList.map((e) => ChildProfile.fromJson(e)).toList();
-
-          for (var remote in remoteProfiles) {
-            final idx = localProfiles.indexWhere((l) => l.accountId == remote.accountId || l.id == remote.id);
-            if (idx >= 0) {
-              localProfiles[idx] = remote;
-            } else {
-              localProfiles.add(remote);
-            }
-          }
-          await _prefs.setStringList('childProfiles', localProfiles.map((e) => e.toJson()).toList());
-          return localProfiles;
-        }
+        final remoteProfiles = snap.docs.map((d) => ChildProfile.fromMap(d.data())).toList();
+        await _prefs.setStringList('childProfiles', remoteProfiles.map((e) => e.toJson()).toList());
+        return remoteProfiles;
       }
     } catch (e) {
       debugPrint('Firestore getChildProfiles notice / fallback: $e');
