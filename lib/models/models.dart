@@ -607,3 +607,51 @@ class UserFeedback {
 
   factory UserFeedback.fromJson(String source) => UserFeedback.fromMap(json.decode(source));
 }
+
+class LessonVideo {
+  final String id;
+  final String topicId;
+  final String title;
+  final String description;
+  final String youtubeUrl;
+  final String duration;
+  final String? thumbnailUrl;
+  final int order;
+
+  LessonVideo({
+    required this.id,
+    required this.topicId,
+    required this.title,
+    required this.description,
+    this.youtubeUrl = '',
+    this.duration = '03:30',
+    this.thumbnailUrl,
+    required this.order,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'topicId': topicId,
+      'title': title,
+      'description': description,
+      'youtubeUrl': youtubeUrl,
+      'duration': duration,
+      'thumbnailUrl': thumbnailUrl,
+      'order': order,
+    };
+  }
+
+  factory LessonVideo.fromMap(Map<String, dynamic> map) {
+    return LessonVideo(
+      id: map['id']?.toString() ?? '',
+      topicId: map['topicId']?.toString() ?? '',
+      title: map['title']?.toString() ?? '',
+      description: map['description']?.toString() ?? '',
+      youtubeUrl: map['youtubeUrl']?.toString() ?? '',
+      duration: map['duration']?.toString() ?? '03:30',
+      thumbnailUrl: map['thumbnailUrl']?.toString(),
+      order: map['order']?.toInt() ?? 1,
+    );
+  }
+}

@@ -6,6 +6,7 @@ import '../../data/mock_data.dart';
 import '../../providers/app_provider.dart';
 import '../../services/celebration_sound_manager.dart';
 import '../topics/topic_detail_screen.dart';
+import '../lessons/video_lessons_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -85,8 +86,13 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(height: 20),
 
                     // Continue Learning Card
-                    if (continueTopic != null && continueLevel != null)
+                    if (continueTopic != null && continueLevel != null) ...[
                       _buildContinueLearningCard(context, provider, continueTopic, continueLevel),
+                      const SizedBox(height: 20),
+                    ],
+
+                    // Video Lessons Banner (Vị trí 1: Banner hoạt hình nổi bật)
+                    _buildVideoLessonsBanner(context),
 
                     const SizedBox(height: 24),
 
@@ -683,6 +689,149 @@ class HomeScreen extends StatelessWidget {
             },
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildVideoLessonsBanner(BuildContext context) {
+    return GestureDetector(
+      key: const Key('video_lessons_banner_button'),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const VideoLessonsScreen()),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFF7E57C2), Color(0xFF5C6BC0)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(color: const Color(0xFF3949AB), width: 2.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0xFF283593),
+              offset: Offset(0, 5),
+              blurRadius: 0,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            // Cinema Film Icon Box
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFD54F),
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: const Color(0xFFFFA000), width: 2),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0xFFFF8F00),
+                    offset: Offset(0, 3),
+                    blurRadius: 0,
+                  ),
+                ],
+              ),
+              child: const Center(
+                child: Text('🎬', style: TextStyle(fontSize: 30)),
+              ),
+            ),
+            const SizedBox(width: 14),
+
+            // Title and Subtitle
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFF5252),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Text(
+                          'GÓC XEM PHIM',
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: 9.5,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      const Text('✨', style: TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  const Text(
+                    'Video Bài Giảng',
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    '4 chủ đề kĩ năng sinh động',
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white.withOpacity(0.9),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(width: 8),
+
+            // Action Button Pill
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFB300),
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: AppColors.cartoonBorder, width: 1.5),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0xFFC68400),
+                    offset: Offset(0, 3),
+                    blurRadius: 0,
+                  ),
+                ],
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'XEM',
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontSize: 13,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  SizedBox(width: 4),
+                  Icon(Icons.play_arrow_rounded, color: AppColors.textPrimary, size: 18),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
