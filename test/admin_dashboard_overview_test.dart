@@ -154,12 +154,7 @@ void main() {
     // 5. Verify Overview Section
     expect(find.text('TỔNG QUAN HỆ THỐNG'), findsOneWidget);
 
-    // Verify Total Revenue: exactly 100000 VND (50000 + 50000, excluding pending and rejected)
-    expect(find.text('TỔNG DOANH THU'), findsOneWidget);
-    expect(find.text('100000 VND'), findsOneWidget);
-    expect(find.text('ĐÃ DUYỆT'), findsOneWidget);
-
-    // Verify Total Customer Users: 4 (free, vip1, vip2, premium)
+    // Row 1: NGƯỜI DÙNG, CHỦ ĐỀ, CÂU HỎI
     expect(find.text('NGƯỜI DÙNG'), findsOneWidget);
     final userPod = find.ancestor(
       of: find.text('NGƯỜI DÙNG'),
@@ -167,9 +162,16 @@ void main() {
     ).first;
     expect(find.descendant(of: userPod, matching: find.text('4')), findsOneWidget);
 
+    expect(find.text('CHỦ ĐỀ'), findsOneWidget);
+    expect(find.text('CÂU HỎI'), findsOneWidget);
+
+    // Row 2: TỔNG DOANH THU, NGƯỜI DÙNG VIP, NGƯỜI DÙNG PREMIUM
+    expect(find.text('TỔNG DOANH THU'), findsOneWidget);
+    expect(find.text('100000 VND'), findsOneWidget);
+    expect(find.text('ĐÃ DUYỆT'), findsNothing);
+
     // Verify VIP Users: 2
     expect(find.text('NGƯỜI DÙNG VIP'), findsOneWidget);
-    expect(find.text('VIP'), findsOneWidget);
     final vipPod = find.ancestor(
       of: find.text('NGƯỜI DÙNG VIP'),
       matching: find.byType(Column),
@@ -178,7 +180,6 @@ void main() {
 
     // Verify Premium Users: 1
     expect(find.text('NGƯỜI DÙNG PREMIUM'), findsOneWidget);
-    expect(find.text('PREMIUM'), findsOneWidget);
     final premiumPod = find.ancestor(
       of: find.text('NGƯỜI DÙNG PREMIUM'),
       matching: find.byType(Column),

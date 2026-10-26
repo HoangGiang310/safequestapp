@@ -78,12 +78,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     }
   }
 
-  String _formatVnd(int amount) {
-    final str = amount.toString();
-    final reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
-    return str.replaceAllMapped(reg, (Match m) => '${m[1]}.');
-  }
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AppProvider>(context);
@@ -191,88 +185,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Tổng Doanh Thu Banner
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE8F5E9),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColors.cartoonBorder, width: 2),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0xFF388E3C),
-                            offset: Offset(0, 3),
-                            blurRadius: 0,
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'TỔNG DOANH THU',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w900,
-                                    color: AppColors.textSecondary,
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Wrap(
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: [
-                                    Text(
-                                      '$totalRevenue VND',
-                                      style: const TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w900,
-                                        color: Color(0xFF2E7D32),
-                                      ),
-                                    ),
-                                    if (totalRevenue >= 1000) ...[
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        '(${_formatVnd(totalRevenue)} đ)',
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700,
-                                          color: Color(0xFF388E3C),
-                                        ),
-                                      ),
-                                    ],
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF2E7D32),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: AppColors.cartoonBorder, width: 1.5),
-                            ),
-                            child: const Text(
-                              'ĐÃ DUYỆT',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 11,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-
-                    // Row 1: Content & Users
+                    // Hàng 1: Người Dùng, Chủ Đề, Câu Hỏi
                     Row(
                       children: [
                         Expanded(
@@ -308,27 +221,31 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     ),
                     const SizedBox(height: 10),
 
-                    // Row 2: Member ranks (VIP & Premium)
+                    // Hàng 2: Tổng Doanh Thu, Người Dùng Vip, Người Dùng Premium
                     Row(
                       children: [
                         Expanded(
                           child: _buildKidStatPod(
-                            badgeText: 'VIP',
-                            badgeColor: const Color(0xFF0288D1),
-                            badgeTextColor: Colors.white,
-                            title: 'NGƯỜI DÙNG VIP',
-                            value: '$vipUsers',
-                            bgColor: const Color(0xFFE1F5FE),
-                            shadowColor: const Color(0xFF0288D1),
-                            textColor: const Color(0xFF0277BD),
+                            title: 'TỔNG DOANH THU',
+                            value: '$totalRevenue VND',
+                            bgColor: const Color(0xFFE8F8F5),
+                            shadowColor: const Color(0xFF27AE60),
+                            textColor: const Color(0xFF1E824C),
                           ),
                         ),
                         const SizedBox(width: 10),
                         Expanded(
                           child: _buildKidStatPod(
-                            badgeText: 'PREMIUM',
-                            badgeColor: const Color(0xFF7B1FA2),
-                            badgeTextColor: Colors.white,
+                            title: 'NGƯỜI DÙNG VIP',
+                            value: '$vipUsers',
+                            bgColor: const Color(0xFFFFF8E1),
+                            shadowColor: const Color(0xFFFFA000),
+                            textColor: const Color(0xFFFF8F00),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: _buildKidStatPod(
                             title: 'NGƯỜI DÙNG PREMIUM',
                             value: '$premiumUsers',
                             bgColor: const Color(0xFFF3E5F5),
@@ -452,12 +369,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     required Color bgColor,
     required Color shadowColor,
     required Color textColor,
-    String? badgeText,
-    Color? badgeColor,
-    Color? badgeTextColor,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(18),
@@ -473,44 +387,40 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (badgeText != null) ...[
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: badgeColor ?? Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppColors.cartoonBorder, width: 1.5),
-              ),
-              child: Text(
-                badgeText,
-                style: TextStyle(
-                  fontSize: 9,
-                  fontWeight: FontWeight.w900,
-                  color: badgeTextColor ?? AppColors.textPrimary,
-                  letterSpacing: 0.5,
+          SizedBox(
+            height: 28,
+            child: Center(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                    color: textColor,
+                  ),
+                  maxLines: 1,
                 ),
               ),
             ),
-            const SizedBox(height: 4),
-          ],
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w900,
-              color: textColor,
-            ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w900,
-              color: AppColors.textSecondary,
-              letterSpacing: 0.5,
+          const SizedBox(height: 6),
+          SizedBox(
+            height: 28,
+            child: Center(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.textSecondary,
+                  letterSpacing: 0.5,
+                  height: 1.2,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+              ),
             ),
-            textAlign: TextAlign.center,
           ),
         ],
       ),
