@@ -70,7 +70,8 @@ void main() {
     await tester.tap(find.text('PHÁT VIDEO').first);
     await tester.pumpAndSettle();
 
-    expect(find.text('Chuẩn Bị Video Bài Giảng'), findsOneWidget);
+    expect(find.text('Bài 1 - An toàn giao thông'), findsOneWidget);
+    expect(find.text('Đang phát trực tiếp trong app'), findsOneWidget);
     expect(find.textContaining('Đã gắn link YouTube'), findsOneWidget);
     expect(find.text('MỞ XEM TRÊN YOUTUBE 🚀'), findsOneWidget);
     expect(find.text('ĐÃ HIỂU'), findsOneWidget);

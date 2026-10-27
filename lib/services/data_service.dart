@@ -562,15 +562,17 @@ class DataService {
         if (snap.docs.isNotEmpty) {
           final remoteVideos = snap.docs.map((d) => LessonVideo.fromMap(d.data())).toList();
           for (int i = 0; i < remoteVideos.length; i++) {
-            if (remoteVideos[i].youtubeUrl.isEmpty) {
-              final mockV = MockContentRepository.lessonVideos.cast<LessonVideo?>().firstWhere(
-                (m) => m?.id == remoteVideos[i].id,
-                orElse: () => null,
-              );
-              if (mockV != null && mockV.youtubeUrl.isNotEmpty) {
-                remoteVideos[i] = remoteVideos[i].copyWith(youtubeUrl: mockV.youtubeUrl);
-              }
-            }
+            final mockV = MockContentRepository.lessonVideos.cast<LessonVideo?>().firstWhere(
+              (m) => m?.id == remoteVideos[i].id,
+              orElse: () => null,
+            );
+            remoteVideos[i] = remoteVideos[i].copyWith(
+              title: 'Bài ${remoteVideos[i].order}',
+              description: '',
+              youtubeUrl: remoteVideos[i].youtubeUrl.isNotEmpty
+                  ? remoteVideos[i].youtubeUrl
+                  : (mockV?.youtubeUrl ?? ''),
+            );
           }
           remoteVideos.sort((a, b) => a.order.compareTo(b.order));
           await _prefs.setStringList('lesson_videos', remoteVideos.map((e) => e.toJson()).toList());
@@ -585,15 +587,17 @@ class DataService {
     if (list.isNotEmpty) {
       final cached = list.map((e) => LessonVideo.fromJson(e)).toList();
       for (int i = 0; i < cached.length; i++) {
-        if (cached[i].youtubeUrl.isEmpty) {
-          final mockV = MockContentRepository.lessonVideos.cast<LessonVideo?>().firstWhere(
-            (m) => m?.id == cached[i].id,
-            orElse: () => null,
-          );
-          if (mockV != null && mockV.youtubeUrl.isNotEmpty) {
-            cached[i] = cached[i].copyWith(youtubeUrl: mockV.youtubeUrl);
-          }
-        }
+        final mockV = MockContentRepository.lessonVideos.cast<LessonVideo?>().firstWhere(
+          (m) => m?.id == cached[i].id,
+          orElse: () => null,
+        );
+        cached[i] = cached[i].copyWith(
+          title: 'Bài ${cached[i].order}',
+          description: '',
+          youtubeUrl: cached[i].youtubeUrl.isNotEmpty
+              ? cached[i].youtubeUrl
+              : (mockV?.youtubeUrl ?? ''),
+        );
       }
       cached.sort((a, b) => a.order.compareTo(b.order));
       return cached;
