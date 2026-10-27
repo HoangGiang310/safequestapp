@@ -4,8 +4,19 @@ import '../../core/theme/app_text_styles.dart';
 import '../../models/models.dart';
 import '../../services/data_service.dart';
 
+enum UserFilterCategory {
+  all,
+  vip,
+  premium,
+  notUsed,
+}
+
 class AdminUserListScreen extends StatefulWidget {
-  const AdminUserListScreen({super.key});
+  final UserFilterCategory initialFilter;
+  const AdminUserListScreen({
+    super.key,
+    this.initialFilter = UserFilterCategory.all,
+  });
 
   @override
   State<AdminUserListScreen> createState() => _AdminUserListScreenState();
@@ -17,10 +28,12 @@ class _AdminUserListScreenState extends State<AdminUserListScreen> {
   List<Account> _filteredAccounts = [];
   Map<int, ChildProfile> _profileMap = {};
   bool _isLoading = true;
+  late UserFilterCategory _selectedFilter;
 
   @override
   void initState() {
     super.initState();
+    _selectedFilter = widget.initialFilter;
     _loadUsers();
   }
 
@@ -59,26 +72,46 @@ class _AdminUserListScreenState extends State<AdminUserListScreen> {
         _accounts = uniqueAccounts.values.toList();
         _profileMap = map;
         _isLoading = false;
-        _filterUsers(_searchCtrl.text);
+        _applyFilter();
       });
     }
   }
 
-  void _filterUsers(String query) {
-    if (query.trim().isEmpty) {
-      setState(() {
-        _filteredAccounts = _accounts;
-      });
-      return;
-    }
+  void _applyFilter([String? customQuery]) {
+    final query = (customQuery ?? _searchCtrl.text).trim().toLowerCase();
 
-    final lower = query.toLowerCase();
     setState(() {
       _filteredAccounts = _accounts.where((acc) {
+        final primaryProfile = _profileMap[acc.id];
+        final daysUsed = primaryProfile?.studyDates.length ?? 0;
+
+        // 1. Phân loại theo 4 mục:
+        bool matchesCategory = true;
+        switch (_selectedFilter) {
+          case UserFilterCategory.all:
+            matchesCategory = true;
+            break;
+          case UserFilterCategory.vip:
+            matchesCategory = acc.membershipType == MembershipType.VIP;
+            break;
+          case UserFilterCategory.premium:
+            matchesCategory = acc.membershipType == MembershipType.PREMIUM;
+            break;
+          case UserFilterCategory.notUsed:
+            matchesCategory = daysUsed == 0;
+            break;
+        }
+
+        if (!matchesCategory) return false;
+
+        // 2. Lọc theo từ khóa tìm kiếm (ID, Tên, Gmail):
+        if (query.isEmpty) return true;
+
         final idMatch = acc.id.toString().contains(query);
-        final userMatch = acc.username.toLowerCase().contains(lower);
-        final profileName = _profileMap[acc.id]?.name.toLowerCase() ?? '';
-        final profileMatch = profileName.contains(lower);
+        final userMatch = acc.username.toLowerCase().contains(query);
+        final profileName = primaryProfile?.name.toLowerCase() ?? '';
+        final profileMatch = profileName.contains(query);
+
         return idMatch || userMatch || profileMatch;
       }).toList();
     });
@@ -86,14 +119,56 @@ class _AdminUserListScreenState extends State<AdminUserListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final totalCount = _accounts.length;
+    final vipCount = _accounts.where((a) => a.membershipType == MembershipType.VIP).length;
+    final premiumCount = _accounts.where((a) => a.membershipType == MembershipType.PREMIUM).length;
+    final notUsedCount = _accounts.where((a) => (_profileMap[a.id]?.studyDates.length ?? 0) == 0).length;
+
+    String statusTitle;
+    Color statusBg;
+    Color statusBorder;
+    Color statusTextColor;
+    String statusEmoji;
+
+    switch (_selectedFilter) {
+      case UserFilterCategory.all:
+        statusTitle = 'Tổng số người dùng';
+        statusBg = const Color(0xFFE8EAF6);
+        statusBorder = const Color(0xFF9FA8DA);
+        statusTextColor = const Color(0xFF283593);
+        statusEmoji = '👥';
+        break;
+      case UserFilterCategory.vip:
+        statusTitle = 'Người dùng đã nâng rank VIP';
+        statusBg = const Color(0xFFE1F5FE);
+        statusBorder = const Color(0xFF81D4FA);
+        statusTextColor = const Color(0xFF0277BD);
+        statusEmoji = '🛡️';
+        break;
+      case UserFilterCategory.premium:
+        statusTitle = 'Người dùng đã nâng rank Premium';
+        statusBg = const Color(0xFFFFF8E1);
+        statusBorder = const Color(0xFFFFE082);
+        statusTextColor = const Color(0xFFE65100);
+        statusEmoji = '👑';
+        break;
+      case UserFilterCategory.notUsed:
+        statusTitle = 'Người chưa dùng app (ngày sử dụng = 0)';
+        statusBg = const Color(0xFFFFEBEE);
+        statusBorder = const Color(0xFFEF9A9A);
+        statusTextColor = const Color(0xFFC62828);
+        statusEmoji = '⏳';
+        break;
+    }
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
-            // Top Bar (NO ICONS)
+            // Top Bar
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -140,6 +215,72 @@ class _AdminUserListScreenState extends State<AdminUserListScreen> {
               ),
             ),
 
+            // 4 Khối Phân Loại Người Dùng (2x2 Grid)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildFilterCard(
+                          category: UserFilterCategory.all,
+                          emoji: '👥',
+                          title: 'TỔNG NGƯỜI DÙNG',
+                          subtitle: 'Toàn bộ học viên',
+                          count: totalCount,
+                          activeColor: const Color(0xFF3F51B5),
+                          activeBg: const Color(0xFFE8EAF6),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: _buildFilterCard(
+                          category: UserFilterCategory.vip,
+                          emoji: '🛡️',
+                          title: 'ĐÃ NÂNG VIP',
+                          subtitle: 'Hạng Hiệp Sĩ',
+                          count: vipCount,
+                          activeColor: const Color(0xFF0288D1),
+                          activeBg: const Color(0xFFE1F5FE),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildFilterCard(
+                          category: UserFilterCategory.premium,
+                          emoji: '👑',
+                          title: 'ĐÃ NÂNG PREMIUM',
+                          subtitle: 'Hạng Vương Quốc',
+                          count: premiumCount,
+                          activeColor: const Color(0xFFFFA000),
+                          activeBg: const Color(0xFFFFF8E1),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: _buildFilterCard(
+                          category: UserFilterCategory.notUsed,
+                          emoji: '⏳',
+                          title: 'CHƯA DÙNG APP',
+                          subtitle: 'Ngày sử dụng = 0',
+                          count: notUsedCount,
+                          activeColor: const Color(0xFFE53935),
+                          activeBg: const Color(0xFFFFEBEE),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 4),
+
             // Search Bar
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6),
@@ -159,35 +300,46 @@ class _AdminUserListScreenState extends State<AdminUserListScreen> {
                 child: TextField(
                   controller: _searchCtrl,
                   style: const TextStyle(fontWeight: FontWeight.bold),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Nhập Tên, Gmail hoặc ID để tìm kiếm...',
-                    hintStyle: TextStyle(fontSize: 13, color: Colors.black38),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                    hintStyle: const TextStyle(fontSize: 13, color: Colors.black38),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
                     border: InputBorder.none,
+                    suffixIcon: _searchCtrl.text.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Icons.clear, size: 20),
+                            onPressed: () {
+                              _searchCtrl.clear();
+                              _applyFilter('');
+                            },
+                          )
+                        : null,
                   ),
-                  onChanged: _filterUsers,
+                  onChanged: (val) => _applyFilter(val),
                 ),
               ),
             ),
 
-            // Mode note banner (Read-only notice)
+            // Mode note banner (Hiển thị mục đang lọc và số lượng)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF3E5F5),
+                  color: statusBg,
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xFFCE93D8), width: 1.5),
+                  border: Border.all(color: statusBorder, width: 1.5),
                 ),
                 child: Row(
                   children: [
-                    const Text('📋 ', style: TextStyle(fontSize: 14)),
+                    Text(statusEmoji, style: const TextStyle(fontSize: 16)),
+                    const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Tổng số: ${_accounts.length} người dùng • Chế độ xem toàn bộ thông tin (Chỉ xem)',
-                        style: const TextStyle(
-                          color: Color(0xFF6A1B9A),
+                        'Đang lọc: $statusTitle (${_filteredAccounts.length} người dùng)'
+                        '${_searchCtrl.text.trim().isNotEmpty ? ' • Từ khóa: "${_searchCtrl.text.trim()}"' : ''}',
+                        style: TextStyle(
+                          color: statusTextColor,
                           fontWeight: FontWeight.w800,
                           fontSize: 11.5,
                         ),
@@ -206,16 +358,33 @@ class _AdminUserListScreenState extends State<AdminUserListScreen> {
                   ? const Center(child: CircularProgressIndicator())
                   : _filteredAccounts.isEmpty
                       ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('🔍', style: TextStyle(fontSize: 48)),
-                              const SizedBox(height: 12),
-                              Text(
-                                'Không tìm thấy người dùng phù hợp',
-                                style: AppTextStyles.h2.copyWith(color: AppColors.textSecondary, fontSize: 16),
-                              ),
-                            ],
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  _searchCtrl.text.isNotEmpty ? '🔍' : statusEmoji,
+                                  style: const TextStyle(fontSize: 48),
+                                ),
+                                const SizedBox(height: 12),
+                                Text(
+                                  _searchCtrl.text.isNotEmpty
+                                      ? 'Không tìm thấy người dùng phù hợp'
+                                      : 'Không có tài khoản nào trong mục này',
+                                  style: AppTextStyles.h2.copyWith(color: AppColors.textSecondary, fontSize: 15),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  'Chạm vào các ô phía trên để đổi bộ lọc khác',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade600,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         )
                       : RefreshIndicator(
@@ -327,10 +496,10 @@ class _AdminUserListScreenState extends State<AdminUserListScreen> {
                                           Expanded(
                                             child: _buildInfoItem(
                                               label: 'NGÀY ĐÃ SỬ DỤNG',
-                                              value: '$daysUsed ngày',
-                                              emoji: '📅',
-                                              bgColor: const Color(0xFFE8F5E9),
-                                              textColor: const Color(0xFF2E7D32),
+                                              value: daysUsed == 0 ? '0 ngày (Chưa dùng)' : '$daysUsed ngày',
+                                              emoji: daysUsed == 0 ? '⏳' : '📅',
+                                              bgColor: daysUsed == 0 ? const Color(0xFFFFEBEE) : const Color(0xFFE8F5E9),
+                                              textColor: daysUsed == 0 ? const Color(0xFFC62828) : const Color(0xFF2E7D32),
                                             ),
                                           ),
                                         ],
@@ -366,6 +535,100 @@ class _AdminUserListScreenState extends State<AdminUserListScreen> {
                             },
                           ),
                         ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFilterCard({
+    required UserFilterCategory category,
+    required String emoji,
+    required String title,
+    required String subtitle,
+    required int count,
+    required Color activeColor,
+    required Color activeBg,
+  }) {
+    final isSelected = _selectedFilter == category;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedFilter = category;
+        });
+        _applyFilter();
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? activeBg : Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(
+            color: isSelected ? activeColor : AppColors.cartoonBorder,
+            width: isSelected ? 2.5 : 2,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: isSelected ? activeColor.withOpacity(0.45) : AppColors.cartoonBorder,
+              offset: isSelected ? const Offset(0, 3.5) : const Offset(0, 2.5),
+              blurRadius: 0,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(emoji, style: const TextStyle(fontSize: 18)),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: isSelected ? activeColor : const Color(0xFFF5F5F5),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: isSelected ? activeColor : AppColors.cartoonBorder,
+                      width: 1.5,
+                    ),
+                  ),
+                  child: Text(
+                    '$count',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w900,
+                      color: isSelected ? Colors.white : AppColors.textPrimary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w900,
+                color: isSelected ? activeColor : AppColors.textPrimary,
+                letterSpacing: 0.2,
+              ),
+            ),
+            const SizedBox(height: 1),
+            Text(
+              subtitle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 8.5,
+                fontWeight: FontWeight.w700,
+                color: isSelected ? activeColor.withOpacity(0.9) : AppColors.textSecondary,
+              ),
             ),
           ],
         ),
@@ -451,7 +714,7 @@ class _AdminUserListScreenState extends State<AdminUserListScreen> {
                 child: Text(
                   value,
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 12.5,
                     fontWeight: FontWeight.w900,
                     color: textColor,
                   ),

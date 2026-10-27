@@ -195,6 +195,14 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                             bgColor: const Color(0xFFE1F5FE),
                             shadowColor: const Color(0xFF0288D1),
                             textColor: const Color(0xFF0277BD),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const AdminUserListScreen(initialFilter: UserFilterCategory.all),
+                                ),
+                              ).then((_) => _loadStats());
+                            },
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -241,6 +249,14 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                             bgColor: const Color(0xFFFFF8E1),
                             shadowColor: const Color(0xFFFFA000),
                             textColor: const Color(0xFFFF8F00),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const AdminUserListScreen(initialFilter: UserFilterCategory.vip),
+                                ),
+                              ).then((_) => _loadStats());
+                            },
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -251,6 +267,14 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                             bgColor: const Color(0xFFF3E5F5),
                             shadowColor: const Color(0xFF7B1FA2),
                             textColor: const Color(0xFF6A1B9A),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const AdminUserListScreen(initialFilter: UserFilterCategory.premium),
+                                ),
+                              ).then((_) => _loadStats());
+                            },
                           ),
                         ),
                       ],
@@ -369,8 +393,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     required Color bgColor,
     required Color shadowColor,
     required Color textColor,
+    VoidCallback? onTap,
   }) {
-    return Container(
+    final pod = Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
       decoration: BoxDecoration(
         color: bgColor,
@@ -425,6 +450,14 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         ],
       ),
     );
+
+    if (onTap != null) {
+      return GestureDetector(
+        onTap: onTap,
+        child: pod,
+      );
+    }
+    return pod;
   }
 
   Widget _buildCartoonMenuCard({
