@@ -677,6 +677,29 @@ class LessonVideo {
     );
   }
 
+  String? get youtubeVideoId {
+    if (youtubeUrl.isEmpty) return null;
+    final uri = Uri.tryParse(youtubeUrl);
+    if (uri == null) return null;
+    if (uri.host.contains('youtube.com')) {
+      return uri.queryParameters['v'];
+    } else if (uri.host.contains('youtu.be')) {
+      return uri.pathSegments.isNotEmpty ? uri.pathSegments.first : null;
+    }
+    return null;
+  }
+
+  String? get effectiveThumbnailUrl {
+    if (thumbnailUrl != null && thumbnailUrl!.isNotEmpty) {
+      return thumbnailUrl;
+    }
+    final vid = youtubeVideoId;
+    if (vid != null) {
+      return 'https://img.youtube.com/vi/$vid/hqdefault.jpg';
+    }
+    return null;
+  }
+
   String toJson() => json.encode(toMap());
 
   factory LessonVideo.fromJson(String source) => LessonVideo.fromMap(json.decode(source));

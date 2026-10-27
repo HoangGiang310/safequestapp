@@ -71,7 +71,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Chuẩn Bị Video Bài Giảng'), findsOneWidget);
-    expect(find.textContaining('Vị trí video này đã sẵn sàng'), findsOneWidget);
+    expect(find.textContaining('Đã gắn link YouTube'), findsOneWidget);
+    expect(find.text('MỞ XEM TRÊN YOUTUBE 🚀'), findsOneWidget);
     expect(find.text('ĐÃ HIỂU'), findsOneWidget);
 
     // Close the dialog

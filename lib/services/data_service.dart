@@ -561,6 +561,17 @@ class DataService {
         final snap = await _firestore!.collection('lesson_videos').get().timeout(const Duration(seconds: 4));
         if (snap.docs.isNotEmpty) {
           final remoteVideos = snap.docs.map((d) => LessonVideo.fromMap(d.data())).toList();
+          for (int i = 0; i < remoteVideos.length; i++) {
+            if (remoteVideos[i].youtubeUrl.isEmpty) {
+              final mockV = MockContentRepository.lessonVideos.cast<LessonVideo?>().firstWhere(
+                (m) => m?.id == remoteVideos[i].id,
+                orElse: () => null,
+              );
+              if (mockV != null && mockV.youtubeUrl.isNotEmpty) {
+                remoteVideos[i] = remoteVideos[i].copyWith(youtubeUrl: mockV.youtubeUrl);
+              }
+            }
+          }
           remoteVideos.sort((a, b) => a.order.compareTo(b.order));
           await _prefs.setStringList('lesson_videos', remoteVideos.map((e) => e.toJson()).toList());
           return remoteVideos;
@@ -573,6 +584,17 @@ class DataService {
     final list = _prefs.getStringList('lesson_videos') ?? [];
     if (list.isNotEmpty) {
       final cached = list.map((e) => LessonVideo.fromJson(e)).toList();
+      for (int i = 0; i < cached.length; i++) {
+        if (cached[i].youtubeUrl.isEmpty) {
+          final mockV = MockContentRepository.lessonVideos.cast<LessonVideo?>().firstWhere(
+            (m) => m?.id == cached[i].id,
+            orElse: () => null,
+          );
+          if (mockV != null && mockV.youtubeUrl.isNotEmpty) {
+            cached[i] = cached[i].copyWith(youtubeUrl: mockV.youtubeUrl);
+          }
+        }
+      }
       cached.sort((a, b) => a.order.compareTo(b.order));
       return cached;
     }

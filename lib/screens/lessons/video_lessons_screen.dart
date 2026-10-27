@@ -1,5 +1,8 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../core/theme/app_colors.dart';
 import '../../models/models.dart';
 import '../../data/mock_data.dart';
@@ -382,7 +385,42 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
     );
   }
 
+  Future<void> _openYouTube(String url) async {
+    final uri = Uri.tryParse(url);
+    if (uri != null) {
+      try {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } catch (e) {
+        debugPrint('Could not launch $url: $e');
+      }
+    }
+  }
+
+  Widget _buildThumbnailWidget(String url) {
+    if (!kIsWeb && Platform.environment.containsKey('FLUTTER_TEST')) {
+      return Container(
+        color: const Color(0xFF1E293B),
+        child: const Center(
+          child: Icon(Icons.smart_display_rounded, size: 54, color: Colors.white24),
+        ),
+      );
+    }
+    return Image.network(
+      url,
+      fit: BoxFit.cover,
+      errorBuilder: (_, __, ___) => Container(
+        color: const Color(0xFF1E293B),
+        child: const Center(
+          child: Icon(Icons.smart_display_rounded, size: 54, color: Colors.white24),
+        ),
+      ),
+    );
+  }
+
   Widget _buildVideoCard(BuildContext context, LessonVideo video, int number, Color topicColor) {
+    final hasUrl = video.youtubeUrl.trim().isNotEmpty;
+    final thumbUrl = video.effectiveThumbnailUrl;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -400,52 +438,84 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Video Mockup Player Frame
+          // Video Player / Thumbnail Frame
           GestureDetector(
             onTap: () => _onTapVideo(context, video),
             child: Stack(
               children: [
                 Container(
-                  height: 160,
+                  height: 165,
                   decoration: const BoxDecoration(
                     color: Color(0xFF0F172A),
                     borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
                   ),
-                  child: Center(
-                    child: Container(
-                      width: 58,
-                      height: 58,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE53935),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFFE53935).withOpacity(0.5),
-                            offset: const Offset(0, 4),
-                            blurRadius: 10,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        if (thumbUrl != null)
+                          _buildThumbnailWidget(thumbUrl)
+                        else
+                          Container(
+                            color: const Color(0xFF0F172A),
+                            child: const Center(
+                              child: Icon(Icons.smart_display_rounded, size: 54, color: Colors.white24),
+                            ),
                           ),
-                        ],
-                        border: Border.all(color: Colors.white, width: 2.5),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.play_arrow_rounded,
-                          color: Colors.white,
-                          size: 38,
+                        // Dark soft overlay for text & button contrast
+                        Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0.35),
+                                Colors.black.withOpacity(0.6),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                        // Center Play Button
+                        Center(
+                          child: Container(
+                            width: 58,
+                            height: 58,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE53935),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xFFE53935).withOpacity(0.55),
+                                  offset: const Offset(0, 4),
+                                  blurRadius: 10,
+                                ),
+                              ],
+                              border: Border.all(color: Colors.white, width: 2.5),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.play_arrow_rounded,
+                                color: Colors.white,
+                                size: 38,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                // Lesson index badge
+                // Lesson index badge (Top Left)
                 Positioned(
                   top: 12,
                   left: 12,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.7),
+                      color: Colors.black.withOpacity(0.75),
                       borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.white.withOpacity(0.2)),
                     ),
                     child: Text(
                       'Bài $number / 3',
@@ -458,7 +528,43 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
                     ),
                   ),
                 ),
-                // Duration badge
+                // YouTube pill badge (Top Right)
+                if (hasUrl)
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE53935),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.35),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.play_circle_fill, size: 12, color: Colors.white),
+                          SizedBox(width: 4),
+                          Text(
+                            'YouTube',
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.w900,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                // Duration badge (Bottom Right)
                 Positioned(
                   bottom: 12,
                   right: 12,
@@ -499,21 +605,25 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFF3E0),
+                    color: hasUrl ? const Color(0xFFE8F5E9) : const Color(0xFFFFF3E0),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.video_library_rounded, size: 14, color: Color(0xFFE65100)),
+                      Icon(
+                        hasUrl ? Icons.check_circle_rounded : Icons.video_library_rounded,
+                        size: 14,
+                        color: hasUrl ? const Color(0xFF2E7D32) : const Color(0xFFE65100),
+                      ),
                       const SizedBox(width: 5),
                       Text(
-                        video.youtubeUrl.isNotEmpty ? 'Đã gắn video' : 'Sẵn sàng gắn video',
-                        style: const TextStyle(
+                        hasUrl ? 'Sẵn sàng xem' : 'Chưa có video',
+                        style: TextStyle(
                           fontFamily: 'Nunito',
                           fontSize: 11,
                           fontWeight: FontWeight.w900,
-                          color: Color(0xFFE65100),
+                          color: hasUrl ? const Color(0xFF2E7D32) : const Color(0xFFE65100),
                         ),
                       ),
                     ],
@@ -564,6 +674,8 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
     final provider = Provider.of<AppProvider>(context, listen: false);
     final isAdmin = provider.isAdmin;
     final urlController = TextEditingController(text: video.youtubeUrl);
+    final hasUrl = video.youtubeUrl.trim().isNotEmpty;
+    final thumbUrl = video.effectiveThumbnailUrl;
 
     showDialog(
       context: context,
@@ -587,18 +699,54 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  width: 64,
-                  height: 64,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFFEBEE),
-                    shape: BoxShape.circle,
+                // Top Icon / Thumbnail preview
+                if (thumbUrl != null)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 14),
+                    height: 140,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(color: const Color(0xFFD6E4FF), width: 2),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          _buildThumbnailWidget(thumbUrl),
+                          Container(
+                            color: Colors.black.withOpacity(0.3),
+                          ),
+                          Center(
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFE53935),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 34),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Container(
+                    width: 64,
+                    height: 64,
+                    margin: const EdgeInsets.only(bottom: 14),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFFFEBEE),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Center(
+                      child: Icon(Icons.smart_display_rounded, size: 36, color: Color(0xFFE53935)),
+                    ),
                   ),
-                  child: const Center(
-                    child: Icon(Icons.smart_display_rounded, size: 36, color: Color(0xFFE53935)),
-                  ),
-                ),
-                const SizedBox(height: 14),
+
                 const Text(
                   'Chuẩn Bị Video Bài Giảng',
                   style: TextStyle(
@@ -635,6 +783,8 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
                   ),
                 ],
                 const SizedBox(height: 14),
+
+                // Info Box
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -648,7 +798,7 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          video.youtubeUrl.isNotEmpty
+                          hasUrl
                               ? 'Đã gắn link YouTube: ${video.youtubeUrl}'
                               : 'Vị trí video này đã sẵn sàng. Bạn có thể gắn đường link YouTube bài giảng vào để bé xem trực tiếp trong app!',
                           style: const TextStyle(
@@ -662,6 +812,50 @@ class _VideoLessonsScreenState extends State<VideoLessonsScreen> {
                     ],
                   ),
                 ),
+
+                // Open YouTube Button (if URL available)
+                if (hasUrl) ...[
+                  const SizedBox(height: 14),
+                  GestureDetector(
+                    onTap: () {
+                      _openYouTube(video.youtubeUrl);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE53935),
+                        borderRadius: BorderRadius.circular(18),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFFB71C1C).withOpacity(0.4),
+                            offset: const Offset(0, 3.5),
+                            blurRadius: 0,
+                          ),
+                        ],
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.smart_display_rounded, color: Colors.white, size: 20),
+                          SizedBox(width: 8),
+                          Text(
+                            'MỞ XEM TRÊN YOUTUBE 🚀',
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: 13,
+                              fontWeight: FontWeight.w900,
+                              color: Colors.white,
+                              letterSpacing: 0.2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+
+                // Admin Editing Panel
                 if (isAdmin) ...[
                   const SizedBox(height: 16),
                   Container(

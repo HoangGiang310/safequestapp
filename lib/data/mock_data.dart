@@ -229,24 +229,24 @@ class MockContentRepository {
 
   static final List<LessonVideo> lessonVideos = [
     // t1: An toàn giao thông
-    LessonVideo(id: 'v_t1_1', topicId: 't1', title: 'Bài 1', description: '', duration: '03:45', order: 1),
-    LessonVideo(id: 'v_t1_2', topicId: 't1', title: 'Bài 2', description: '', duration: '04:15', order: 2),
-    LessonVideo(id: 'v_t1_3', topicId: 't1', title: 'Bài 3', description: '', duration: '03:20', order: 3),
+    LessonVideo(id: 'v_t1_1', topicId: 't1', title: 'Bài 1', description: '', youtubeUrl: 'https://www.youtube.com/watch?v=EazUZzNl0JI', duration: '03:45', order: 1),
+    LessonVideo(id: 'v_t1_2', topicId: 't1', title: 'Bài 2', description: '', youtubeUrl: 'https://www.youtube.com/watch?v=S4mj5gyx8h0', duration: '04:15', order: 2),
+    LessonVideo(id: 'v_t1_3', topicId: 't1', title: 'Bài 3', description: '', youtubeUrl: 'https://www.youtube.com/watch?v=YlQZ4r2shvU', duration: '03:20', order: 3),
 
     // t2: An toàn trong nhà
-    LessonVideo(id: 'v_t2_1', topicId: 't2', title: 'Bài 1', description: '', duration: '03:50', order: 1),
-    LessonVideo(id: 'v_t2_2', topicId: 't2', title: 'Bài 2', description: '', duration: '04:05', order: 2),
-    LessonVideo(id: 'v_t2_3', topicId: 't2', title: 'Bài 3', description: '', duration: '03:30', order: 3),
+    LessonVideo(id: 'v_t2_1', topicId: 't2', title: 'Bài 1', description: '', youtubeUrl: 'https://www.youtube.com/watch?v=IKyYu_Lkw3Y', duration: '03:50', order: 1),
+    LessonVideo(id: 'v_t2_2', topicId: 't2', title: 'Bài 2', description: '', youtubeUrl: '', duration: '04:05', order: 2),
+    LessonVideo(id: 'v_t2_3', topicId: 't2', title: 'Bài 3', description: '', youtubeUrl: '', duration: '03:30', order: 3),
 
     // t3: An toàn ngoài trời
-    LessonVideo(id: 'v_t3_1', topicId: 't3', title: 'Bài 1', description: '', duration: '04:30', order: 1),
-    LessonVideo(id: 'v_t3_2', topicId: 't3', title: 'Bài 2', description: '', duration: '03:40', order: 2),
-    LessonVideo(id: 'v_t3_3', topicId: 't3', title: 'Bài 3', description: '', duration: '03:15', order: 3),
+    LessonVideo(id: 'v_t3_1', topicId: 't3', title: 'Bài 1', description: '', youtubeUrl: 'https://www.youtube.com/watch?v=qbzvTn6k2Rs', duration: '04:30', order: 1),
+    LessonVideo(id: 'v_t3_2', topicId: 't3', title: 'Bài 2', description: '', youtubeUrl: 'https://www.youtube.com/watch?v=WU_ZOAKa47A', duration: '03:40', order: 2),
+    LessonVideo(id: 'v_t3_3', topicId: 't3', title: 'Bài 3', description: '', youtubeUrl: '', duration: '03:15', order: 3),
 
     // t4: An toàn với người lạ
-    LessonVideo(id: 'v_t4_1', topicId: 't4', title: 'Bài 1', description: '', duration: '04:45', order: 1),
-    LessonVideo(id: 'v_t4_2', topicId: 't4', title: 'Bài 2', description: '', duration: '03:55', order: 2),
-    LessonVideo(id: 'v_t4_3', topicId: 't4', title: 'Bài 3', description: '', duration: '04:10', order: 3),
+    LessonVideo(id: 'v_t4_1', topicId: 't4', title: 'Bài 1', description: '', youtubeUrl: 'https://www.youtube.com/watch?v=6hoGqc0_mbY', duration: '04:45', order: 1),
+    LessonVideo(id: 'v_t4_2', topicId: 't4', title: 'Bài 2', description: '', youtubeUrl: 'https://www.youtube.com/watch?v=ZUKXW7hRvag', duration: '03:55', order: 2),
+    LessonVideo(id: 'v_t4_3', topicId: 't4', title: 'Bài 3', description: '', youtubeUrl: '', duration: '04:10', order: 3),
   ];
 
   static List<LessonVideo> getVideosByTopic(String topicId) {
