@@ -93,12 +93,12 @@ void main() {
       expect(find.text('HẠNG HIỆP SĨ HIỆN TẠI'), findsOneWidget);
 
       // Check bonus gift badges
-      expect(find.text('TẶNG NGAY +500 ĐIỂM HỌC TẬP (XÂY NHÀ 🏡)'), findsOneWidget);
-      expect(find.text('TẶNG NGAY +1.000 ĐIỂM HỌC TẬP (XÂY DINH THỰ 🏰)'), findsOneWidget);
+      expect(find.text('TẶNG NGAY +500 ĐIỂM HỌC TẬP'), findsOneWidget);
+      expect(find.text('TẶNG NGAY +1.000 ĐIỂM HỌC TẬP'), findsOneWidget);
 
       // Check house building perks in feature list
-      expect(find.text('Tặng ngay +500 Điểm Học Tập để xây nhà & sắm nội thất'), findsOneWidget);
-      expect(find.text('Tặng ngay +1.000 Điểm Học Tập xây dinh thự & lâu đài mơ ước'), findsOneWidget);
+      expect(find.text('Tặng ngay +500 Điểm Học Tập'), findsOneWidget);
+      expect(find.text('Tặng ngay +1.000 Điểm Học Tập'), findsOneWidget);
       expect(find.text('Mở khóa bộ sưu tập nội thất Hoàng Gia & sân vườn biệt thự'), findsOneWidget);
     });
   });

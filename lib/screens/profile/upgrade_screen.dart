@@ -405,9 +405,9 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
                   cardColor: const Color(0xFFE1F5FE),
                   headerColor: const Color(0xFF039BE5),
                   headerShadow: const Color(0xFF0277BD),
-                  bonusGiftText: 'TẶNG NGAY +500 ĐIỂM HỌC TẬP (XÂY NHÀ 🏡)',
+                  bonusGiftText: 'TẶNG NGAY +500 ĐIỂM HỌC TẬP',
                   features: [
-                    'Tặng ngay +500 Điểm Học Tập để xây nhà & sắm nội thất',
+                    'Tặng ngay +500 Điểm Học Tập',
                     'Mở khóa toàn bộ chủ đề và bài học an toàn',
                     'Mở khóa vật phẩm & đồ trang trí nhà VIP đặc quyền',
                     'Trải nghiệm mượt mà, không quảng cáo làm phiền',
@@ -424,9 +424,9 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
                   cardColor: const Color(0xFFFFF8E1),
                   headerColor: const Color(0xFFFFB300),
                   headerShadow: const Color(0xFFF57F17),
-                  bonusGiftText: 'TẶNG NGAY +1.000 ĐIỂM HỌC TẬP (XÂY DINH THỰ 🏰)',
+                  bonusGiftText: 'TẶNG NGAY +1.000 ĐIỂM HỌC TẬP',
                   features: [
-                    'Tặng ngay +1.000 Điểm Học Tập xây dinh thự & lâu đài mơ ước',
+                    'Tặng ngay +1.000 Điểm Học Tập',
                     'Toàn bộ đặc quyền của gói VIP',
                     'Mở khóa bộ sưu tập nội thất Hoàng Gia & sân vườn biệt thự',
                     'Trợ lý AI đồng hành thông minh giải đáp an toàn',
