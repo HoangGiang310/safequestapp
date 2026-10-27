@@ -278,11 +278,13 @@ void main() {
     // 6. User now uses coin to upgrade to VIP rank
     await provider.login('student1', '123');
     expect(provider.currentAccount?.coinBalance, 500);
+    final initialPoints = provider.profile?.points ?? 0;
 
     final successUpgrade = await provider.upgradeMembership(MembershipType.VIP, 500);
     expect(successUpgrade, true);
     expect(provider.currentAccount?.membershipType, MembershipType.VIP);
     expect(provider.currentAccount?.coinBalance, 0);
+    expect(provider.profile?.points, initialPoints + 500);
 
     // 7. Admin returns / re-enters Admin Dashboard
     await provider.login('admin', '123');

@@ -453,7 +453,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               _buildCartoonActionCard(
                 title: 'Nâng cấp tài khoản',
-                subtitle: 'Mở khóa đặc quyền hiệp sĩ VIP & Premium',
+                subtitle: 'Mở khóa đặc quyền VIP, nhận tới +1.000 điểm xây nhà',
                 badgeText: 'NÂNG CẤP',
                 cardColor: const Color(0xFFFFF8E1),
                 badgeColor: const Color(0xFFFFB300),

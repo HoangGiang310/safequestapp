@@ -632,6 +632,39 @@ class AppProvider with ChangeNotifier {
     
     await DataService().saveAccount(updatedAccount);
     _currentAccount = updatedAccount;
+
+    // Bonus điểm học tập khi nâng cấp gói:
+    // VIP: +500 điểm, PREMIUM: +1.000 điểm (dùng cho Game Xây Nhà)
+    final int bonusPoints = newType == MembershipType.PREMIUM ? 1000 : 500;
+
+    if (_profile == null) {
+      _profile = await DataService().getChildProfileByAccountId(_currentAccount!.id);
+    }
+
+    if (_profile != null) {
+      _profile = _profile!.copyWith(
+        points: _profile!.points + bonusPoints,
+      );
+    } else {
+      _profile = ChildProfile(
+        id: 'child_${_currentAccount!.id}',
+        accountId: _currentAccount!.id,
+        name: _currentAccount!.username,
+        age: 7,
+        avatar: '👦',
+        points: bonusPoints,
+        streak: 0,
+        longestStreak: 0,
+        studyDates: [],
+        unlockedBadges: _unlockedBadges,
+        completedLevels: _progress.keys.toList(),
+        wrongQuestions: _wrongQuestions,
+        lastCheckInDate: null,
+      );
+    }
+    _checkBadges();
+    _profile = _profile!.copyWith(unlockedBadges: _unlockedBadges);
+    await DataService().saveChildProfile(_profile!);
     
     notifyListeners();
     return true;

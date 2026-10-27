@@ -119,6 +119,32 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
               textAlign: TextAlign.center,
               style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondary, height: 1.4),
             ),
+            const SizedBox(height: 14),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFF3E0),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFFFF9800), width: 1.5),
+              ),
+              child: Row(
+                children: [
+                  const Text('🎁', style: TextStyle(fontSize: 22)),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'TẶNG NGAY: +${type == MembershipType.PREMIUM ? "1.000" : "500"} Điểm Học Tập để tha hồ xây nhà mơ ước!',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFFE65100),
+                        height: 1.3,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
         actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -150,9 +176,10 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
                     Navigator.pop(ctx);
                     final success = await provider.upgradeMembership(type, cost);
                     if (success && mounted) {
+                      final bonus = type == MembershipType.PREMIUM ? 1000 : 500;
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Nâng cấp ${type.name} thành công! 🎉'),
+                          content: Text('Nâng cấp ${type.name} thành công! 🎉 Nhận ngay +$bonus Điểm Học Tập 🏡'),
                           backgroundColor: AppColors.success,
                         ),
                       );
@@ -242,7 +269,7 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
 
               // Current Membership & Vault Pod
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(26),
@@ -297,35 +324,72 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
                         ),
                       ],
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFF3E0),
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(color: AppColors.cartoonBorder, width: 2),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0xFFFFB74D),
-                            offset: Offset(0, 3),
-                            blurRadius: 0,
+                    Row(
+                      children: [
+                        // Study Points Pod
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFF9C4),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: AppColors.cartoonBorder, width: 2),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0xFFFBC02D),
+                                offset: Offset(0, 3),
+                                blurRadius: 0,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text('🪙', style: TextStyle(fontSize: 20)),
-                          const SizedBox(width: 6),
-                          Text(
-                            '${provider.currentAccount?.coinBalance ?? 0}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w900,
-                              color: Color(0xFFE65100),
-                              fontSize: 16,
-                            ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text('⭐', style: TextStyle(fontSize: 16)),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${provider.profile?.points ?? 0}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  color: Color(0xFFF57F17),
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(width: 8),
+                        // Coin Balance Pod
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFF3E0),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: AppColors.cartoonBorder, width: 2),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0xFFFFB74D),
+                                offset: Offset(0, 3),
+                                blurRadius: 0,
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text('🪙', style: TextStyle(fontSize: 16)),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${provider.currentAccount?.coinBalance ?? 0}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  color: Color(0xFFE65100),
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -341,10 +405,13 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
                   cardColor: const Color(0xFFE1F5FE),
                   headerColor: const Color(0xFF039BE5),
                   headerShadow: const Color(0xFF0277BD),
+                  bonusGiftText: 'TẶNG NGAY +500 ĐIỂM HỌC TẬP (XÂY NHÀ 🏡)',
                   features: [
-                    'Mở khóa tất cả chủ đề cơ bản',
-                    'Không bao giờ có quảng cáo gián đoạn',
-                    'Huy hiệu Hiệp Sĩ VIP độc quyền',
+                    'Tặng ngay +500 Điểm Học Tập để xây nhà & sắm nội thất',
+                    'Mở khóa toàn bộ chủ đề và bài học an toàn',
+                    'Mở khóa vật phẩm & đồ trang trí nhà VIP đặc quyền',
+                    'Trải nghiệm mượt mà, không quảng cáo làm phiền',
+                    'Huy hiệu danh xưng Hiệp Sĩ VIP độc quyền',
                   ],
                   onTap: () => _buyMembership(MembershipType.VIP, 500),
                 ),
@@ -357,11 +424,13 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
                   cardColor: const Color(0xFFFFF8E1),
                   headerColor: const Color(0xFFFFB300),
                   headerShadow: const Color(0xFFF57F17),
+                  bonusGiftText: 'TẶNG NGAY +1.000 ĐIỂM HỌC TẬP (XÂY DINH THỰ 🏰)',
                   features: [
-                    'Toàn bộ đặc quyền gói VIP',
-                    'Bộ tình huống đặc biệt nâng cao',
-                    'Cố vấn AI thông minh hỗ trợ',
-                    'Ưu tiên nhận màn chơi mới sớm nhất',
+                    'Tặng ngay +1.000 Điểm Học Tập xây dinh thự & lâu đài mơ ước',
+                    'Toàn bộ đặc quyền của gói VIP',
+                    'Mở khóa bộ sưu tập nội thất Hoàng Gia & sân vườn biệt thự',
+                    'Trợ lý AI đồng hành thông minh giải đáp an toàn',
+                    'Ưu tiên nhận sớm chủ đề và vật phẩm kiến trúc mới nhất',
                   ],
                   onTap: () => _buyMembership(MembershipType.PREMIUM, 1000),
                 ),
@@ -397,7 +466,7 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
                       ),
                       const SizedBox(height: 8),
                       const Text(
-                        'Con đang sở hữu trọn bộ quyền năng cao cấp của SAFEQUEST. Chúc hiệp sĩ nhí có những chuyến phiêu lưu thật bổ ích!',
+                        'Con đang sở hữu trọn bộ quyền năng cao cấp của SAFEQUEST và đặc quyền Hoàng Gia trong Game Xây Nhà. Chúc hiệp sĩ nhí có những chuyến phiêu lưu thật bổ ích!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -423,6 +492,7 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
     required Color cardColor,
     required Color headerColor,
     required Color headerShadow,
+    required String bonusGiftText,
     required List<String> features,
     required VoidCallback onTap,
   }) {
@@ -490,15 +560,58 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
             ),
           ),
 
-          // Features List (NO ICONS IN TEXT LINES)
+          // Gift Banner Pod (Bonus points hook!)
+          Container(
+            margin: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFFFF6D00), Color(0xFFFF9100)],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: AppColors.cartoonBorder, width: 2),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0xFFBF360C),
+                  offset: Offset(0, 3),
+                  blurRadius: 0,
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                const Text('🎁', style: TextStyle(fontSize: 22)),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    bonusGiftText,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 0.3,
+                      shadows: [
+                        Shadow(color: Color(0xFFBF360C), offset: Offset(1, 1), blurRadius: 1),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Features List
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.fromLTRB(20.0, 14.0, 20.0, 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ...features.asMap().entries.map((entry) {
                   final idx = entry.key + 1;
                   final f = entry.value;
+                  final isPointBonus = entry.key == 0;
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: Row(
@@ -508,17 +621,20 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
                           width: 24,
                           height: 24,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: isPointBonus ? const Color(0xFFFFE082) : Colors.white,
                             shape: BoxShape.circle,
-                            border: Border.all(color: AppColors.cartoonBorder, width: 2),
+                            border: Border.all(
+                              color: isPointBonus ? const Color(0xFFF57F17) : AppColors.cartoonBorder,
+                              width: 2,
+                            ),
                           ),
                           alignment: Alignment.center,
                           child: Text(
-                            '$idx',
+                            isPointBonus ? '★' : '$idx',
                             style: TextStyle(
-                              fontSize: 11,
+                              fontSize: isPointBonus ? 13 : 11,
                               fontWeight: FontWeight.w900,
-                              color: headerShadow,
+                              color: isPointBonus ? const Color(0xFFE65100) : headerShadow,
                             ),
                           ),
                         ),
@@ -526,10 +642,10 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
                         Expanded(
                           child: Text(
                             f,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w700,
+                            style: TextStyle(
+                              fontWeight: isPointBonus ? FontWeight.w900 : FontWeight.w700,
                               fontSize: 14,
-                              color: AppColors.textPrimary,
+                              color: isPointBonus ? const Color(0xFFBF360C) : AppColors.textPrimary,
                               height: 1.3,
                             ),
                           ),
