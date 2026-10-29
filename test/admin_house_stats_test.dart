@@ -156,7 +156,12 @@ void main() {
     await tester.pumpAndSettle();
 
     // 1. Kiểm tra tiêu đề màn hình
-    expect(find.text('THỐNG KÊ GAME NGÔI NHÀ'), findsOneWidget);
+    expect(find.text('THỐNG KÊ GAME'), findsOneWidget);
+
+    // Kiểm tra 3 thẻ thống kê tổng quan trên cùng
+    expect(find.text('TỔNG ĐÃ MỞ'), findsOneWidget);
+    expect(find.text('RANK VIP'), findsOneWidget);
+    expect(find.text('RANK PREMIUM'), findsOneWidget);
 
     // 2. Kiểm tra chỉ hiển thị 2 người chơi đã mở game
     expect(find.text('Bé Lan'), findsWidgets);
@@ -172,10 +177,12 @@ void main() {
     expect(find.text('🆔 ID: #102'), findsOneWidget);
     expect(find.text('👦'), findsWidgets);
 
-    // 4. Kiểm tra điểm tiêu hao
-    // Bé Lan mua sofa lvl 2 (20 + 55 = 75) + tủ lạnh lvl 1 (30) = 105 điểm
+    // 4. Kiểm tra điểm tiêu hao & số lượng món /45
+    // Bé Lan mua sofa lvl 2 (20 + 55 = 75) + tủ lạnh lvl 1 (30) = 105 điểm, tổng 3 cấp độ (3/45 món)
     expect(find.textContaining('105 điểm tiêu hao'), findsOneWidget);
+    expect(find.textContaining('3/45 món'), findsOneWidget);
     expect(find.textContaining('0 điểm tiêu hao'), findsOneWidget); // Bé Minh chưa mua gì
+    expect(find.textContaining('0/45 món'), findsOneWidget);
   });
 
   testWidgets('Search filter filters players by name, email or ID', (tester) async {
@@ -231,6 +238,8 @@ void main() {
 
     // Modal hiện ra
     expect(find.text('CHI TIẾT 4 PHÒNG & CẤP ĐỘ ĐỒ VẬT'), findsOneWidget);
+    expect(find.text('ĐÃ SỞ HỮU'), findsOneWidget);
+    expect(find.text('3/45 món'), findsWidgets);
     expect(find.text('Phòng Khách'), findsOneWidget);
     expect(find.text('Level 2: Tiện Nghi'), findsOneWidget);
     expect(find.text('Phòng Bếp'), findsOneWidget);

@@ -43,6 +43,7 @@ class AdminHousePlayer {
   double get overallProgress => house.overallProgress;
   int get ownedCount => house.ownedCount;
   int get maxCount => house.maxCount;
+  int get totalLevelsAchieved => house.totalLevelsAchieved;
 }
 
 class AdminHouseStatsScreen extends StatefulWidget {
@@ -63,6 +64,8 @@ class _AdminHouseStatsScreenState extends State<AdminHouseStatsScreen> with Sing
   bool _isLoading = true;
   int _totalPointsAcrossServer = 0;
   double _avgProgress = 0.0;
+  int _vipCount = 0;
+  int _premiumCount = 0;
 
   @override
   void initState() {
@@ -149,9 +152,17 @@ class _AdminHouseStatsScreenState extends State<AdminHouseStatsScreen> with Sing
 
       int totalPoints = 0;
       double sumProgress = 0;
+      int vipCount = 0;
+      int premiumCount = 0;
+
       for (final p in playerList) {
         totalPoints += p.totalPointsSpent;
         sumProgress += p.overallProgress;
+        if (p.account.membershipType == MembershipType.VIP) {
+          vipCount++;
+        } else if (p.account.membershipType == MembershipType.PREMIUM) {
+          premiumCount++;
+        }
       }
 
       final avgProg = playerList.isNotEmpty ? (sumProgress / playerList.length) : 0.0;
@@ -162,6 +173,8 @@ class _AdminHouseStatsScreenState extends State<AdminHouseStatsScreen> with Sing
           _leaderboard = leaderboardList;
           _totalPointsAcrossServer = totalPoints;
           _avgProgress = avgProg;
+          _vipCount = vipCount;
+          _premiumCount = premiumCount;
           _isLoading = false;
           _applyFilter();
         });
@@ -279,7 +292,7 @@ class _AdminHouseStatsScreenState extends State<AdminHouseStatsScreen> with Sing
                   children: [
                     Text('🏡 ', style: TextStyle(fontSize: 16)),
                     Text(
-                      'THỐNG KÊ GAME NGÔI NHÀ',
+                      'THỐNG KÊ GAME',
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         color: Color(0xFFBF360C),
@@ -321,10 +334,10 @@ class _AdminHouseStatsScreenState extends State<AdminHouseStatsScreen> with Sing
   Widget _buildOverviewMetrics() {
     return Row(
       children: [
-        // Metric 1: Số người chơi
+        // Metric 1: Tổng số người đã mở chế độ game
         Expanded(
           child: _buildMetricCard(
-            title: 'NGƯỜI CHƠI',
+            title: 'TỔNG ĐÃ MỞ',
             value: '${_players.length}',
             unit: 'học viên',
             bgColor: const Color(0xFFE8EAF6),
@@ -335,30 +348,30 @@ class _AdminHouseStatsScreenState extends State<AdminHouseStatsScreen> with Sing
         ),
         const SizedBox(width: 8),
 
-        // Metric 2: Tổng điểm tiêu hao
+        // Metric 2: Tổng số người rank VIP đã mở game
         Expanded(
           child: _buildMetricCard(
-            title: 'TIÊU ĐIỂM',
-            value: '$_totalPointsAcrossServer',
-            unit: '💎 học tập',
+            title: 'RANK VIP',
+            value: '$_vipCount',
+            unit: 'học viên',
             bgColor: const Color(0xFFFFF8E1),
             borderColor: const Color(0xFFFFA000),
             textColor: const Color(0xFFFF6F00),
-            emoji: '💎',
+            emoji: '🛡️',
           ),
         ),
         const SizedBox(width: 8),
 
-        // Metric 3: Hoàn thiện TB
+        // Metric 3: Tổng số người rank PREMIUM đã mở game
         Expanded(
           child: _buildMetricCard(
-            title: 'TIẾN ĐỘ TB',
-            value: '${(_avgProgress * 100).toInt()}%',
-            unit: 'căn nhà',
+            title: 'RANK PREMIUM',
+            value: '$_premiumCount',
+            unit: 'học viên',
             bgColor: const Color(0xFFE8F5E9),
             borderColor: const Color(0xFF43A047),
             textColor: const Color(0xFF2E7D32),
-            emoji: '🏠',
+            emoji: '👑',
           ),
         ),
       ],
@@ -732,7 +745,7 @@ class _AdminHouseStatsScreenState extends State<AdminHouseStatsScreen> with Sing
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
                               child: Text(
-                                'Xây ${(player.overallProgress * 100).toInt()}% (${player.ownedCount}/15 món)',
+                                'Xây ${(player.overallProgress * 100).toInt()}% (${player.totalLevelsAchieved}/45 món)',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w900,
                                   color: Color(0xFF2E7D32),
@@ -880,7 +893,7 @@ class _AdminHouseStatsScreenState extends State<AdminHouseStatsScreen> with Sing
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'ID: #${player.id} • ${player.ownedCount}/15 đồ vật',
+                      'ID: #${player.id} • ${player.totalLevelsAchieved}/45 món',
                       style: const TextStyle(
                         color: Color(0xFF757575),
                         fontSize: 10,
@@ -1186,7 +1199,7 @@ class _AdminHouseStatsScreenState extends State<AdminHouseStatsScreen> with Sing
                               Expanded(
                                 child: _buildStatPod(
                                   title: 'ĐÃ SỞ HỮU',
-                                  value: '${player.ownedCount}/15 món',
+                                  value: '${player.totalLevelsAchieved}/45 món',
                                   color: const Color(0xFF1565C0),
                                   bgColor: const Color(0xFFE3F2FD),
                                 ),

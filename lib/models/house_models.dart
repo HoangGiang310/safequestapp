@@ -674,6 +674,16 @@ class UserHouseData {
     return itemLevels.values.where((lvl) => lvl >= 1).length;
   }
 
+  /// Tổng số cấp độ đã sở hữu (tối đa 15 món x 3 level = 45 món)
+  int get totalLevelsAchieved {
+    int total = 0;
+    for (final item in HouseCatalog.allItems) {
+      final lvl = itemLevels[item.id] ?? 0;
+      total += lvl.clamp(0, 3);
+    }
+    return total;
+  }
+
   /// Tổng số món đã nâng Max (level 3)
   int get maxCount {
     return itemLevels.values.where((lvl) => lvl >= 3).length;

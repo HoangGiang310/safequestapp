@@ -316,11 +316,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               const SizedBox(height: 14),
 
               _buildCartoonMenuCard(
-                title: 'Thống Kê Game Ngôi Nhà',
+                title: 'Thống Kê Game',
                 subtitle: 'Danh sách học viên mở game, chi tiết 4 phòng & Bảng xếp hạng',
-                badgeText: 'MINIGAME',
-                badgeCount: housePlayersCount,
-                badgeCountText: '$housePlayersCount',
+                badgeText: 'TRUY CẬP',
                 cardColor: const Color(0xFFFFF3E0),
                 badgeColor: const Color(0xFFFF7043),
                 badgeShadow: const Color(0xFFD84315),

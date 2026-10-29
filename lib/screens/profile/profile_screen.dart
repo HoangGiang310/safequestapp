@@ -672,21 +672,30 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildHouseGameCard(BuildContext context, AppProvider provider) {
     final houseData = provider.houseData;
     final overallPct = (houseData.overallProgress * 100).toInt();
-    final ownedCount = houseData.ownedCount;
+    final totalLevels = houseData.totalLevelsAchieved;
 
     return Container(
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF00897B), Color(0xFF00695C)],
+          colors: [
+            Color(0xFF6A1B9A), // Tím hoàng gia
+            Color(0xFF8E24AA), // Tím phát sáng
+            Color(0xFFE91E63), // Hồng neon rực rỡ
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFF004D40), width: 2.5),
-        boxShadow: const [
+        borderRadius: BorderRadius.circular(26),
+        border: Border.all(color: const Color(0xFFFFD54F), width: 3), // Viền vàng kim 3D lung linh
+        boxShadow: [
           BoxShadow(
-            color: Color(0xFF004D40),
-            offset: Offset(0, 4),
+            color: const Color(0xFFAB47BC).withOpacity(0.5),
+            offset: const Offset(0, 6),
+            blurRadius: 14,
+          ),
+          const BoxShadow(
+            color: Color(0xFF4A148C),
+            offset: Offset(0, 4.5),
             blurRadius: 0,
           ),
         ],
@@ -695,7 +704,7 @@ class ProfileScreen extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           key: const Key('house_building_banner_button'),
-          borderRadius: BorderRadius.circular(22),
+          borderRadius: BorderRadius.circular(23),
           onTap: () {
             Navigator.push(
               context,
@@ -706,27 +715,33 @@ class ProfileScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             child: Row(
               children: [
-                // Icon ngôi nhà hoạt hình
+                // Icon ngôi nhà hoạt hình lung linh với ánh vàng
                 Container(
-                  width: 50,
-                  height: 50,
+                  width: 54,
+                  height: 54,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFFFFDE7), Color(0xFFFFE082)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                     shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xFF004D40), width: 2),
+                    border: Border.all(color: const Color(0xFFFFB300), width: 2.5),
                     boxShadow: const [
                       BoxShadow(
-                        color: Color(0xFF004D40),
-                        offset: Offset(0, 2),
+                        color: Color(0xFFFF8F00),
+                        offset: Offset(0, 3),
+                        blurRadius: 0,
                       ),
                     ],
                   ),
                   child: const Center(
-                    child: Text('🏡', style: TextStyle(fontSize: 26)),
+                    child: Text('🏡', style: TextStyle(fontSize: 28)),
                   ),
                 ),
                 const SizedBox(width: 12),
-                // Thông tin mô tả
+
+                // Thông tin mô tả nổi bật
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -734,47 +749,72 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Flexible(
+                          const Flexible(
                             child: Text(
-                              'Ngôi Nhà Của Bé',
-                              style: const TextStyle(
+                              '✨ Ngôi Nhà Của Bé',
+                              style: TextStyle(
                                 fontFamily: 'Nunito',
                                 fontSize: 16.5,
                                 fontWeight: FontWeight.w900,
                                 color: Colors.white,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.black38,
+                                    offset: Offset(0, 1.5),
+                                    blurRadius: 2,
+                                  ),
+                                ],
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           const SizedBox(width: 6),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFFFD54F),
-                              borderRadius: BorderRadius.circular(6),
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFFFFEE58), Color(0xFFFF9800)],
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.white, width: 1),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color(0xFFE65100),
+                                  offset: Offset(0, 1.5),
+                                  blurRadius: 0,
+                                ),
+                              ],
                             ),
                             child: const Text(
-                              'GAME 4.0',
+                              '🔥 GAME 4.0',
                               style: TextStyle(
                                 fontFamily: 'Nunito',
                                 fontSize: 9,
                                 fontWeight: FontWeight.w900,
-                                color: Color(0xFFE65100),
+                                color: Color(0xFFBF360C),
+                                letterSpacing: 0.3,
                               ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 3),
+                      const SizedBox(height: 4),
                       Text(
-                        ownedCount == 0
-                            ? 'Sắm đồ đạc an toàn & thông minh'
-                            : '$ownedCount/15 món • Tiến độ $overallPct%',
+                        totalLevels == 0
+                            ? '⭐ Khám phá & Sắm đồ 4 căn phòng an toàn'
+                            : '⭐ $totalLevels/45 món • Tiến độ $overallPct%',
                         style: TextStyle(
                           fontFamily: 'Nunito',
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
-                          color: Colors.white.withOpacity(0.92),
+                          color: Colors.white.withOpacity(0.95),
+                          shadows: const [
+                            Shadow(
+                              color: Colors.black26,
+                              offset: Offset(0, 1),
+                              blurRadius: 2,
+                            ),
+                          ],
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -783,29 +823,49 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                // Nút VÀO CHƠI
+
+                // Nút VÀO CHƠI 3D nổi bật
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFB300),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFFFD54F), Color(0xFFFF8F00)],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: const Color(0xFFC68400), width: 2),
+                    border: Border.all(color: Colors.white, width: 2),
                     boxShadow: const [
                       BoxShadow(
-                        color: Color(0xFFC68400),
-                        offset: Offset(0, 3),
+                        color: Color(0xFFBF360C),
+                        offset: Offset(0, 3.5),
+                        blurRadius: 0,
                       ),
                     ],
                   ),
-                  child: const Text(
-                    'VÀO CHƠI',
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      letterSpacing: 0.5,
-                    ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'VÀO CHƠI',
+                        style: TextStyle(
+                          fontFamily: 'Nunito',
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                          letterSpacing: 0.5,
+                          shadows: [
+                            Shadow(
+                              color: Color(0xFFBF360C),
+                              offset: Offset(0, 1),
+                              blurRadius: 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 3),
+                      Text('🚀', style: TextStyle(fontSize: 12)),
+                    ],
                   ),
                 ),
               ],
