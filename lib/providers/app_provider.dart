@@ -28,6 +28,10 @@ class AppProvider with ChangeNotifier {
   ChildProfile? _profile;
   ChildProfile? get profile => _profile;
 
+  // House Building Minigame
+  UserHouseData _houseData = const UserHouseData();
+  UserHouseData get houseData => _houseData;
+
   // Transactions
   List<Transaction> _myTransactions = [];
   List<Transaction> get myTransactions => _myTransactions;
@@ -92,6 +96,7 @@ class AppProvider with ChangeNotifier {
         
         if (_currentAccount?.role == Role.CUSTOMER) {
           _profile = await DataService().getChildProfileByAccountId(accountId);
+          _houseData = await DataService().getHouseData(accountId);
           await _loadMyTransactions();
           if (_profile != null) {
             _loadProgressData();
@@ -226,6 +231,7 @@ class AppProvider with ChangeNotifier {
       
       if (account.role == Role.CUSTOMER) {
         _profile = await DataService().getChildProfileByAccountId(account.id);
+        _houseData = await DataService().getHouseData(account.id);
         await _loadMyTransactions();
         if (_profile != null) {
           _loadProgressData();
@@ -260,6 +266,8 @@ class AppProvider with ChangeNotifier {
       }
 
       _startSessionListener(newAccount.id, sessionId);
+
+      _houseData = UserHouseData(accountId: newAccount.id);
 
       notifyListeners();
       return true;
@@ -368,6 +376,7 @@ class AppProvider with ChangeNotifier {
     _recentUnlockedBadges = [];
     _myTransactions = [];
     _allTransactions = [];
+    _houseData = const UserHouseData();
     await _prefs?.remove('currentAccountId');
     notifyListeners();
   }
@@ -472,6 +481,16 @@ class AppProvider with ChangeNotifier {
       lastCheckInDate: _profile?.lastCheckInDate,
     );
     await DataService().saveChildProfile(_profile!);
+
+    if (_houseData.hasOpenedGame) {
+      _houseData = _houseData.copyWith(
+        childName: name,
+        childAvatar: avatar,
+        updatedAt: DateTime.now(),
+      );
+      await DataService().saveHouseData(_currentAccount!.id, _houseData);
+    }
+
     notifyListeners();
   }
 
@@ -487,6 +506,18 @@ class AppProvider with ChangeNotifier {
         _checkBadges();
       }
       await DataService().saveChildProfile(_profile!);
+
+      if (_houseData.hasOpenedGame && (name != null || avatar != null)) {
+        _houseData = _houseData.copyWith(
+          childName: _profile!.name,
+          childAvatar: _profile!.avatar,
+          updatedAt: DateTime.now(),
+        );
+        if (_currentAccount != null) {
+          await DataService().saveHouseData(_currentAccount!.id, _houseData);
+        }
+      }
+
       notifyListeners();
     }
   }
@@ -670,6 +701,116 @@ class AppProvider with ChangeNotifier {
     return true;
   }
   
+  // --- HOUSE BUILDING MINIGAME ACTIONS ---
+  Future<Map<String, dynamic>> upgradeHouseItem(String itemId) async {
+    if (_currentAccount == null) {
+      return {'success': false, 'message': 'Vui lòng đăng nhập để nâng cấp ngôi nhà!'};
+    }
+
+    if (_profile == null) {
+      _profile = await DataService().getChildProfileByAccountId(_currentAccount!.id);
+    }
+
+    if (_profile == null) {
+      return {'success': false, 'message': 'Không tìm thấy hồ sơ người chơi!'};
+    }
+
+    final item = HouseCatalog.getItemById(itemId);
+    if (item == null) {
+      return {'success': false, 'message': 'Không tìm thấy vật phẩm này trong danh mục!'};
+    }
+
+    final currentLevel = _houseData.getItemLevel(itemId);
+    if (currentLevel >= 3) {
+      return {
+        'success': false,
+        'message': '${item.name} đã đạt cấp tối đa Smart 4.0 cao nhất rồi!',
+      };
+    }
+
+    final targetLevel = currentLevel + 1;
+    final targetLevelInfo = item.getLevel(targetLevel);
+    if (targetLevelInfo == null) {
+      return {'success': false, 'message': 'Không tìm thấy cấp độ nâng cấp tiếp theo!'};
+    }
+
+    final cost = targetLevelInfo.pointsCost;
+    if (_profile!.points < cost) {
+      return {
+        'success': false,
+        'message': 'Chưa đủ Điểm Học Tập! Cần $cost ⭐ nhưng bé chỉ có ${_profile!.points} ⭐. Hãy học thêm bài hoặc điểm danh để tích lũy nhé!',
+        'requiredPoints': cost,
+        'currentPoints': _profile!.points,
+      };
+    }
+
+    // Trừ điểm học tập
+    _profile = _profile!.copyWith(points: _profile!.points - cost);
+
+    // Cập nhật cấp độ vật phẩm và đảm bảo lưu thông tin đầy đủ online
+    final updatedMap = Map<String, int>.from(_houseData.itemLevels);
+    updatedMap[itemId] = targetLevel;
+    _houseData = _houseData.copyWith(
+      accountId: _currentAccount!.id,
+      childName: _profile!.name,
+      childAvatar: _profile!.avatar,
+      itemLevels: updatedMap,
+      hasOpenedGame: true,
+      updatedAt: DateTime.now(),
+    );
+
+    await DataService().saveChildProfile(_profile!);
+    await DataService().saveHouseData(_currentAccount!.id, _houseData);
+
+    _checkBadges();
+    notifyListeners();
+
+    return {
+      'success': true,
+      'message': 'Chúc mừng! Đã nâng cấp ${item.name} lên ${targetLevelInfo.title} thành công! 🎉',
+      'item': item,
+      'levelInfo': targetLevelInfo,
+    };
+  }
+
+  /// Đánh dấu tài khoản đã mở chức năng game xây nhà (để hiện trên BXH)
+  Future<void> openHouseGame() async {
+    if (_currentAccount == null) return;
+    final needsSync = !_houseData.hasOpenedGame ||
+        _houseData.childName.isEmpty ||
+        (_profile != null && _profile!.name.isNotEmpty && _houseData.childName != _profile!.name) ||
+        (_profile != null && _houseData.childAvatar != _profile!.avatar);
+    if (needsSync) {
+      _houseData = _houseData.copyWith(
+        accountId: _currentAccount!.id,
+        childName: (_profile?.name.isNotEmpty == true) ? _profile!.name : 'Bé Thám Hiểm',
+        childAvatar: (_profile?.avatar.isNotEmpty == true) ? _profile!.avatar : '🧒',
+        hasOpenedGame: true,
+        updatedAt: DateTime.now(),
+      );
+      await DataService().saveHouseData(_currentAccount!.id, _houseData);
+      notifyListeners();
+    }
+  }
+
+  /// Đánh dấu bé đã xem màn hình chào mừng lần đầu tiên
+  Future<void> markHouseWelcomeSeen() async {
+    if (_currentAccount == null) return;
+    _houseData = _houseData.copyWith(hasSeenWelcome: true);
+    await DataService().saveHouseData(_currentAccount!.id, _houseData);
+    notifyListeners();
+  }
+
+  /// Lấy danh sách Bảng Xếp Hạng Xây Nhà
+  Future<List<HouseLeaderboardEntry>> getHouseLeaderboard() async {
+    return await DataService().getHouseLeaderboard();
+  }
+
+  /// Lấy toàn bộ UserHouseData của những người đã mở game
+  Future<List<UserHouseData>> getAllUserHouses() async {
+    return await DataService().getAllUserHouses();
+  }
+
   // ADMIN ACTIONS
   Future<void> confirmTransaction(String txId) async {
     if (!isAdmin) return;

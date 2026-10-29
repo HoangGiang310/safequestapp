@@ -91,6 +91,7 @@ class HomeScreen extends StatelessWidget {
                       const SizedBox(height: 20),
                     ],
 
+
                     // Video Lessons Banner (Vị trí 1: Banner hoạt hình nổi bật)
                     _buildVideoLessonsBanner(context),
 
@@ -692,6 +693,8 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+
 
   Widget _buildVideoLessonsBanner(BuildContext context) {
     return GestureDetector(

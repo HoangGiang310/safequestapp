@@ -1,4 +1,5 @@
 import 'dart:convert';
+export 'house_models.dart';
 
 enum QuestionType { singleChoice, multipleChoice, dialogue }
 enum Role { ADMIN, CUSTOMER }

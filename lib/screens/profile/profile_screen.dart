@@ -7,6 +7,7 @@ import '../../models/models.dart';
 import '../welcome/welcome_screen.dart';
 import 'top_up_screen.dart';
 import 'upgrade_screen.dart';
+import '../game/house_screen.dart';
 import '../../core/widgets/change_password_dialog.dart';
 import '../../core/widgets/feedback_dialog.dart';
 
@@ -429,6 +430,20 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
+              // Section Game: Ngôi Nhà Của Bé
+              Text(
+                'NGÔI NHÀ CỦA BÉ',
+                style: AppTextStyles.h2.copyWith(
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.textPrimary,
+                  fontSize: 16,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              const SizedBox(height: 12),
+              _buildHouseGameCard(context, provider),
+              const SizedBox(height: 20),
+
               // Section 1: Tài khoản & Nâng cấp
               Text(
                 'CHỨC NĂNG COIN',
@@ -650,6 +665,153 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildHouseGameCard(BuildContext context, AppProvider provider) {
+    final houseData = provider.houseData;
+    final overallPct = (houseData.overallProgress * 100).toInt();
+    final ownedCount = houseData.ownedCount;
+
+    return Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF00897B), Color(0xFF00695C)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: const Color(0xFF004D40), width: 2.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0xFF004D40),
+            offset: Offset(0, 4),
+            blurRadius: 0,
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          key: const Key('house_building_banner_button'),
+          borderRadius: BorderRadius.circular(22),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const HouseScreen()),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            child: Row(
+              children: [
+                // Icon ngôi nhà hoạt hình
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: const Color(0xFF004D40), width: 2),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0xFF004D40),
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: Text('🏡', style: TextStyle(fontSize: 26)),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                // Thông tin mô tả
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              'Ngôi Nhà Của Bé',
+                              style: const TextStyle(
+                                fontFamily: 'Nunito',
+                                fontSize: 16.5,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFFFD54F),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: const Text(
+                              'GAME 4.0',
+                              style: TextStyle(
+                                fontFamily: 'Nunito',
+                                fontSize: 9,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFFE65100),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 3),
+                      Text(
+                        ownedCount == 0
+                            ? 'Sắm đồ đạc an toàn & thông minh'
+                            : '$ownedCount/15 món • Tiến độ $overallPct%',
+                        style: TextStyle(
+                          fontFamily: 'Nunito',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white.withOpacity(0.92),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 10),
+                // Nút VÀO CHƠI
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFB300),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: const Color(0xFFC68400), width: 2),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0xFFC68400),
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: const Text(
+                    'VÀO CHƠI',
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -15,7 +15,6 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    ndkVersion = "26.1.10909125"
     namespace = "com.safeuest.safequest"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion

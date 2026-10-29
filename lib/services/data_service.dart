@@ -762,4 +762,173 @@ class DataService {
 
     return true;
   }
+
+  // --- HOUSE BUILDING MINIGAME ---
+  Future<UserHouseData> getHouseData(int accountId) async {
+    // 1. Try Firestore online first (Đảm bảo chạy online, bảo toàn tiến độ)
+    try {
+      if (_firestore != null) {
+        final doc = await _firestore!
+            .collection('userHouses')
+            .doc(accountId.toString())
+            .get()
+            .timeout(const Duration(seconds: 4));
+        if (doc.exists && doc.data() != null) {
+          final houseData = UserHouseData.fromMap(doc.data()!);
+          await _prefs.setString('user_house_$accountId', houseData.toJson());
+          return houseData;
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getHouseData notice: $e');
+    }
+
+    // 2. Fallback to local SharedPreferences
+    final localJson = _prefs.getString('user_house_$accountId');
+    if (localJson != null && localJson.isNotEmpty) {
+      return UserHouseData.fromJson(localJson);
+    }
+
+    return UserHouseData(accountId: accountId);
+  }
+
+  Future<void> saveHouseData(int accountId, UserHouseData houseData) async {
+    // 1. Save locally
+    await _prefs.setString('user_house_$accountId', houseData.toJson());
+
+    // 2. Sync online to Firestore (Bảo toàn tiến độ vĩnh viễn trên Cloud)
+    try {
+      if (_firestore != null) {
+        await _firestore!
+            .collection('userHouses')
+            .doc(accountId.toString())
+            .set(houseData.toMap(), SetOptions(merge: true))
+            .timeout(const Duration(seconds: 5));
+      }
+    } catch (e) {
+      debugPrint('Firestore saveHouseData notice: $e');
+    }
+  }
+
+  /// Lấy Bảng Xếp Hạng Xây Nhà online từ Firestore
+  /// Chỉ hiển thị những tài khoản ĐÃ MỞ chức năng game (hasOpenedGame == true)
+  Future<List<HouseLeaderboardEntry>> getHouseLeaderboard() async {
+    final List<HouseLeaderboardEntry> list = [];
+
+    // 1. Try Firestore online
+    try {
+      if (_firestore != null) {
+        final snapshot = await _firestore!
+            .collection('userHouses')
+            .where('hasOpenedGame', isEqualTo: true)
+            .get()
+            .timeout(const Duration(seconds: 5));
+
+        for (final doc in snapshot.docs) {
+          final data = doc.data();
+          list.add(HouseLeaderboardEntry.fromMap(data));
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getHouseLeaderboard notice: $e');
+    }
+
+    // 2. If list is empty or offline, check local SharedPreferences
+    if (list.isEmpty) {
+      try {
+        final keys = _prefs.getKeys().where((k) => k.startsWith('user_house_'));
+        for (final key in keys) {
+          final jsonStr = _prefs.getString(key);
+          if (jsonStr != null) {
+            final house = UserHouseData.fromJson(jsonStr);
+            if (house.hasOpenedGame) {
+              list.add(HouseLeaderboardEntry(
+                accountId: house.accountId,
+                childName: house.childName.isNotEmpty ? house.childName : 'Bé Thám Hiểm',
+                childAvatar: house.childAvatar,
+                totalPointsSpent: house.totalPointsSpent,
+                overallProgress: house.overallProgress,
+                ownedCount: house.ownedCount,
+                maxCount: house.maxCount,
+              ));
+            }
+          }
+        }
+      } catch (e) {
+        debugPrint('Local getHouseLeaderboard notice: $e');
+      }
+    }
+
+    // Sắp xếp: Ưu tiên điểm học tập đã tiêu hao cao nhất trước
+    list.sort((a, b) {
+      final cmp = b.totalPointsSpent.compareTo(a.totalPointsSpent);
+      if (cmp != 0) return cmp;
+      return b.overallProgress.compareTo(a.overallProgress);
+    });
+
+    // Gán thứ hạng rank: 1, 2, 3...
+    final rankedList = <HouseLeaderboardEntry>[];
+    for (int i = 0; i < list.length; i++) {
+      final entry = list[i];
+      rankedList.add(HouseLeaderboardEntry(
+        accountId: entry.accountId,
+        childName: entry.childName,
+        childAvatar: entry.childAvatar,
+        totalPointsSpent: entry.totalPointsSpent,
+        overallProgress: entry.overallProgress,
+        ownedCount: entry.ownedCount,
+        maxCount: entry.maxCount,
+        rank: i + 1,
+      ));
+    }
+
+    return rankedList;
+  }
+
+  /// Lấy toàn bộ UserHouseData của những tài khoản đã mở game (hasOpenedGame == true)
+  Future<List<UserHouseData>> getAllUserHouses() async {
+    final Map<int, UserHouseData> map = {};
+
+    // 1. Try Firestore online
+    try {
+      if (_firestore != null) {
+        final snapshot = await _firestore!
+            .collection('userHouses')
+            .where('hasOpenedGame', isEqualTo: true)
+            .get()
+            .timeout(const Duration(seconds: 5));
+
+        for (final doc in snapshot.docs) {
+          final data = doc.data();
+          final house = UserHouseData.fromMap(data);
+          if (house.hasOpenedGame) {
+            map[house.accountId] = house;
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint('Firestore getAllUserHouses notice: $e');
+    }
+
+    // 2. Fallback / Merge with local SharedPreferences
+    try {
+      final keys = _prefs.getKeys().where((k) => k.startsWith('user_house_'));
+      for (final key in keys) {
+        final jsonStr = _prefs.getString(key);
+        if (jsonStr != null && jsonStr.isNotEmpty) {
+          final house = UserHouseData.fromJson(jsonStr);
+          if (house.hasOpenedGame) {
+            if (!map.containsKey(house.accountId) ||
+                house.totalPointsSpent > (map[house.accountId]?.totalPointsSpent ?? 0)) {
+              map[house.accountId] = house;
+            }
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint('Local getAllUserHouses notice: $e');
+    }
+
+    return map.values.toList();
+  }
 }

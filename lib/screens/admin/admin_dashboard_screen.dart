@@ -10,6 +10,7 @@ import 'admin_users_screen.dart';
 import 'admin_user_list_screen.dart';
 import 'admin_feedback_screen.dart';
 import 'admin_transactions_screen.dart';
+import 'admin_house_stats_screen.dart';
 import '../../models/models.dart';
 import '../../core/widgets/change_password_dialog.dart';
 
@@ -27,6 +28,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   int totalRevenue = 0;
   int vipUsers = 0;
   int premiumUsers = 0;
+  int housePlayersCount = 0;
   AppProvider? _appProvider;
 
   @override
@@ -62,10 +64,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     final users = await DataService().getAccounts();
     final txs = await DataService().getTransactions();
     final fbs = await DataService().getFeedbacks();
+    final houses = await DataService().getAllUserHouses();
     if (mounted) {
       final customerUsers = users.where((u) => u.role == Role.CUSTOMER).toList();
       final confirmedTxs = txs.where((tx) => tx.status == TransactionStatus.CONFIRMED).toList();
       final calculatedRevenue = confirmedTxs.fold<int>(0, (sum, tx) => sum + tx.amount);
+      final openedHouses = houses.where((h) => h.hasOpenedGame).length;
 
       setState(() {
         totalUsers = customerUsers.length;
@@ -74,6 +78,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         totalRevenue = calculatedRevenue;
         vipUsers = customerUsers.where((u) => u.membershipType == MembershipType.VIP).length;
         premiumUsers = customerUsers.where((u) => u.membershipType == MembershipType.PREMIUM).length;
+        housePlayersCount = openedHouses;
       });
     }
   }
@@ -305,6 +310,22 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 badgeShadow: const Color(0xFF7B1FA2),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminUserListScreen()))
+                      .then((_) => _loadStats());
+                },
+              ),
+              const SizedBox(height: 14),
+
+              _buildCartoonMenuCard(
+                title: 'Thống Kê Game Ngôi Nhà',
+                subtitle: 'Danh sách học viên mở game, chi tiết 4 phòng & Bảng xếp hạng',
+                badgeText: 'MINIGAME',
+                badgeCount: housePlayersCount,
+                badgeCountText: '$housePlayersCount',
+                cardColor: const Color(0xFFFFF3E0),
+                badgeColor: const Color(0xFFFF7043),
+                badgeShadow: const Color(0xFFD84315),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminHouseStatsScreen()))
                       .then((_) => _loadStats());
                 },
               ),

@@ -428,7 +428,7 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
                   features: [
                     'Tặng ngay +1.000 Điểm Học Tập',
                     'Toàn bộ đặc quyền của gói VIP',
-                    'Mở khóa bộ sưu tập nội thất Hoàng Gia & sân vườn biệt thự',
+                    'Mở khóa bộ sưu tập nội thất Smart Home 4.0 đỉnh cao',
                     'Trợ lý AI đồng hành thông minh giải đáp an toàn',
                     'Ưu tiên nhận sớm chủ đề và vật phẩm kiến trúc mới nhất',
                   ],
@@ -466,7 +466,7 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
                       ),
                       const SizedBox(height: 8),
                       const Text(
-                        'Con đang sở hữu trọn bộ quyền năng cao cấp của SAFEQUEST và đặc quyền Hoàng Gia trong Game Xây Nhà. Chúc hiệp sĩ nhí có những chuyến phiêu lưu thật bổ ích!',
+                        'Con đang sở hữu trọn bộ quyền năng cao cấp của SAFEQUEST và kho điểm dồi dào để xây dựng Tổ Ấm Smart Home 4.0. Chúc hiệp sĩ nhí có những chuyến phiêu lưu thật bổ ích!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,

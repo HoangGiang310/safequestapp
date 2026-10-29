@@ -99,7 +99,7 @@ void main() {
       // Check house building perks in feature list
       expect(find.text('Tặng ngay +500 Điểm Học Tập'), findsOneWidget);
       expect(find.text('Tặng ngay +1.000 Điểm Học Tập'), findsOneWidget);
-      expect(find.text('Mở khóa bộ sưu tập nội thất Hoàng Gia & sân vườn biệt thự'), findsOneWidget);
+      expect(find.text('Mở khóa bộ sưu tập nội thất Smart Home 4.0 đỉnh cao'), findsOneWidget);
     });
   });
 }
